@@ -1,0 +1,32 @@
+/*
+===================================================================================
+Login Scene CSS 
+===================================================================================
+*/
+.login-borderpane{
+-fx-background-color: #FFFFFF;
+}
+.username-textfield{
+	-fx-border-radius: 10 10 10 10;
+	-fx-background-radius: 10 10 10 10;
+}
+.password-textfield{
+	-fx-border-radius: 10 10 10 10;
+	-fx-background-radius: 10 10 10 10;
+}
+.login-button{
+	-fx-border-radius: 10 10 10 10;
+	-fx-background-radius: 10 10 10 10;
+	-fx-background-color: #77B3D7;
+}
+.login-button:hover{
+	-fx-border-radius: 10 10 10 10;
+	-fx-background-radius: 10 10 10 10;
+	-fx-background-color: #77A4EA;
+}
+
+/*
+===================================================================================
+Main Body of KPS CSS
+===================================================================================
+*/

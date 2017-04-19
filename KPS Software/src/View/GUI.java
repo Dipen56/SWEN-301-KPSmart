@@ -25,8 +25,9 @@ public class GUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Kelburn Postal Smart - Buttercup");
+        primaryStage.setTitle("Kelburn Postal Smart - Team Buttercup");
         primaryStage.getIcons().add(LoadResources.ICON_IMAGE);
+        primaryStage.setResizable(false);
         try {
             BorderPane page = (BorderPane) FXMLLoader.load(GUI.class.getResource("/rec/login screen.fxml"));
             Scene scene = new Scene(page);
@@ -34,11 +35,7 @@ public class GUI extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         primaryStage.show();
 
     }
-    //public static void main(String[] args) {
-    // launch(args);
-    // }
 }

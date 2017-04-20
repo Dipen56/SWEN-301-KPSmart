@@ -3,7 +3,6 @@ package View;/**
  */
 
 import Controller.GUIController;
-import Model.AlertMsg;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;

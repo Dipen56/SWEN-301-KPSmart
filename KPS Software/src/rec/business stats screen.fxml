@@ -61,27 +61,27 @@
       </VBox>
       <AnchorPane id="home-anchorpane" prefHeight="490.0" prefWidth="586.0" styleClass="home-anchorpane" stylesheets="@style.css">
          <children>
-            <Label layoutX="119.0" layoutY="103.0" prefHeight="36.0" prefWidth="116.0" text="Total Revenue:" textAlignment="CENTER">
+            <Label layoutX="119.0" layoutY="103.0" prefHeight="36.0" prefWidth="195.0" text="Total Revenue:                   $" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="119.0" layoutY="153.0" prefHeight="36.0" prefWidth="132.0" text="Total Expenditure:">
+            <Label layoutX="119.0" layoutY="153.0" prefHeight="36.0" prefWidth="195.0" text="Total Expenditure:             $">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="119.0" layoutY="200.0" prefHeight="36.0" prefWidth="177.0" text="Total Number of Events:">
+            <Label layoutX="119.0" layoutY="200.0" prefHeight="36.0" prefWidth="195.0" text="Total Number of Events:   $">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="119.0" layoutY="251.0" prefHeight="36.0" prefWidth="132.0" text="Total Mail:">
+            <Label layoutX="119.0" layoutY="251.0" prefHeight="36.0" prefWidth="195.0" text="Total Mail:                          $">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="119.0" layoutY="302.0" prefHeight="36.0" prefWidth="177.0" text="Average Delivery Times:">
+            <Label layoutX="119.0" layoutY="302.0" prefHeight="36.0" prefWidth="195.0" text="Average Delivery Times:   $">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -105,27 +105,27 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="319.0" layoutY="103.0" prefHeight="36.0" prefWidth="149.0" text="\$0.00">
+            <Label layoutX="319.0" layoutY="103.0" prefHeight="36.0" prefWidth="149.0" text="0.00">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="319.0" layoutY="153.0" prefHeight="36.0" prefWidth="149.0" text="\$0.00">
+            <Label layoutX="319.0" layoutY="153.0" prefHeight="36.0" prefWidth="149.0" text="0.00">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="319.0" layoutY="200.0" prefHeight="36.0" prefWidth="149.0" text="\$0.00">
+            <Label layoutX="319.0" layoutY="200.0" prefHeight="36.0" prefWidth="149.0" text="0.00">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="319.0" layoutY="251.0" prefHeight="36.0" prefWidth="149.0" text="\$0.00">
+            <Label layoutX="319.0" layoutY="251.0" prefHeight="36.0" prefWidth="149.0" text="0.00">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="319.0" layoutY="302.0" prefHeight="36.0" prefWidth="149.0" text="\$0.00">
+            <Label layoutX="319.0" layoutY="302.0" prefHeight="36.0" prefWidth="149.0" text="0.00">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>

@@ -76,7 +76,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Button layoutX="230.0" layoutY="516.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="101.0" styleClass="logout-button" stylesheets="@style.css" text="Reset" textFill="WHITE">
+            <Button layoutX="230.0" layoutY="516.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="101.0" styleClass="main-button" stylesheets="@style.css" text="Reset" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></Button>
@@ -94,7 +94,7 @@
                   <Image url="@new-route.png" />
                </image>
             </ImageView>
-            <Button id="send-mail" layoutX="112.0" layoutY="516.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="101.0" styleClass="main-button" stylesheets="@style.css" text="Send Mail" textFill="WHITE">
+            <Button id="send-mail" layoutX="112.0" layoutY="516.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="101.0" styleClass="logout-button" stylesheets="@style.css" text="Accept" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -105,23 +105,23 @@
                </font>
             </Label>
             <ComboBox layoutX="285.0" layoutY="270.0" prefHeight="36.0" prefWidth="150.0" promptText="Select Type" />
-            <Label layoutX="75.0" layoutY="320.0" prefHeight="36.0" prefWidth="176.0" text="Customer Weight Pricet:">
+            <Label layoutX="75.0" layoutY="320.0" prefHeight="36.0" prefWidth="208.0" text="Customer Weight Pricet:      $">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <TextField layoutX="285.0" layoutY="320.0" prefHeight="36.0" prefWidth="150.0" promptText="Enter Cost " />
+            <TextField layoutX="285.0" layoutY="320.0" prefHeight="36.0" prefWidth="150.0" promptText="Enter Price" />
             <Label layoutX="440.0" layoutY="321.0" prefHeight="36.0" prefWidth="74.0" text="per gram">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="75.0" layoutY="363.0" prefHeight="36.0" prefWidth="176.0" text="Customer Volume Price:">
+            <Label layoutX="75.0" layoutY="363.0" prefHeight="36.0" prefWidth="208.0" text="Customer Volume Price:       $">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <TextField layoutX="285.0" layoutY="363.0" prefHeight="36.0" prefWidth="150.0" promptText="Enter Cost" />
+            <TextField layoutX="285.0" layoutY="363.0" prefHeight="36.0" prefWidth="150.0" promptText="Enter Price" />
             <Label layoutX="440.0" layoutY="363.0" prefHeight="36.0" prefWidth="60.0" text="cm^3">
                <font>
                   <Font name="System Bold" size="15.0" />
@@ -138,21 +138,21 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <TextField layoutX="285.0" layoutY="97.0" prefHeight="36.0" prefWidth="150.0" />
-            <TextField layoutX="285.0" layoutY="140.0" prefHeight="36.0" prefWidth="150.0" />
-            <TextField layoutX="285.0" layoutY="184.0" prefHeight="36.0" prefWidth="150.0" />
-            <Label layoutX="76.0" layoutY="407.0" prefHeight="36.0" prefWidth="176.0" text="Transport Weight Cost:">
+            <TextField layoutX="285.0" layoutY="97.0" prefHeight="36.0" prefWidth="150.0" promptText="Enter Origin" />
+            <TextField layoutX="285.0" layoutY="140.0" prefHeight="36.0" prefWidth="150.0" promptText="Enter Destination" />
+            <TextField layoutX="285.0" layoutY="184.0" prefHeight="36.0" prefWidth="150.0" promptText="Enter Company" />
+            <Label layoutX="75.0" layoutY="407.0" prefHeight="36.0" prefWidth="208.0" text="Transport Weight Cost:        $">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="75.0" layoutY="450.0" prefHeight="36.0" prefWidth="176.0" text="Transport Volume Cost:">
+            <Label layoutX="75.0" layoutY="450.0" prefHeight="36.0" prefWidth="208.0" text="Transport Volume Cost:       $">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <TextField layoutX="285.0" layoutY="407.0" prefHeight="36.0" prefWidth="150.0" />
-            <TextField layoutX="285.0" layoutY="450.0" prefHeight="36.0" prefWidth="150.0" />
+            <TextField layoutX="285.0" layoutY="407.0" prefHeight="36.0" prefWidth="150.0" promptText="Enter Cost" />
+            <TextField layoutX="285.0" layoutY="450.0" prefHeight="36.0" prefWidth="150.0" promptText="Enter Cost" />
             <Label layoutX="440.0" layoutY="407.0" prefHeight="36.0" prefWidth="74.0" text="per gram">
                <font>
                   <Font name="System Bold" size="15.0" />

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox id="home-hbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" spacing="5.0" styleClass="home-hbox" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox id="home-vbox" prefHeight="490.0" prefWidth="105.0" spacing="3.0" styleClass="home-vbox" stylesheets="@style.css">
+         <children>
+            <AnchorPane prefHeight="76.0" prefWidth="106.0">
+               <children>
+                  <ImageView fitHeight="59.0" fitWidth="65.0" layoutX="26.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@user.png" />
+                     </image>
+                  </ImageView>
+                  <Label id="user-lable" alignment="CENTER" layoutY="61.0" prefHeight="26.0" prefWidth="110.0" styleClass="user-lable" stylesheets="@style.css" text="Manager Dipen" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <Button id="btn" mnemonicParsing="false" prefHeight="60.0" prefWidth="110.0" styleClass="main-button" stylesheets="@style.css" text="Send Mail" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Button>
+            <Button id="route-button" mnemonicParsing="false" prefHeight="60.0" prefWidth="110.0" styleClass="main-button" stylesheets="@style.css" text="Route Discontinue" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Button>
+            <Button id="customer-price-button" mnemonicParsing="false" prefHeight="60.0" prefWidth="110.0" styleClass="main-button" stylesheets="@style.css" text="Price Update" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Button>
+            <Button id="transport-cost-button" mnemonicParsing="false" prefHeight="60.0" prefWidth="113.0" styleClass="main-button" stylesheets="@style.css" text="Transport Cost Update" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Button>
+            <Button id="new-route" mnemonicParsing="false" prefHeight="60.0" prefWidth="109.0" styleClass="main-button" stylesheets="@style.css" text="New Route" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Button>
+            <Button id="Business Figures" mnemonicParsing="false" prefHeight="60.0" prefWidth="111.0" styleClass="main-button" stylesheets="@style.css" text="Business Figures" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Button>
+            <Button id="review-log-button" mnemonicParsing="false" prefHeight="60.0" prefWidth="110.0" styleClass="main-button" stylesheets="@style.css" text="Review Logs" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Button>
+            <Button id="logout-button" mnemonicParsing="false" prefHeight="60.0" prefWidth="110.0" styleClass="logout-button" stylesheets="@style.css" text="Log Out" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Button>
+         </children>
+      </VBox>
+      <AnchorPane id="home-anchorpane" prefHeight="490.0" prefWidth="586.0" styleClass="home-anchorpane" stylesheets="@style.css">
+         <children>
+            <Label layoutX="119.0" layoutY="121.0" prefHeight="36.0" prefWidth="94.0" text="Origin:" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="119.0" layoutY="170.0" prefHeight="36.0" prefWidth="94.0" text="Destination:">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="119.0" layoutY="221.0" prefHeight="36.0" prefWidth="150.0" text="Transport Company:">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <ComboBox layoutX="283.0" layoutY="121.0" prefHeight="36.0" prefWidth="150.0" promptText="Select Origin" />
+            <ComboBox layoutX="283.0" layoutY="170.0" prefHeight="36.0" prefWidth="150.0" promptText="Select Destination" />
+            <ComboBox layoutX="283.0" layoutY="221.0" prefHeight="36.0" prefWidth="150.0" promptText="Select Company" />
+            <Button layoutX="227.0" layoutY="503.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="101.0" styleClass="logout-button" stylesheets="@style.css" text="Reset" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Button>
+            <Button layoutX="345.0" layoutY="503.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="101.0" styleClass="discard-button" stylesheets="@style.css" text="Discard" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Button>
+            <Label layoutX="32.0" layoutY="24.0" prefHeight="58.0" prefWidth="411.0" text="Tansport Cost Update">
+               <font>
+                  <Font name="System Bold" size="40.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="87.0" fitWidth="150.0" layoutX="462.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@transport-cost.png" />
+               </image>
+            </ImageView>
+            <Button id="send-mail" layoutX="109.0" layoutY="503.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="101.0" styleClass="main-button" stylesheets="@style.css" text="Send Mail" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <Label layoutX="119.0" layoutY="274.0" prefHeight="36.0" prefWidth="158.0" text="Type of Tansport:">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <ComboBox layoutX="283.0" layoutY="274.0" prefHeight="36.0" prefWidth="150.0" promptText="Select Type" />
+            <Label layoutX="119.0" layoutY="326.0" prefHeight="36.0" prefWidth="130.0" text="New Weight Cost:">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField layoutX="283.0" layoutY="326.0" prefHeight="36.0" prefWidth="150.0" promptText="Enter Cost " />
+            <Label layoutX="438.0" layoutY="327.0" prefHeight="36.0" prefWidth="74.0" text="per gram">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="119.0" layoutY="378.0" prefHeight="36.0" prefWidth="150.0" text="New Volume Cost:">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField layoutX="283.0" layoutY="378.0" prefHeight="36.0" prefWidth="150.0" promptText="Enter Cost" />
+            <Label layoutX="438.0" layoutY="378.0" prefHeight="36.0" prefWidth="60.0" text="cm^3">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="119.0" layoutY="427.0" prefHeight="36.0" prefWidth="74.0" text="Duration: ">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField layoutX="283.0" layoutY="427.0" prefHeight="36.0" prefWidth="150.0" promptText="Enter Duration" />
+            <Label layoutX="438.0" layoutY="427.0" prefHeight="36.0" prefWidth="60.0" text="hours">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</HBox>

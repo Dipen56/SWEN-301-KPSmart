@@ -25,3 +25,4 @@ hs_err_pid*
 # Eclipse config file
 /.project
 
+/bin/

@@ -15,7 +15,7 @@ public class GUIController {
 
     public GUIController() {
        gui = new GUI(this);
-       GUI.launch(GUI.class);
+        GUI.launch(GUI.class);
     }
 
     public void startListners() {

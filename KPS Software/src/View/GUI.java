@@ -3,13 +3,12 @@ package View;/**
  */
 
 import Controller.GUIController;
+import Model.AlertMsg;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.BorderPane;
-
 import java.io.IOException;
 
 public class GUI extends Application {
@@ -26,9 +25,14 @@ public class GUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Kelburn Postal Smart - Team Buttercup");
+    	//TODO: login window and check login with database
+    	//AlertMsg.display("Welcome to Kelburn Postal Smart", "Login successful");
+        
+    	// Setting page title, icon, and resizeability
+    	primaryStage.setTitle("Kelburn Postal Smart - Team Buttercup");
         primaryStage.getIcons().add(LoadResources.ICON_IMAGE);
         primaryStage.setResizable(false);
+        // loading page resources
         try {
             HBox page = (HBox) FXMLLoader.load(GUI.class.getResource("/rec/home screen.fxml"));
             Scene scene = new Scene(page);
@@ -36,6 +40,12 @@ public class GUI extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // allowing for safe closing of window
+        primaryStage.setOnCloseRequest(e -> {
+        	System.out.println("Closing KPS app");
+        	primaryStage.close();
+        });
+        // displaying page
         primaryStage.show();
 
     }

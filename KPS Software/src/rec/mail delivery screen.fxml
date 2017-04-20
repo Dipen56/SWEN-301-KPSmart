@@ -61,11 +61,79 @@
       </VBox>
       <AnchorPane id="home-anchorpane" prefHeight="490.0" prefWidth="586.0" styleClass="home-anchorpane" stylesheets="@style.css">
          <children>
-            <ImageView fitHeight="590.0" fitWidth="575.0" layoutX="6.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+            <Label layoutX="152.0" layoutY="104.0" prefHeight="36.0" prefWidth="94.0" text="Origin:" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="152.0" layoutY="153.0" prefHeight="36.0" prefWidth="94.0" text="Destination:">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="152.0" layoutY="200.0" prefHeight="36.0" prefWidth="94.0" text="Weight:">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="152.0" layoutY="251.0" prefHeight="36.0" prefWidth="94.0" text="Volume:">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="152.0" layoutY="302.0" prefHeight="36.0" prefWidth="94.0" text="Priority:">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <ComboBox layoutX="260.0" layoutY="104.0" prefHeight="36.0" prefWidth="150.0" promptText="Select Origin" />
+            <ComboBox layoutX="260.0" layoutY="153.0" prefHeight="36.0" prefWidth="150.0" promptText="Select Destination" />
+            <TextField layoutX="261.0" layoutY="200.0" prefHeight="36.0" prefWidth="149.0" promptText="Enter Weight " />
+            <Label layoutX="417.0" layoutY="200.0" prefHeight="36.0" prefWidth="71.0" text="gram(s)">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField layoutX="261.0" layoutY="251.0" prefHeight="36.0" prefWidth="149.0" promptText="Enter Volume" />
+            <Label layoutX="422.0" layoutY="251.0" prefHeight="36.0" prefWidth="60.0" text="cm^3">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <ComboBox layoutX="260.0" layoutY="302.0" prefHeight="36.0" prefWidth="150.0" promptText="Select Priority" />
+            <Button layoutX="244.0" layoutY="456.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="101.0" styleClass="logout-button" stylesheets="@style.css" text="Reset" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Button>
+            <Button layoutX="362.0" layoutY="456.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="101.0" styleClass="discard-button" stylesheets="@style.css" text="Discard" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Button>
+            <Label layoutX="141.0" layoutY="15.0" prefHeight="58.0" prefWidth="204.0" text="Send Mail">
+               <font>
+                  <Font name="System Bold" size="40.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="87.0" fitWidth="150.0" layoutX="345.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@KPS.png" />
+                  <Image url="@mail-delivery.png" />
                </image>
             </ImageView>
+            <Label layoutX="141.0" layoutY="376.0" prefHeight="36.0" prefWidth="94.0" text="Total:">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="261.0" layoutY="376.0" prefHeight="36.0" prefWidth="149.0" text="\$0.00">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Button id="send-mail" layoutX="126.0" layoutY="456.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="101.0" styleClass="main-button" stylesheets="@style.css" text="Send Mail" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </children>

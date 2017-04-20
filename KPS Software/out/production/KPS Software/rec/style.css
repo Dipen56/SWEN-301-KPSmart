@@ -37,11 +37,43 @@ Main Body of KPS CSS
 	-fx-background-color: #E8E8E8;
 }
 .home-anchorpane{
-	-fx-background-color: #E8E8E8;
+	//-fx-background-color: #E8E8E8;
+	-fx-background-color: #FFFFFF;
 }
 .user-lable{
 	-fx-border-width: 0 0 2 0;
 	-fx-border-color: #A9A9A9;
-	-fx-border-radius: 2;
-	
+	-fx-border-radius: 2;	
+}
+
+
+.main-button{
+	-fx-background-color: #0080ff;
+	-fx-border-radius: 2 2 2 2;
+	-fx-background-radius: 2 2 2 2;
+	-fx-border-color: #0080ff;
+}
+.main-button:hover{
+	//-fx-background-color: #33cc33;
+	-fx-background-color: #FFFFFF;
+	-fx-text-fill: #000000;
+	-fx-border-radius: 2 2 2 2;
+	-fx-background-radius: 2 2 2 2;
+	-fx-border-width: 3 3 3 3;
+	-fx-border-color: #ff0000;
+}
+.logout-button{
+	-fx-background-color: #33cc33;
+	-fx-border-radius: 2 2 2 2;
+	-fx-background-radius: 2 2 2 2;
+	-fx-border-color: #33cc33;
+}
+.logout-button:hover{
+	//-fx-background-color: #33cc33;
+	-fx-background-color: #FFFFFF;
+	-fx-text-fill: #000000;
+	-fx-border-radius: 2 2 2 2;
+	-fx-background-radius: 2 2 2 2;
+	-fx-border-width: 3 3 3 3;
+	-fx-border-color: #ff0000;
 }

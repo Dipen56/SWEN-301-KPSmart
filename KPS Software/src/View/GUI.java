@@ -5,6 +5,7 @@ package View;/**
 import Controller.GUIController;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
@@ -29,7 +30,7 @@ public class GUI extends Application {
         primaryStage.getIcons().add(LoadResources.ICON_IMAGE);
         primaryStage.setResizable(false);
         try {
-            BorderPane page = (BorderPane) FXMLLoader.load(GUI.class.getResource("/rec/login screen.fxml"));
+            HBox page = (HBox) FXMLLoader.load(GUI.class.getResource("/rec/home screen.fxml"));
             Scene scene = new Scene(page);
             primaryStage.setScene(scene);
         } catch (IOException e) {

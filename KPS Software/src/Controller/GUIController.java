@@ -33,7 +33,7 @@ public class GUIController {
         actionEvent = new EventHandler<ActionEvent>() {
 
             @Override
-            public void handle(ActionEvent event) {
+            public void handle(ActionEvent event) {            	
             }
         };
     }

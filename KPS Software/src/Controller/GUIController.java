@@ -14,10 +14,13 @@ public class GUIController {
     private EventHandler<ActionEvent> actionEvent;
 
     public GUIController() {
-       gui = new GUI(this);
-        GUI.launch(GUI.class);
+       setGui(new GUI(this));
+       GUI.launch(GUI.class);
     }
 
+    /*
+     * Setting up action event handlers
+     */
     public void startListners() {
         setActionEventHandler();
     }
@@ -30,10 +33,19 @@ public class GUIController {
         actionEvent = new EventHandler<ActionEvent>() {
 
             @Override
-            public void handle(ActionEvent event) {
+            public void handle(ActionEvent event) {            	
             }
         };
     }
 
-
+    /*
+     * Getter and setter for the GUI
+     */
+	public GUI getGui() {
+		return gui;
+	}
+	public void setGui(GUI gui) {
+		this.gui = gui;
+	}
+	
 }

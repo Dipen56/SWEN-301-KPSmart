@@ -31,14 +31,6 @@ public class GUI extends Application {
         primaryStage.setTitle("Kelburn Postal Smart - Team Buttercup");
         primaryStage.getIcons().add(LoadResources.ICON_IMAGE);
         primaryStage.setResizable(false);
-        // loading page resources
-        try {
-            HBox page = (HBox) FXMLLoader.load(GUI.class.getResource("/rec/home screen.fxml"));
-            Scene scene = new Scene(page);
-            primaryStage.setScene(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         // allowing for safe closing of window
         primaryStage.setOnCloseRequest(e -> {
         	System.out.println("Closing KPS app");

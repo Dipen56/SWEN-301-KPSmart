@@ -12,23 +12,23 @@ import java.io.IOException;
 
 public class GUI extends Application {
     private static GUIController controller;
-    Scene loginScene;
+    private static LoginScreen loginScene;
+    private static Stage primaryStage;
 
-    public  GUI(GUIController controller){
+    public GUI(GUIController controller) {
         this.controller = controller;
 
+
     }
+
     public GUI() {
 
     }
 
     @Override
-    public void start(Stage primaryStage) {
-    	//TODO: login window and check login with database
-    	LoginGUI.display();
-        
-    	// Setting page title, icon, and resizeability
-    	primaryStage.setTitle("Kelburn Postal Smart - Team Buttercup");
+    public void start(Stage stage) {
+        primaryStage = stage;
+        primaryStage.setTitle("Kelburn Postal Smart - Team Buttercup");
         primaryStage.getIcons().add(LoadResources.ICON_IMAGE);
         primaryStage.setResizable(false);
         // loading page resources
@@ -45,7 +45,13 @@ public class GUI extends Application {
         	primaryStage.close();
         });
         // displaying page
+        displayLoginScreen();
         primaryStage.show();
-
     }
+
+    public void displayLoginScreen() {
+        loginScene = new LoginScreen();
+        primaryStage.setScene(loginScene.getScene());
+    }
+
 }

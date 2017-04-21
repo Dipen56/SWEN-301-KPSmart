@@ -61,79 +61,77 @@
       </VBox>
       <AnchorPane id="home-anchorpane" prefHeight="490.0" prefWidth="586.0" styleClass="home-anchorpane" stylesheets="@style.css">
          <children>
-            <Label layoutX="152.0" layoutY="104.0" prefHeight="36.0" prefWidth="94.0" text="Origin:" textAlignment="CENTER">
+            <Label layoutX="119.0" layoutY="103.0" prefHeight="36.0" prefWidth="195.0" text="Total Revenue:                   $" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="152.0" layoutY="153.0" prefHeight="36.0" prefWidth="94.0" text="Destination:">
+            <Label layoutX="119.0" layoutY="153.0" prefHeight="36.0" prefWidth="195.0" text="Total Expenditure:             $">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="152.0" layoutY="200.0" prefHeight="36.0" prefWidth="94.0" text="Weight:">
+            <Label layoutX="119.0" layoutY="200.0" prefHeight="36.0" prefWidth="195.0" text="Total Number of Events:   $">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="152.0" layoutY="251.0" prefHeight="36.0" prefWidth="94.0" text="Volume:">
+            <Label layoutX="119.0" layoutY="251.0" prefHeight="36.0" prefWidth="195.0" text="Total Mail:                          $">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="152.0" layoutY="302.0" prefHeight="36.0" prefWidth="94.0" text="Priority:">
+            <Label layoutX="119.0" layoutY="302.0" prefHeight="36.0" prefWidth="195.0" text="Average Delivery Times:   $">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <ComboBox layoutX="260.0" layoutY="104.0" prefHeight="36.0" prefWidth="150.0" promptText="Select Origin" />
-            <ComboBox layoutX="260.0" layoutY="153.0" prefHeight="36.0" prefWidth="150.0" promptText="Select Destination" />
-            <TextField layoutX="260.0" layoutY="200.0" prefHeight="36.0" prefWidth="149.0" promptText="Enter Weight " />
-            <Label layoutX="417.0" layoutY="200.0" prefHeight="36.0" prefWidth="71.0" text="gram(s)">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Label>
-            <TextField layoutX="260.0" layoutY="251.0" prefHeight="36.0" prefWidth="149.0" promptText="Enter Volume" />
-            <Label layoutX="422.0" layoutY="251.0" prefHeight="36.0" prefWidth="60.0" text="cm^3">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Label>
-            <ComboBox layoutX="260.0" layoutY="302.0" prefHeight="36.0" prefWidth="150.0" promptText="Select Priority" />
-            <Button layoutX="244.0" layoutY="456.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="101.0" styleClass="main-button" stylesheets="@style.css" text="Reset" textFill="WHITE">
+            <Button layoutX="226.0" layoutY="529.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="101.0" styleClass="discard-button" stylesheets="@style.css" text="Exit" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></Button>
-            <Button layoutX="362.0" layoutY="456.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="101.0" styleClass="discard-button" stylesheets="@style.css" text="Discard" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font></Button>
-            <Label layoutX="141.0" layoutY="15.0" prefHeight="58.0" prefWidth="204.0" text="Send Mail">
+            <Label layoutX="82.0" layoutY="17.0" prefHeight="58.0" prefWidth="325.0" text="Business Figures">
                <font>
                   <Font name="System Bold" size="40.0" />
                </font>
             </Label>
-            <ImageView fitHeight="87.0" fitWidth="150.0" layoutX="345.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="87.0" fitWidth="150.0" layoutX="405.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@mail-delivery.png" />
+                  <Image url="@business-figures.jpg" />
                </image>
             </ImageView>
-            <Label layoutX="152.0" layoutY="376.0" prefHeight="36.0" prefWidth="101.0" text="Total:            $">
+            <Label layoutX="119.0" layoutY="352.0" prefHeight="36.0" prefWidth="132.0" text="Critical Routes:">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="260.0" layoutY="376.0" prefHeight="36.0" prefWidth="150.0" text="0.00">
+            <Label layoutX="319.0" layoutY="103.0" prefHeight="36.0" prefWidth="149.0" text="0.00">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Button id="send-mail" layoutX="126.0" layoutY="456.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="101.0" styleClass="logout-button" stylesheets="@style.css" text="Accept" textFill="WHITE">
+            <Label layoutX="319.0" layoutY="153.0" prefHeight="36.0" prefWidth="149.0" text="0.00">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
-            </Button>
+            </Label>
+            <Label layoutX="319.0" layoutY="200.0" prefHeight="36.0" prefWidth="149.0" text="0.00">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="319.0" layoutY="251.0" prefHeight="36.0" prefWidth="149.0" text="0.00">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="319.0" layoutY="302.0" prefHeight="36.0" prefWidth="149.0" text="0.00">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <ListView layoutX="119.0" layoutY="395.0" prefHeight="109.0" prefWidth="314.0" />
+            <ScrollBar layoutX="419.0" layoutY="400.0" orientation="VERTICAL" />
          </children>
       </AnchorPane>
    </children>

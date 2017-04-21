@@ -25,7 +25,7 @@ public class GUI extends Application {
     @Override
     public void start(Stage primaryStage) {
     	//TODO: login window and check login with database
-    	//AlertMsg.display("Welcome to Kelburn Postal Smart", "Login successful");
+    	LoginGUI.display();
         
     	// Setting page title, icon, and resizeability
     	primaryStage.setTitle("Kelburn Postal Smart - Team Buttercup");

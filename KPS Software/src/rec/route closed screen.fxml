@@ -79,7 +79,7 @@
             <ComboBox layoutX="295.0" layoutY="142.0" prefHeight="36.0" prefWidth="150.0" promptText="Select Origin" />
             <ComboBox layoutX="295.0" layoutY="191.0" prefHeight="36.0" prefWidth="150.0" promptText="Select Destination" />
             <ComboBox layoutX="295.0" layoutY="242.0" prefHeight="36.0" prefWidth="150.0" promptText="Select Company" />
-            <Button layoutX="237.0" layoutY="456.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="101.0" styleClass="logout-button" stylesheets="@style.css" text="Reset" textFill="WHITE">
+            <Button layoutX="237.0" layoutY="456.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="101.0" styleClass="main-button" stylesheets="@style.css" text="Reset" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></Button>
@@ -97,7 +97,7 @@
                   <Image url="@route-closed.jpg" />
                </image>
             </ImageView>
-            <Button id="send-mail" layoutX="119.0" layoutY="456.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="101.0" styleClass="main-button" stylesheets="@style.css" text="Send Mail" textFill="WHITE">
+            <Button id="send-mail" layoutX="119.0" layoutY="456.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="101.0" styleClass="logout-button" stylesheets="@style.css" text="Accept" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>

@@ -61,11 +61,16 @@
       </VBox>
       <AnchorPane id="home-anchorpane" prefHeight="490.0" prefWidth="586.0" styleClass="home-anchorpane" stylesheets="@style.css">
          <children>
-            <ImageView fitHeight="590.0" fitWidth="575.0" layoutX="6.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="575.0" fitWidth="567.0" layoutX="6.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@KPS.png" />
                </image>
             </ImageView>
+            <Button layoutX="487.0" layoutY="516.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="75.0" styleClass="discard-button" stylesheets="@style.css" text="Setting" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </children>

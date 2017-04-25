@@ -1,41 +1,37 @@
 package View;
 
 /**
- * Created by Dipen on 18/04/2017.
+ * Created by Dipen on 18/04/2017.This class is finished! YOU WANT TO CHANGE CODE PLEASE TALK WITH ME FIRST!!
  */
 
-import Controller.GUIController;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class GUI extends Application {
-    private static GUIController controller;
-    private static LoginScreen loginScene;
-    private static Stage primaryStage;
-
-    public GUI(GUIController controller) {
-        this.controller = controller;
-
-    }
-
-    public GUI() {
-
-    }
 
     @Override
-    public void start(Stage stage) {
-        // displaying home screen page
-    	stage = HomeScreen.getStage();
-    	primaryStage = stage;
-    	primaryStage.show();
-    	// open login gui
-        //TODO: user login authentication with database
-        LoginGUI.display();
+    public void start(Stage primaryStage) throws Exception {
+        primaryStage.setTitle("Kelburn Postal Smart");
+        Image iconImage = new Image(GUI.class.getResourceAsStream("/rec/KPS.png"));
+        primaryStage.getIcons().add(iconImage);
+        primaryStage.setResizable(false);
+        //primaryStage.setAlwaysOnTop(true);
+        //loads the FXML file for the login scene
+        Parent root = FXMLLoader.load(GUI.class.getResource("/rec/login screen.fxml"));
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        // used to close the program properly
+        primaryStage.setOnCloseRequest(e -> {
+            System.out.println("Exiting...");
+            System.exit(0);
+            Platform.exit();
+        });
     }
-
-    public void displayLoginScreen() {
-        loginScene = new LoginScreen();
-        primaryStage.setScene(loginScene.getScene());
-    }
-
 }
+

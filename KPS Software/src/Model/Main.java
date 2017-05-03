@@ -8,7 +8,7 @@ import View.GUI;
 public class Main {
 
     public static void main(String[] args) {
-        GUI.launch(args);
+        javafx.application.Application.launch(GUI.class);
     }
 
 }

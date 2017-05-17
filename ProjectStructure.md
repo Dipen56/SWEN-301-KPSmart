@@ -12,3 +12,9 @@
 > - `resources/img` is for images
 
 3. `Documents` is where the submitted documents are put in
+
+
+### How to set up project structure
+1. If you use IntelliJ, File => Project Structure => Modules => Sources, then select `src` folder and mark it as Sources. And also mark `resources` as Resources.
+
+2. If you use Eclipse, right click on `resources` folder, build path => use as source folder

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox id="home-hbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="600.0" prefWidth="700.0" spacing="5.0" styleClass="home-hbox" stylesheets="@../css/style.css"
+      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeScreenController">
+    <children>
+        <VBox id="home-vbox" prefHeight="490.0" prefWidth="105.0" spacing="3.0" styleClass="home-vbox"
+              stylesheets="@../css/style.css">
+            <children>
+                <AnchorPane prefHeight="76.0" prefWidth="106.0">
+                    <children>
+                        <ImageView fx:id="avatar" fitHeight="59.0" fitWidth="65.0" layoutX="26.0" pickOnBounds="true"
+                                   preserveRatio="true">
+                            <image>
+                                <Image url="@../img/user.png"/>
+                            </image>
+                        </ImageView>
+                        <Label fx:id="userLable" alignment="CENTER" layoutY="61.0" prefHeight="26.0" prefWidth="110.0"
+                               styleClass="user-lable" stylesheets="@../css/style.css" text="Manager Dipen"
+                               textAlignment="CENTER" wrapText="true">
+                            <font>
+                                <Font name="System Bold" size="14.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+                <Button id="sendMail" onAction="#changeScenes" mnemonicParsing="false" prefHeight="60.0" prefWidth="110.0" styleClass="main-button"
+                        stylesheets="@../css/style.css" text="Send Mail" textAlignment="CENTER" textFill="WHITE"
+                        wrapText="true">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Button>
+                <Button id="routeDiscontinue" onAction="#changeScenes" mnemonicParsing="false" prefHeight="60.0" prefWidth="110.0"
+                        styleClass="main-button" stylesheets="@../css/style.css" text="Route Discontinue"
+                        textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Button>
+                <Button id="customerPriceUpdate" onAction="#changeScenes" mnemonicParsing="false" prefHeight="60.0" prefWidth="110.0"
+                        styleClass="main-button" stylesheets="@../css/style.css" text="Price Update" textAlignment="CENTER"
+                        textFill="WHITE" wrapText="true">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Button>
+                <Button id="transportCostUpdate" onAction="#changeScenes" mnemonicParsing="false" prefHeight="60.0" prefWidth="113.0"
+                        styleClass="main-button" stylesheets="@../css/style.css" text="Transport Cost Update"
+                        textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Button>
+                <Button id="newRoute" onAction="#changeScenes" mnemonicParsing="false" prefHeight="60.0" prefWidth="109.0"
+                        styleClass="main-button" stylesheets="@../css/style.css" text="New Route" textAlignment="CENTER"
+                        textFill="WHITE" wrapText="true">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Button>
+                <Button id="businessFigures" onAction="#changeScenes" mnemonicParsing="false" prefHeight="60.0" prefWidth="111.0"
+                        styleClass="main-button" stylesheets="@../css/style.css" text="Business Figures" textAlignment="CENTER"
+                        textFill="WHITE" wrapText="true">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Button>
+                <Button fx:id="reviewLogs" onAction="#changeScenes" mnemonicParsing="false" prefHeight="60.0" prefWidth="110.0"
+                        styleClass="main-button" stylesheets="@../css/style.css" text="Review Logs" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Button>
+                <Button id="logout" onAction="#changeScenes" mnemonicParsing="false" prefHeight="60.0" prefWidth="110.0"
+                        styleClass="logout-button" stylesheets="@../css/style.css" text="Log Out" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Button>
+            </children>
+        </VBox>
+        <AnchorPane id="home-anchorpane" prefHeight="490.0" prefWidth="586.0" styleClass="home-anchorpane"
+                    stylesheets="@../css/style.css">
+            <children>
+                <ImageView fitHeight="575.0" fitWidth="567.0" layoutX="6.0" layoutY="8.0" pickOnBounds="true"
+                           preserveRatio="true">
+                    <image>
+                        <Image url="@../img/KPS.png"/>
+                    </image>
+                </ImageView>
+                <Button  id="setting" onAction="#changeScenes" layoutX="487.0" layoutY="516.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="75.0"
+                        styleClass="discard-button" stylesheets="@../css/style.css" text="Setting" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Button>
+            </children>
+        </AnchorPane>
+    </children>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+    </padding>
+</HBox>

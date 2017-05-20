@@ -1,4 +1,4 @@
-package model.user;
+package model.staff;
 
 public abstract class Staff {
 
@@ -6,10 +6,10 @@ public abstract class Staff {
     private String userName;
     private String password;
 
-    public Staff(int uid, String name, String pass) {
+    public Staff(int uid, String username, String password) {
         this.setUID(uid);
-        this.setUserName(name);
-        this.setPassword(pass);
+        this.setUserName(username);
+        this.setPassword(password);
     }
 
     /**
@@ -17,13 +17,13 @@ public abstract class Staff {
      * those of this staff member. Returns true if both match and false
      * if either does not match.
      *
-     * @param name
-     * @param pass
+     * @param username
+     * @param password
      * @return
      */
-    public boolean checkLogin(String name, String pass) {
-        if (this.userName.equals(name)
-                && this.password.equals(pass)) {
+    public boolean checkLogin(String username, String password) {
+        if (this.userName.equals(username)
+                && this.password.equals(password)) {
             return true;
         }
         return false;
@@ -58,4 +58,11 @@ public abstract class Staff {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "Staff{" +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

@@ -1,6 +1,6 @@
 package model;
 
-import model.event.EventManager;
+import model.event.*;
 import model.location.InternationalLocation;
 import model.location.NZCity;
 import model.location.NZLocation;
@@ -14,7 +14,11 @@ import model.staff.Manager;
 import model.staff.Staff;
 import model.transportFirm.TransportFirm;
 
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This class is a wrapper class that contains all model objects
@@ -29,7 +33,7 @@ public class KPSmartModel {
     // ======= Mock data, existing in memory. Will be stored in DB in final version ==========
 
     private Map<Integer, Staff> registeredStaff;
-    private EventManager eventManager;
+    private EventLogger eventLogger;
     private RoutingSystem routingSystem;
     private List<Mail> mails;
 
@@ -49,8 +53,9 @@ public class KPSmartModel {
      */
     private void generateEvents() {
         registeredStaff = new HashMap<>();
-        eventManager = new EventManager();
+        eventLogger = new EventLogger();
         mails = new ArrayList<>();
+        routingSystem = new RoutingSystem();
 
         // 1. Add 2 users, 1 manager, 1 clerk
         registeredStaff.put(1, new Manager(1, "123", "123"));
@@ -60,8 +65,6 @@ public class KPSmartModel {
         login(1);
 
         // 3. Add at least 10 routes
-        Set<Route> routes = new HashSet<>();
-
         NZLocation wellington = new NZLocation(1, NZCity.Wellington);
         NZLocation auckland = new NZLocation(2, NZCity.Auckland);
         NZLocation christchurch = new NZLocation(3, NZCity.Christchurch);
@@ -96,62 +99,73 @@ public class KPSmartModel {
         Route rout_13 = new Route(guangzhou, moscow, RouteType.Land, 14.0f, fedEx, 9.6f, 9.9f, 8.5f, 8.5f);
         Route rout_14 = new Route(guangzhou, moscow, RouteType.Air, 5.5f, fedEx, 13.5f, 14.5f, 12.0f, 12.5f);
 
-        routes.add(rout_1);
-        routes.add(rout_2);
-        routes.add(rout_3);
-        routes.add(rout_4);
-        routes.add(rout_5);
-        routes.add(rout_6);
-        routes.add(rout_7);
-        routes.add(rout_8);
-        routes.add(rout_9);
-        routes.add(rout_10);
-        routes.add(rout_11);
-        routes.add(rout_12);
-        routes.add(rout_13);
-        routes.add(rout_14);
+        addRoute(rout_1);
+        addRoute(rout_2);
+        addRoute(rout_3);
+        addRoute(rout_4);
+        addRoute(rout_5);
+        addRoute(rout_6);
+        addRoute(rout_7);
+        addRoute(rout_8);
+        addRoute(rout_9);
+        addRoute(rout_10);
+        addRoute(rout_11);
+        addRoute(rout_12);
+        addRoute(rout_13);
+        addRoute(rout_14);
 
-        routingSystem = new RoutingSystem(routes);
+        // 4. deliver several Mails
 
-        // 4. Add several Mails
-        Mail mail_1;
-        Mail mail_2;
-        Mail mail_3;
-        Mail mail_4;
-        Mail mail_5;
+        /*
+         * currently the routing system is empty, so no valid routes can be found
+         */
 
         // this routes should not be rout_5, dunedin to auckland by air
         List<Route> routesForMail_1 = routingSystem.findRoutes(dunedin, auckland, Priority.Domestic_Standard);
-        if (isLegalRoutes(routesForMail_1)) {
-            mail_1 = new Mail(1, dunedin, auckland, 2500, 3000, Priority.Domestic_Standard, routesForMail_1);
-            mails.add(mail_1);
+        if (isValidRouteChain(routesForMail_1)) {
+            deliverMail(new Mail(1, dunedin, auckland, 2500, 3000, Priority.Domestic_Standard, routesForMail_1));
         }
 
         List<Route> routesForMail_2 = routingSystem.findRoutes(dunedin, moscow, Priority.International_Standard);
-        if (isLegalRoutes(routesForMail_2)) {
-            mail_2 = new Mail(2, dunedin, moscow, 6200, 30000, Priority.International_Standard, routesForMail_2);
-            mails.add(mail_2);
+        if (isValidRouteChain(routesForMail_2)) {
+            deliverMail(new Mail(2, dunedin, moscow, 6200, 30000, Priority.International_Standard, routesForMail_2));
         }
 
         List<Route> routesForMail_3 = routingSystem.findRoutes(dunedin, hongkong, Priority.International_Air);
-        if (isLegalRoutes(routesForMail_3)) {
-            mail_3 = new Mail(3, dunedin, hongkong, 99000, 10000, Priority.International_Air, routesForMail_3);
-            mails.add(mail_3);
+        if (isValidRouteChain(routesForMail_3)) {
+            deliverMail(new Mail(3, dunedin, hongkong, 99000, 10000, Priority.International_Air, routesForMail_3));
         }
 
         List<Route> routesForMail_4 = routingSystem.findRoutes(auckland, sydney, Priority.International_Air);
-        if (isLegalRoutes(routesForMail_4)) {
-            mail_4 = new Mail(4, auckland, sydney, 500, 100, Priority.International_Air, routesForMail_4);
-            mails.add(mail_4);
+        if (isValidRouteChain(routesForMail_4)) {
+            deliverMail(new Mail(4, auckland, sydney, 500, 100, Priority.International_Air, routesForMail_4));
         }
 
         List<Route> routesForMail_5 = routingSystem.findRoutes(christchurch, auckland, Priority.Domestic_Standard);
-        if (isLegalRoutes(routesForMail_5)) {
-            mail_5 = new Mail(5, christchurch, auckland, 8800, 8800, Priority.Domestic_Standard, routesForMail_5);
-            mails.add(mail_5);
+        if (isValidRouteChain(routesForMail_5)) {
+            deliverMail(new Mail(5, christchurch, auckland, 8800, 8800, Priority.Domestic_Standard, routesForMail_5));
         }
 
-        // 5. Calculate Business figures
+        // 5. update customer price
+        int idRouteToUpdatePrice = 1;
+        float newPricePerGram = 35.0f;
+        float newPricePerVolume = 35.0f;
+
+        updateCustomerPrice(idRouteToUpdatePrice, newPricePerGram, newPricePerVolume);
+
+        // 6. update transport cost
+        int idRouteToUpdateCost = 2;
+        float newCostPerGram = 35.0f;
+        float newCostPerVolume = 35.0f;
+
+        updateTransportCost(idRouteToUpdateCost, newCostPerGram, newCostPerVolume);
+
+        // 7. delete a route (transport discontinued)
+        int idRouteToDelete = 3;
+        deleteRoute(idRouteToDelete);
+
+
+        // 8. Calculate Business figures
         // TODO: calculate business figures. (It's Angelo's job. for now.)
 
 
@@ -166,7 +180,7 @@ public class KPSmartModel {
      * @param routes  the routes to be checked
      * @return
      */
-    private boolean isLegalRoutes(List<Route> routes) {
+    private boolean isValidRouteChain(List<Route> routes) {
         return routes != null && !routes.isEmpty();
     }
 
@@ -185,5 +199,42 @@ public class KPSmartModel {
             this.currentStaff = staff;
             return true;
         }
+    }
+
+    private void addRoute(Route route) {
+        routingSystem.addRoute(route);
+        eventLogger.logEvent(new RouteAdditionEvent(currentStaff, LocalDateTime.now(), route));
+    }
+
+    private void deliverMail(Mail mail) {
+        mails.add(mail);
+        eventLogger.logEvent(new MailDeliveryEvent(currentStaff, LocalDateTime.now(), mail));
+    }
+
+    private void updateCustomerPrice(int routeId, float newPricePerGram, float newPricePerVolume) {
+        Route route = routingSystem.getRouteById(routeId);
+        float oldPricePerGram = route.getPricePerGram();
+        float oldPricePerVolume = route.getPricePerVolume();
+
+        routingSystem.updateRoutePriceById(routeId, newPricePerGram, newPricePerVolume);
+        eventLogger.logEvent(new CustomerPriceUpdateEvent(currentStaff, LocalDateTime.now(), routeId,
+                oldPricePerGram, oldPricePerVolume, newPricePerGram, newPricePerVolume));
+
+    }
+
+    private void updateTransportCost(int routeId, float newCostPerGram, float newCostPerVolume) {
+        Route route = routingSystem.getRouteById(routeId);
+        float oldCostPerGram = route.getCostPerGram();
+        float oldCostPerVolume = route.getCostPerVolume();
+
+        routingSystem.updateRouteCostById(routeId, newCostPerGram, newCostPerVolume);
+        eventLogger.logEvent(new TransportCostUpdateEvent(currentStaff, LocalDateTime.now(), routeId,
+                oldCostPerGram, oldCostPerVolume, newCostPerGram, newCostPerVolume));
+
+    }
+
+    private void deleteRoute(int routeId) {
+        routingSystem.deleteRouteById(routeId);
+        eventLogger.logEvent(new RouteDeletionEvent(currentStaff, LocalDateTime.now(), routeId));
     }
 }

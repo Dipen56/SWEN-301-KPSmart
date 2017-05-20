@@ -61,6 +61,7 @@ public abstract class Staff {
     @Override
     public String toString() {
         return "Staff{" +
+                "UID=" + UID +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 '}';

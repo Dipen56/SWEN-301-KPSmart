@@ -9,25 +9,33 @@ import java.util.Map;
  * @author Hector
  * @version 2017/5/20
  */
-public class EventManager {
+public class EventLogger {
 
     // private DatabaseDriver dbDriver;
 
-    private int incrementingId;
+    private int currentId;
 
     // ======= Mock database, existing in memory. Will be stored in DB in final version ==========
+    // key is id, value is the event
     private Map<Integer, Event> events;
 
-    public EventManager() {
+    public EventLogger() {
         events = new HashMap<>();
-        incrementingId = 0;
+        currentId = findCurrentId();
     }
 
     public boolean logEvent(Event event) {
-        events.put(incrementingId, event);
-        incrementingId++;
+        events.put(currentId, event);
+        currentId++;
+
+        System.out.println("[EventLog] " + event.toString());
+
         return true;
     }
 
+    private int findCurrentId() {
+        // TODO: should read the XML file and find the last ID
+        return 0;
+    }
 
 }

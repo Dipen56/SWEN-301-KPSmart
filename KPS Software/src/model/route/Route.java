@@ -11,11 +11,11 @@ import model.transportFirm.TransportFirm;
  */
 public class Route {
 
-    private Location end_1;
-    private Location end_2;
-    private RouteType routeType;
-    private float duration;
-    private TransportFirm transportFirm;
+    private final Location end_1;
+    private final Location end_2;
+    private final RouteType routeType;
+    private final float duration;
+    private final TransportFirm transportFirm;
     private float pricePerGram;
     private float pricePerVolume;
     private float costPerGram;
@@ -35,6 +35,38 @@ public class Route {
         this.pricePerGram = pricePerGram;
         this.pricePerVolume = pricePerVolume;
         this.costPerGram = costPerGram;
+        this.costPerVolume = costPerVolume;
+    }
+
+    public float getPricePerGram() {
+        return pricePerGram;
+    }
+
+    public void setPricePerGram(float pricePerGram) {
+        this.pricePerGram = pricePerGram;
+    }
+
+    public float getPricePerVolume() {
+        return pricePerVolume;
+    }
+
+    public void setPricePerVolume(float pricePerVolume) {
+        this.pricePerVolume = pricePerVolume;
+    }
+
+    public float getCostPerGram() {
+        return costPerGram;
+    }
+
+    public void setCostPerGram(float costPerGram) {
+        this.costPerGram = costPerGram;
+    }
+
+    public float getCostPerVolume() {
+        return costPerVolume;
+    }
+
+    public void setCostPerVolume(float costPerVolume) {
         this.costPerVolume = costPerVolume;
     }
 

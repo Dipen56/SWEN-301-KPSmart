@@ -12,13 +12,16 @@ import java.time.LocalDateTime;
  */
 public abstract class Event {
 
-    private EventType eventType;
     private Staff staff;
     private LocalDateTime timeStamp;
 
-    public Event(EventType eventType, Staff staff, LocalDateTime timeStamp) {
-        this.eventType = eventType;
+    public Event(Staff staff, LocalDateTime timeStamp) {
         this.staff = staff;
         this.timeStamp = timeStamp;
+    }
+
+    @Override
+    public String toString() {
+        return "staff=" + staff + ", timeStamp=" + timeStamp;
     }
 }

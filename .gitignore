@@ -8,7 +8,7 @@
 hs_err_pid*
 
 # IntelliJ files
-/.idea/
+.idea/
 /KelburnPostalService.iml
 
 # Eclipse config file
@@ -16,5 +16,6 @@ hs_err_pid*
 /.classpath
 
 # compiled output files
-/bin/
+bin/
+out/
 *.class

@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import view.DialogBox;
+
 /**
  * Created by Dipen on 25/04/2017.
  */
@@ -73,7 +75,7 @@ public class HomeScreenController implements Initializable {
             //TODO; still need to build the screen
         } else if (event.toString().contains("logout")) {
             //TODO; POP up dialog box to ask the user if they are sure want to logout
-            //DialogBox.LogoutyMsg("Logout", "Are you sure you want to logout.");
+            DialogBox.LogoutyMsg("Logout", "Are you sure to logout?");
             Parent loginScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/login screen.fxml"));
             Scene loginScene = new Scene(loginScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -81,7 +83,11 @@ public class HomeScreenController implements Initializable {
             tempStage.show();
         } else if (event.toString().contains("setting")) {
             //TODO
-            System.out.println("setting");
+            Parent usermanagementScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/user management.fxml"));
+            Scene usermanagementScene = new Scene(usermanagementScreen);
+            Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            tempStage.setScene(usermanagementScene);
+            tempStage.show();
         }
     }
 

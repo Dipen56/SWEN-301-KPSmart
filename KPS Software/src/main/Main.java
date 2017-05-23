@@ -1,9 +1,10 @@
 package main;
 
 import view.GUI;
+import model.user.*;
 
 /**
- * Created by Dipen on 18/04/2017.
+ * Created by Betty on 19/05/2017.
  */
 public class Main {
 

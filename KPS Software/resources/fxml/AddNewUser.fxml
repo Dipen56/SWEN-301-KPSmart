@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox id="home-hbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="600.0" prefWidth="700.0" spacing="5.0" styleClass="home-hbox" stylesheets="@../css/style.css"
+      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controller.UserManagementController">
+    <children>
+        <VBox id="home-vbox" prefHeight="490.0" prefWidth="105.0" spacing="3.0" styleClass="home-vbox"
+              stylesheets="@../css/style.css">
+            <children>
+                <AnchorPane prefHeight="76.0" prefWidth="106.0">
+                    <children>
+                        <ImageView fx:id="avatar" fitHeight="59.0" fitWidth="65.0" layoutX="26.0" pickOnBounds="true"
+                                   preserveRatio="true">
+                            <image>
+                                <Image url="@../img/user.png"/>
+                            </image>
+                        </ImageView>
+                        <Label fx:id="userLable" alignment="CENTER" layoutY="61.0" prefHeight="26.0" prefWidth="110.0"
+                               styleClass="user-lable" stylesheets="@../css/style.css" text="Manager Dipen"
+                               textAlignment="CENTER" wrapText="true">
+                            <font>
+                                <Font name="System Bold" size="14.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+                <Button id="ChangePassword" onAction="#changeScenes" mnemonicParsing="false" prefHeight="60.0" prefWidth="110.0" styleClass="main-button"
+                        stylesheets="@../css/style.css" text="Change Password" textAlignment="CENTER" textFill="WHITE"
+                        wrapText="true">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Button>
+                <Button id="ManageUser" onAction="#changeScenes" mnemonicParsing="false" prefHeight="60.0" prefWidth="110.0"
+                        styleClass="main-button" stylesheets="@../css/style.css" text="Manage Users"
+                        textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Button>
+                <Button id="AddNewUser" onAction="#changeScenes" mnemonicParsing="false" prefHeight="60.0" prefWidth="110.0"
+                        styleClass="main-button" stylesheets="@../css/style.css" text="Add a New User" textAlignment="CENTER"
+                        textFill="WHITE" wrapText="true">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Button>
+                <Button id="logout" onAction="#changeScenes" mnemonicParsing="false" prefHeight="60.0" prefWidth="110.0"
+                        styleClass="logout-button" stylesheets="@../css/style.css" text="Log Out" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Button>
+            </children>
+        </VBox>
+        <AnchorPane id="home-anchorpane" prefHeight="490.0" prefWidth="586.0" styleClass="home-anchorpane"
+                    stylesheets="@../css/style.css">
+            <children>
+                <Label layoutX="59.0" layoutY="25.0" prefHeight="58.0" prefWidth="358.0" text="Add New User">
+                    <font>
+                        <Font name="System Bold" size="40.0"/>
+                    </font>
+                </Label>
+                <Label layoutX="75.0" layoutY="80.0" prefHeight="36.0" prefWidth="194.0" text="First Name"
+                       textAlignment="CENTER">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="FirstNameTextfield"  layoutX="285.0" layoutY="80.0" prefHeight="36.0" prefWidth="150.0"
+                           promptText="First Name"/>
+                <Label layoutX="75.0" layoutY="120.0" prefHeight="36.0" prefWidth="194.0" text="Last Name"
+                       textAlignment="CENTER">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="LastNameTextfield"  layoutX="285.0" layoutY="120.0" prefHeight="36.0" prefWidth="150.0"
+                           promptText="Last Name"/>
+                <Label layoutX="75.0" layoutY="160.0" prefHeight="36.0" prefWidth="158.0" text="Gender:">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Label>
+                <CheckBox fx:id="femaleBox" layoutX="285.0" layoutY="160.0" prefHeight="36.0" prefWidth="150.0" text="Female"/>
+                <CheckBox fx:id="maleBox" layoutX="365.0" layoutY="160.0" prefHeight="36.0" prefWidth="150.0" text="Male"/>
+                <Label layoutX="75.0" layoutY="200.0" prefHeight="36.0" prefWidth="194.0" text="Email"
+                       textAlignment="CENTER">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="emailTextfield"  layoutX="285.0" layoutY="200.0" prefHeight="36.0" prefWidth="150.0"
+                           promptText="Email Address"/>
+                <Label layoutX="75.0" layoutY="240.0" prefHeight="36.0" prefWidth="194.0" text="Phone Number"
+                       textAlignment="CENTER">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="phoneTextfield"  layoutX="285.0" layoutY="240.0" prefHeight="36.0" prefWidth="150.0"
+                           promptText="Phone Number"/>
+                <Label layoutX="75.0" layoutY="280.0" prefHeight="36.0" prefWidth="194.0" text="UserName"
+                       textAlignment="CENTER">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="usernameTextfield"  layoutX="285.0" layoutY="280.0" prefHeight="36.0" prefWidth="150.0"
+                           promptText="User Name"/>
+                <Label layoutX="75.0" layoutY="320.0" prefHeight="36.0" prefWidth="158.0" text="Permission Level:">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Label>
+                <CheckBox fx:id="managerBox" layoutX="285.0" layoutY="320.0" prefHeight="36.0" prefWidth="150.0" text="Manager"/>
+                <CheckBox fx:id="clerkBox" layoutX="365.0" layoutY="320.0" prefHeight="36.0" prefWidth="150.0" text="Clerk"/>
+
+                <Button id="Confirm" onAction="#handleButtons" layoutX="112.0" layoutY="400.0" mnemonicParsing="false" prefHeight="36.0"
+                        prefWidth="101.0" styleClass="logout-button" stylesheets="@../css/style.css" text="Confirm"
+                        textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Button>
+                <Button id="Discard" onAction="#handleButtons" layoutX="348.0" layoutY="400.0" mnemonicParsing="false" prefHeight="36.0"
+                        prefWidth="101.0" styleClass="discard-button" stylesheets="@../css/style.css" text="Discard"
+                        textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Button>
+                <Button id="Return" onAction="#handleButtons" layoutX="400.0" layoutY="516.0" mnemonicParsing="false" prefHeight="40.0"
+                        prefWidth="120.0" styleClass="main-button" stylesheets="@../css/style.css" text="Return"
+                        textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Button>
+            </children>
+        </AnchorPane>
+    </children>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+    </padding>
+</HBox>
+

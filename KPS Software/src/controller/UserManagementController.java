@@ -54,7 +54,7 @@ public class UserManagementController {
             tempStage.setScene(addNewUserScene);
             tempStage.show();
         } else if (event.toString().contains("Exit")) {
-            Parent returnHomeScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/home screen.fxml"));
+            Parent returnHomeScreen = FXMLLoader.load(UserManagementController.class.getResource("/fxml/home screen.fxml"));
             Scene returnHomeScene = new Scene(returnHomeScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(returnHomeScene);
@@ -62,7 +62,7 @@ public class UserManagementController {
         } else if (event.toString().contains("logout")) {
             //TODO; POP up dialog box to ask the user if they are sure want to logout
             DialogBox.LogoutyMsg("Logout", "Are you sure to logout?");
-            Parent loginScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/login screen.fxml"));
+            Parent loginScreen = FXMLLoader.load(UserManagementController.class.getResource("/fxml/login screen.fxml"));
             Scene loginScene = new Scene(loginScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(loginScene);

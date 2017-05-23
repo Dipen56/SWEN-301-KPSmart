@@ -10,6 +10,7 @@ hs_err_pid*
 # IntelliJ files
 .idea/
 /KelburnPostalService.iml
+*.iml
 
 # Eclipse config file
 /.project

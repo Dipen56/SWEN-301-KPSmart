@@ -16,5 +16,6 @@ hs_err_pid*
 /.classpath
 
 # compiled output files
-/bin/
+bin/
+out/
 *.class

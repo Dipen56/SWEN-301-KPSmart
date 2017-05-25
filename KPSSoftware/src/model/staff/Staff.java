@@ -67,13 +67,13 @@ public abstract class Staff {
     public void setPassword(String password) {
         this.password = password;
     }
-/*
+
     public String getFirstName() {
-        return firstName;
+        return this.firstName;
     }
 
     public void setFirstName(String userName) {
-        this.firstName = firstName;
+        this.firstName = userName;
     }
 
     public String getLastName() {
@@ -88,9 +88,7 @@ public abstract class Staff {
         return email;
     }
 
-    public void setEmail(String userName) {
-        this.email = email;
-    }
+    public void setEmail(String email) { this.email = email; }
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -99,7 +97,7 @@ public abstract class Staff {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-*/
+
 /*    public void setManager(boolean manager) {
         this.manager = manager;
     }

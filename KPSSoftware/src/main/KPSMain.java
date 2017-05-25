@@ -18,5 +18,8 @@ public class KPSMain {
         javafx.application.Application.launch(GUI.class);
     }
 
-    public static void main(String[] args) { new KPSMain().run(); }
+    public static void main(String[] args) {
+        KPSDatabase db = new KPSDatabase();
+        new KPSMain().run();
+    }
 }

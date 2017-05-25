@@ -15,6 +15,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -62,7 +63,8 @@ public class KPSDatabase {
      * @param isManager true to add manager
      * @return false if user name is taken. true if new user successfully added
      */
-    public static boolean addUser(String name, String pass, boolean isManager){
+    public static boolean addUser(String name, String pass, String firstName, String lastName,
+                                  String email, String phone, boolean isManager){
         // check user name hasnt been taken
         for(Staff employee:logins) {
             if (employee.getUserName().equals(name)) {
@@ -72,9 +74,19 @@ public class KPSDatabase {
         }
         // create new employee and add to logins
         if(isManager){
-            return logins.add(new Manager(UID++, name, pass));
+            Manager manager = new Manager(UID++, name, pass);
+            manager.setFirstName(firstName);
+            manager.setLastName(lastName);
+            manager.setEmail(email);
+            manager.setPhoneNumber(phone);
+            return logins.add(manager);
         }else{
-            return logins.add(new Clerk(UID++, name, pass));
+            Clerk clerk = new Clerk(UID++, name, pass);
+            clerk.setFirstName(firstName);
+            clerk.setLastName(lastName);
+            clerk.setEmail(email);
+            clerk.setPhoneNumber(phone);
+            return logins.add(clerk);
         }
     }
 
@@ -136,8 +148,32 @@ public class KPSDatabase {
                 int uid = Integer.parseInt(node.valueOf("@uid"));
                 String name = node.valueOf("@name");
                 String password = node.valueOf("@password");
-                // add clerk to list of all users
-                logins.add(new Clerk(uid, name , password));
+                // creating clerk to add to list of all users
+                Clerk cur = new Clerk(uid, name , password);
+                // iterate over stored info and update clerk
+                Element element = (Element)node;
+                Iterator<Element> itr = element.elementIterator();
+                while(itr.hasNext()){
+                    Element infoElement = (Element)itr.next();
+                    switch(infoElement.getName()){
+                        // first name
+                        case "first":
+                            cur.setFirstName(infoElement.getText());
+                            break;
+                        // last name
+                        case "last":
+                            cur.setLastName(infoElement.getText());
+                            break;
+                        case "email":
+                            cur.setEmail(infoElement.getText());
+                            break;
+                        case "phone":
+                            cur.setPhoneNumber(infoElement.getText());
+                            break;
+                    }
+                }
+                // adding clerk to list of all users
+                logins.add(cur);
             }
             // get all manager nodes
             List<Node> managerNodes = document.selectNodes("/users/manager" );
@@ -147,8 +183,32 @@ public class KPSDatabase {
                 int uid = Integer.parseInt(node.valueOf("@uid"));
                 String name = node.valueOf("@name");
                 String password = node.valueOf("@password");
-                // add manager to list of all users
-                logins.add(new Manager(uid, name , password));
+                // creating manager to add to list of all users
+                Manager cur = new Manager(uid, name , password);
+                // iterate over stored info and update clerk
+                Element element = (Element)node;
+                Iterator<Element> itr = element.elementIterator();
+                while(itr.hasNext()){
+                    Element infoElement = (Element)itr.next();
+                    switch(infoElement.getName()){
+                        // first name
+                        case "first":
+                            cur.setFirstName(infoElement.getText());
+                            break;
+                        // last name
+                        case "last":
+                            cur.setLastName(infoElement.getText());
+                            break;
+                        case "email":
+                            cur.setEmail(infoElement.getText());
+                            break;
+                        case "phone":
+                            cur.setPhoneNumber(infoElement.getText());
+                            break;
+                    }
+                }
+                // adding manager to list of all users
+                logins.add(cur);
             }
             // output for testing
             System.out.println("Successfully loaded: " + logins.size() + " user logins");
@@ -175,6 +235,14 @@ public class KPSDatabase {
                         .addAttribute( "uid", Integer.toString(employee.getUID()) )
                         .addAttribute( "name", employee.getUserName() )
                         .addAttribute( "password", employee.getPassword() );
+                a1.addElement("first")
+                        .addText(employee.getFirstName());
+                a1.addElement("last")
+                        .addText(employee.getLastName());
+                a1.addElement("email")
+                        .addText(employee.getEmail());
+                a1.addElement("phone")
+                        .addText(employee.getPhoneNumber());
             } else {
                 managerCount++;
                 // saving a manager
@@ -182,6 +250,14 @@ public class KPSDatabase {
                         .addAttribute( "uid", Integer.toString(employee.getUID()) )
                         .addAttribute( "name", employee.getUserName() )
                         .addAttribute( "password", employee.getPassword() );
+                a1.addElement("first")
+                        .addText(employee.getFirstName());
+                a1.addElement("last")
+                        .addText(employee.getLastName());
+                a1.addElement("email")
+                        .addText(employee.getEmail());
+                a1.addElement("phone")
+                        .addText(employee.getPhoneNumber());
             }
         }
         // writing user-logins document

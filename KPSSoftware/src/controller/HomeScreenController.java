@@ -25,6 +25,7 @@ public class HomeScreenController implements Initializable {
     public Label userLable;
     public Button reviewLogs;
     public ImageView avatar;
+    public Button setting;
 
 
     /**
@@ -83,7 +84,7 @@ public class HomeScreenController implements Initializable {
             tempStage.show();
         } else if (event.toString().contains("setting")) {
             //TODO
-            Parent usermanagementScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/user management.fxml"));
+            Parent usermanagementScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/user settings.fxml"));
             Scene usermanagementScene = new Scene(usermanagementScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(usermanagementScene);
@@ -103,6 +104,10 @@ public class HomeScreenController implements Initializable {
         //TODO: change this based on real information
         userLable.setText("Clerk Buttercup");
         avatar.setImage(new Image(controller.SendMailScreenController.class.getResourceAsStream("/img/buttercup.png")));
+        ImageView settingImage = new ImageView(new Image(getClass().getResourceAsStream("/img/setting-icon.png")));
+        settingImage.setFitHeight(55);
+        settingImage.setFitWidth(50);
+        setting.setGraphic(settingImage);
         //TODO: if clerk disable reviewLogs button. reviewLogs.setVisible(false);
 
     }

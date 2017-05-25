@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.geometry.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
-
-
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <HBox id="home-hbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
       prefHeight="600.0" prefWidth="700.0" spacing="5.0" styleClass="home-hbox" stylesheets="@../css/style.css"
-      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="controller.UserManagementController">
+      xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controller.UserSettingController">
     <children>
         <VBox id="home-vbox" prefHeight="490.0" prefWidth="105.0" spacing="3.0" styleClass="home-vbox"
               stylesheets="@../css/style.css">
@@ -35,28 +38,28 @@
                         </Label>
                     </children>
                 </AnchorPane>
-                <Button id="ChangePassword" onAction="#changeScenes" mnemonicParsing="false" prefHeight="60.0" prefWidth="110.0" styleClass="main-button"
-                        stylesheets="@../css/style.css" text="Change Password" textAlignment="CENTER" textFill="WHITE"
-                        wrapText="true">
+                <Button id="ChangePassword" mnemonicParsing="false" onAction="#changeScenes" prefHeight="60.0"
+                        prefWidth="110.0" styleClass="main-button" stylesheets="@../css/style.css"
+                        text="Change Password" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                     <font>
                         <Font name="System Bold" size="15.0"/>
                     </font>
                 </Button>
-                <Button id="ManageUser" onAction="#changeScenes" mnemonicParsing="false" prefHeight="60.0" prefWidth="110.0"
-                        styleClass="main-button" stylesheets="@../css/style.css" text="Manage Users"
+                <Button id="ManageUser" mnemonicParsing="false" onAction="#changeScenes" prefHeight="60.0"
+                        prefWidth="110.0" styleClass="main-button" stylesheets="@../css/style.css" text="Manage Users"
                         textAlignment="CENTER" textFill="WHITE" wrapText="true">
                     <font>
                         <Font name="System Bold" size="15.0"/>
                     </font>
                 </Button>
-                <Button id="AddNewUser" onAction="#changeScenes" mnemonicParsing="false" prefHeight="60.0" prefWidth="110.0"
-                        styleClass="main-button" stylesheets="@../css/style.css" text="Add a New User" textAlignment="CENTER"
-                        textFill="WHITE" wrapText="true">
+                <Button id="AddNewUser" mnemonicParsing="false" onAction="#changeScenes" prefHeight="60.0"
+                        prefWidth="110.0" styleClass="main-button" stylesheets="@../css/style.css" text="Add New User"
+                        textAlignment="CENTER" textFill="WHITE" wrapText="true">
                     <font>
                         <Font name="System Bold" size="15.0"/>
                     </font>
                 </Button>
-                <Button id="logout" onAction="#changeScenes" mnemonicParsing="false" prefHeight="60.0" prefWidth="110.0"
+                <Button id="logout" mnemonicParsing="false" onAction="#changeScenes" prefHeight="60.0" prefWidth="110.0"
                         styleClass="logout-button" stylesheets="@../css/style.css" text="Log Out" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="15.0"/>
@@ -67,29 +70,30 @@
         <AnchorPane id="home-anchorpane" prefHeight="490.0" prefWidth="586.0" styleClass="home-anchorpane"
                     stylesheets="@../css/style.css">
             <children>
-                <Label layoutX="25.0" layoutY="25.0" prefHeight="58.0" prefWidth="658.0" text="Manage Users">
+                <Label layoutX="144.0" layoutY="14.0" prefHeight="58.0" prefWidth="288.0" text="Manage Users">
                     <font>
                         <Font name="System Bold" size="40.0"/>
                     </font>
                 </Label>
-                <TableView fx:id="tableView" GridPane.columnIndex="0"  GridPane.rowIndex="1" layoutX="5.0" layoutY="85.0">
+                <TableView fx:id="tableView" layoutX="1.0" layoutY="98.0" prefHeight="395.0" prefWidth="575.0"
+                           GridPane.columnIndex="0" GridPane.rowIndex="1">
                     <columns>
-                        <TableColumn text="Username" prefWidth="80"></TableColumn>
-                        <TableColumn fx:id="firstNameColumn" text="First Name" prefWidth="100"></TableColumn>
-                        <TableColumn text="Last Name" prefWidth="80"></TableColumn>
-                        <TableColumn text="Email" prefWidth="80"></TableColumn>
-                        <TableColumn text="Phone" prefWidth="80"></TableColumn>
-                        <TableColumn text="Current Role" prefWidth="80"></TableColumn>
-                        <TableColumn text="Delete" prefWidth="80">
+                        <TableColumn prefWidth="80" text="Username"/>
+                        <TableColumn fx:id="firstNameColumn" prefWidth="100" text="First Name"/>
+                        <TableColumn prefWidth="80" text="Last Name"/>
+                        <TableColumn prefWidth="99.0" text="Email"/>
+                        <TableColumn prefWidth="105.0" text="Phone"/>
+                        <TableColumn prefWidth="131.0" text="Role"/>
+                        <TableColumn prefWidth="73.0" text="Delete">
                         </TableColumn>
                     </columns>
                     <sortOrder>
                         <fx:reference source="firstNameColumn"/>
                     </sortOrder>
                 </TableView>
-                <Button id="Return" onAction="#handleButtons" layoutX="400.0" layoutY="516.0" mnemonicParsing="false" prefHeight="40.0"
-                        prefWidth="120.0" styleClass="main-button" stylesheets="@../css/style.css" text="Return"
-                        textFill="WHITE">
+                <Button id="Return" layoutX="228.0" layoutY="507.0" mnemonicParsing="false" onAction="#handleButtons"
+                        prefHeight="40.0" prefWidth="120.0" styleClass="discard-button" stylesheets="@../css/style.css"
+                        text="Exit" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="15.0"/>
                     </font>
@@ -101,4 +105,3 @@
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
     </padding>
 </HBox>
-

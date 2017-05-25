@@ -134,7 +134,7 @@ public class PriceUpdateScreenController implements Initializable{
     private void returnHome(ActionEvent event) {
         Parent homescreen = null;
         try {
-            homescreen = FXMLLoader.load(controller.SendMailScreenController.class.getResource("/fxml/home screen.fxml"));
+            homescreen = FXMLLoader.load(controller.PriceUpdateScreenController.class.getResource("/fxml/home screen.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }

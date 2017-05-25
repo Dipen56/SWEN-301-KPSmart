@@ -18,43 +18,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Patrick on 23-May-17.
+ * The KPSDatabase class handles the saving and loading of user
+ *  data and event logging files along with keeping these files
+ *  up to date with the system.
  */
 public class KPSDatabase {
 
     // field storing the path to the user data file
-    private static final String USER_PATH = "KPSSoftware/resources/xml/output.xml";
+    private static final String USER_PATH = "KPSSoftware/resources/xml/user-logins.xml";
+
+    // field storing uid for new users
+    private static int UID = 0;
 
     // field for the list of all staff logins
-    public static List<Staff> logins;
+    private static List<Staff> logins;
     // field for the list of events
-    public List<Event> eventLogFile;
+    private List<Event> eventLogFile;
 
     // returns the list of staff logins
     public static List<Staff> getLogins() {
         return logins;
     }
 
-    /**
-     * Checks a given user name and password against all user logins
-     * @param username
-     * @param pass
-     * @return true if name and password match known login
+    /*
+        KPSDATABASE CONSTRUCTOR
      */
-    public static boolean checkLogin(String username, String pass){
-        for(Staff employee:logins){
-            if(employee.getUserName().equals(username) &&
-                    employee.getPassword().equals(pass)){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public KPSDatabase(){
         logins = new ArrayList<>();
+        loadUsers();
     }
 
+    // helper method *not used*
     public static Document parseXML(URL url) throws DocumentException {
         SAXReader reader = new SAXReader();
         Document document = reader.read(url);
@@ -62,14 +56,71 @@ public class KPSDatabase {
     }
 
     /**
-     * Loads the user data from the user-logins file
-     * @return true if loading successful
+     * Checks user name isnt taken and create a new user
+     * @param name username
+     * @param pass password
+     * @param isManager true to add manager
+     * @return false if user name is taken. true if new user successfully added
      */
-    public static boolean loadUsers(){
-        try {
-            // clear all logins
-            logins.clear();
+    public static boolean addUser(String name, String pass, boolean isManager){
+        // check user name hasnt been taken
+        for(Staff employee:logins) {
+            if (employee.getUserName().equals(name)) {
+                // return false if name already taken
+                return false;
+            }
+        }
+        // create new employee and add to logins
+        if(isManager){
+            return logins.add(new Manager(UID++, name, pass));
+        }else{
+            return logins.add(new Clerk(UID++, name, pass));
+        }
+    }
 
+    /**
+     * Finds and removes a user from the database
+     * @param name username
+     * @param pass password
+     * @return true if user successfully removed, false if user not found
+     */
+    public static boolean removeUser(String name, String pass){
+        // finds and removes user
+        for(Staff s: logins){
+            if(s.getUserName().equals(name) && s.getPassword().equals(pass)){
+                return logins.remove(s);
+            }
+        }
+        // return false if cannot find user
+        return false;
+    }
+
+    /**
+     * Checks a given user name and password against all user logins
+     * @param username username
+     * @param pass password
+     * @return true if name and password match known login
+     */
+    public static boolean checkLogin(String username, String pass){
+        // checks all employee logins
+        for(Staff employee:logins){
+            if(employee.getUserName().equals(username) &&
+                    employee.getPassword().equals(pass)){
+                // return true if match found
+                return true;
+            }
+        }
+        // return false if no match found
+        return false;
+    }
+
+    /**
+     * Loads the user data from the user-logins file
+     * @return true if loaded successfully
+     */
+    private static boolean loadUsers(){
+        try {
+            logins.clear();
             // Get and read file
             File inputFile = new File(USER_PATH);
             SAXReader reader = new SAXReader();
@@ -81,6 +132,7 @@ public class KPSDatabase {
             List<Node> clerkNodes = document.selectNodes("/users/clerk" );
             // load all clerk users
             for (Node node : clerkNodes) {
+                UID++;
                 int uid = Integer.parseInt(node.valueOf("@uid"));
                 String name = node.valueOf("@name");
                 String password = node.valueOf("@password");
@@ -91,6 +143,7 @@ public class KPSDatabase {
             List<Node> managerNodes = document.selectNodes("/users/manager" );
             // load all manager users
             for (Node node : managerNodes) {
+                UID++;
                 int uid = Integer.parseInt(node.valueOf("@uid"));
                 String name = node.valueOf("@name");
                 String password = node.valueOf("@password");
@@ -98,7 +151,7 @@ public class KPSDatabase {
                 logins.add(new Manager(uid, name , password));
             }
             // output for testing
-            System.out.println("Num users loaded: " + logins.size());
+            System.out.println("Successfully loaded: " + logins.size() + " user logins");
         } catch (DocumentException e) { return false; }
         return true;
     }
@@ -142,8 +195,7 @@ public class KPSDatabase {
             // close writer
             writer.close();
             // output for testing
-            System.out.println(clerkCount + " clerk logins saved");
-            System.out.println(managerCount + " manager logins saved");
+            System.out.println("Successfully saved: " + (clerkCount+managerCount) + " user logins");
         } catch (IOException e) { return false; }
         return true;
     }

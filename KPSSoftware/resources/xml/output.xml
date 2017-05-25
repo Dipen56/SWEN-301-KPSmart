@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<users>
+  <clerk uid="0" name="James" password="test123"/>
+  <manager uid="1" name="Bob" password="test123"/>
+  <manager uid="2" name="Steve" password="test123"/>
+</users>

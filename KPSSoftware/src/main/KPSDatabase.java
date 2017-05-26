@@ -144,10 +144,10 @@ public class KPSDatabase {
             List<Node> clerkNodes = document.selectNodes("/users/clerk" );
             // load all clerk users
             for (Node node : clerkNodes) {
-                UID++;
                 int uid = Integer.parseInt(node.valueOf("@uid"));
                 String name = node.valueOf("@name");
                 String password = node.valueOf("@password");
+                UID += uid;
                 // creating clerk to add to list of all users
                 Clerk cur = new Clerk(uid, name , password);
                 // iterate over stored info and update clerk
@@ -179,10 +179,10 @@ public class KPSDatabase {
             List<Node> managerNodes = document.selectNodes("/users/manager" );
             // load all manager users
             for (Node node : managerNodes) {
-                UID++;
                 int uid = Integer.parseInt(node.valueOf("@uid"));
                 String name = node.valueOf("@name");
                 String password = node.valueOf("@password");
+                UID += uid;
                 // creating manager to add to list of all users
                 Manager cur = new Manager(uid, name , password);
                 // iterate over stored info and update clerk

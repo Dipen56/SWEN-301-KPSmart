@@ -19,6 +19,7 @@ public class KPSMain {
     }
 
     public static void main(String[] args) {
+        KPSDatabase db = new KPSDatabase();
         new KPSMain().run();
     }
 }

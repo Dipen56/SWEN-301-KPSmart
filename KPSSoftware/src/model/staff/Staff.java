@@ -1,5 +1,7 @@
 package model.staff;
 
+import java.util.ArrayList;
+
 /**
  * User class of the KPS, which has a username,
  * password and a boolean to represent manager status.
@@ -15,11 +17,22 @@ public abstract class Staff {
     private String lastName;
     private String email;
     private String phoneNumber;
+    private boolean manager;
 
-    public Staff(int uid, String username, String password) {
+    private ArrayList<Staff> accounts;
+    private Staff currentUser;
+
+
+    public Staff(int uid, String username, String password,boolean manager) {
         this.setUID(uid);
         this.setUserName(username);
         this.setPassword(password);
+        this.manager = manager;
+
+    }
+
+    public Staff(){
+        accounts = new ArrayList<Staff>();
     }
 
     /**
@@ -98,14 +111,13 @@ public abstract class Staff {
         this.phoneNumber = phoneNumber;
     }
 
-/*    public void setManager(boolean manager) {
+   public void setManager(boolean manager) {
         this.manager = manager;
     }
-
     public boolean isManager() {
         return manager;
     }
-*/
+
 
     @Override
     public String toString() {
@@ -115,4 +127,90 @@ public abstract class Staff {
                 ", password='" + password + '\'' +
                 '}';
     }
+
+    // USER ACCOUNT METHODS
+    public boolean login(String username, String password) {
+        for (Staff employee : accounts) {
+            if (employee.getUserName().equals(username) && employee.getPassword().equals(password)) {
+                currentUser = employee;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean editPassword(String password) {
+        boolean edited = false;
+        for (Staff employee : accounts) {
+            if (employee.getUserName().equals(currentUser.getUserName())
+                    && employee.getPassword().equals(currentUser.getPassword())) {
+                employee.setPassword(password);
+                edited = true;
+            }
+        }
+        currentUser.setPassword(password);
+        return edited;
+    }
+
+    public boolean editManager(String username, boolean manager) {
+        if (currentUser.isManager()) {
+            findUser(username).setManager(manager);
+        }
+        return false;
+    }
+
+    public boolean delete(Staff user) {
+        boolean removed = false;
+        for (Staff employee : accounts) {
+            if (employee.getUserName().equals(user.getUserName()) && employee.getPassword().equals(user.getPassword())) {
+                accounts.remove(employee);
+                removed = true;
+                break;
+            }
+        }
+        return removed;
+    }
+
+    public void add(Staff user) {
+        boolean b = false;
+        for (Staff employee : accounts) {
+            if (employee.getUserName().equals(user.getUserName())) {
+                b = true;
+            }
+        }
+        if (!b) {
+            accounts.add(user);
+        }
+    }
+
+    public void logout() {
+        currentUser = null;
+    }
+
+    public Staff findUser(String username) {
+        for (Staff employee : accounts) {
+            if (employee.getUserName().equals(username)) {
+                return employee;
+            }
+        }
+        return null;
+    }
+
+    public Staff getCurrentUser() {
+        return currentUser;
+    }
+
+    public void addUserToList(Staff user) {
+        accounts.add(user);
+    }
+
+    public void setCurrentUser(Staff currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    public ArrayList<Staff> getAccounts() {
+        return accounts;
+    }
+
+
 }

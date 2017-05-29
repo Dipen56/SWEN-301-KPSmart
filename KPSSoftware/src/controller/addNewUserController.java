@@ -68,7 +68,7 @@ public class addNewUserController {
             returnUserManagement(event);
         } else if (event.toString().contains("accept")) {
             //TODO: retive information from the field and pass to logic...
-            System.out.println("accpted");
+            System.out.println("accepted");
         }
 
     }

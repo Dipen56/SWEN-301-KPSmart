@@ -9,7 +9,7 @@ package model.location;
  */
 public abstract class Location {
 
-    private final int id;
+    public final int id;
 
     public Location(int locationId) {
         this.id = locationId;

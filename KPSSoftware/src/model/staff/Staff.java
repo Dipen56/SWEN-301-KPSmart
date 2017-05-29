@@ -22,19 +22,18 @@ public abstract class Staff {
     private ArrayList<Staff> accounts;
     private Staff currentUser;
 
-
     public Staff(int uid, String username, String password,boolean manager) {
         this.setUID(uid);
         this.setUserName(username);
         this.setPassword(password);
         this.manager = manager;
-
     }
 
     public Staff(){
         accounts = new ArrayList<Staff>();
     }
 
+    // USER ACCOUNT METHODS
     /**
      * This methods checks if a given login user name and password match
      * those of this staff member. Returns true if both match and false
@@ -44,7 +43,16 @@ public abstract class Staff {
      * @param password
      * @return
      */
-
+    public boolean login(String username, String password) {
+        for (Staff employee : accounts) {
+            if (employee.getUserName().equals(username) && employee.getPassword().equals(password)) {
+                currentUser = employee;
+                return true;
+            }
+        }
+        return false;
+    }
+    /*
     public boolean checkLogin(String username, String password) {
         if (this.userName.equals(username)
                 && this.password.equals(password)) {
@@ -52,6 +60,69 @@ public abstract class Staff {
         }
         else return false;
     }
+    */
+
+    public boolean editPassword(String password) {
+        boolean edited = false;
+        for (Staff employee : accounts) {
+            if (employee.getUserName().equals(currentUser.getUserName())
+                    && employee.getPassword().equals(currentUser.getPassword())) {
+                employee.setPassword(password);
+                edited = true;
+            }
+        }
+        currentUser.setPassword(password);
+        return edited;
+    }
+
+    public boolean editManager(String username, boolean manager) {
+        if (currentUser.isManager()) {
+            findUser(username).setManager(manager);
+        }
+        return false;
+    }
+
+    public boolean delete(Staff user) {
+        boolean removed = false;
+        for (Staff employee : accounts) {
+            if (employee.getUserName().equals(user.getUserName()) && employee.getPassword().equals(user.getPassword())) {
+                accounts.remove(employee);
+                removed = true;
+                break;
+            }
+        }
+        return removed;
+    }
+
+    public void add(Staff user) {
+        boolean exists = false;
+        for (Staff employee : accounts) {
+            if (employee.getUserName().equals(user.getUserName())) {
+                exists = true;
+            }
+        }
+        if (!exists) {
+            accounts.add(user);
+        }
+    }
+
+    public void logout() {
+        currentUser = null;
+    }
+
+    public Staff findUser(String username) {
+        for (Staff employee : accounts) {
+            if (employee.getUserName().equals(username)) {
+                return employee;
+            }
+        }
+        return null;
+    }
+
+    public void addUserToList(Staff user) {
+        accounts.add(user);
+    }
+
 
     /*
      * Getter and Setter methods.
@@ -128,89 +199,16 @@ public abstract class Staff {
                 '}';
     }
 
-    // USER ACCOUNT METHODS
-    public boolean login(String username, String password) {
-        for (Staff employee : accounts) {
-            if (employee.getUserName().equals(username) && employee.getPassword().equals(password)) {
-                currentUser = employee;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean editPassword(String password) {
-        boolean edited = false;
-        for (Staff employee : accounts) {
-            if (employee.getUserName().equals(currentUser.getUserName())
-                    && employee.getPassword().equals(currentUser.getPassword())) {
-                employee.setPassword(password);
-                edited = true;
-            }
-        }
-        currentUser.setPassword(password);
-        return edited;
-    }
-
-    public boolean editManager(String username, boolean manager) {
-        if (currentUser.isManager()) {
-            findUser(username).setManager(manager);
-        }
-        return false;
-    }
-
-    public boolean delete(Staff user) {
-        boolean removed = false;
-        for (Staff employee : accounts) {
-            if (employee.getUserName().equals(user.getUserName()) && employee.getPassword().equals(user.getPassword())) {
-                accounts.remove(employee);
-                removed = true;
-                break;
-            }
-        }
-        return removed;
-    }
-
-    public void add(Staff user) {
-        boolean b = false;
-        for (Staff employee : accounts) {
-            if (employee.getUserName().equals(user.getUserName())) {
-                b = true;
-            }
-        }
-        if (!b) {
-            accounts.add(user);
-        }
-    }
-
-    public void logout() {
-        currentUser = null;
-    }
-
-    public Staff findUser(String username) {
-        for (Staff employee : accounts) {
-            if (employee.getUserName().equals(username)) {
-                return employee;
-            }
-        }
-        return null;
+    public void setCurrentUser(Staff currentUser) {
+        this.currentUser = currentUser;
     }
 
     public Staff getCurrentUser() {
         return currentUser;
     }
 
-    public void addUserToList(Staff user) {
-        accounts.add(user);
-    }
-
-    public void setCurrentUser(Staff currentUser) {
-        this.currentUser = currentUser;
-    }
-
     public ArrayList<Staff> getAccounts() {
         return accounts;
     }
-
 
 }

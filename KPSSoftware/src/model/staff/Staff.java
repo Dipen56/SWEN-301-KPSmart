@@ -31,13 +31,8 @@ public abstract class Staff {
      * @param password
      * @return
      */
-
     public boolean checkLogin(String username, String password) {
-        if (this.userName.equals(username)
-                && this.password.equals(password)) {
-            return true;
-        }
-        else return false;
+        return this.userName.equals(username) && this.password.equals(password);
     }
 
     /*

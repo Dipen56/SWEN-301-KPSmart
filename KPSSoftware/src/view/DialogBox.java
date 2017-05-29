@@ -1,7 +1,5 @@
 package view;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -63,17 +61,13 @@ public class DialogBox {
         Button ok = new Button("Ok");
         Button close = new Button("Close");
 
-        ok.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                tempReturn = true;
-                window.close();
-            }
+        ok.setOnAction(event -> {
+            tempReturn = true;
+            window.close();
         });
-        close.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                tempReturn = false;
-                window.close();
-            }
+        close.setOnAction(event -> {
+            tempReturn = false;
+            window.close();
         });
 
         VBox layout = new VBox(10);

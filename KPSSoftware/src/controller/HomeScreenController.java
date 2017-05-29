@@ -11,12 +11,11 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import view.DialogBox;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import view.DialogBox;
 
 /**
  * Created by Dipen on 25/04/2017.

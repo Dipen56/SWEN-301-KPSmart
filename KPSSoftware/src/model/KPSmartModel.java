@@ -84,20 +84,20 @@ public class KPSmartModel {
         TransportFirm pacificaMails = new TransportFirm("PacificaMails");
         TransportFirm fedEx = new TransportFirm("FedEx");
 
-        Route rout_1 = new Route(dunedin, christchurch, RouteType.Land, 4.0f, royalPost, 1.2f, 0.7f, 1.0f, 0.5f);
-        Route rout_2 = new Route(dunedin, christchurch, RouteType.Land, 3.2f, nzFast, 1.4f, 0.9f, 1.1f, 0.6f);
-        Route rout_3 = new Route(christchurch, wellington, RouteType.Air, 1.2f, royalPost, 1.9f, 1.3f, 1.6f, 0.9f);
-        Route rout_4 = new Route(christchurch, wellington, RouteType.Air, 1.1f, nzFast, 1.8f, 1.3f, 1.7f, 1.0f);
-        Route rout_5 = new Route(dunedin, auckland, RouteType.Air, 4.5f, nzFast, 3.9f, 4.0f, 3.2f, 3.5f);
-        Route rout_6 = new Route(christchurch, auckland, RouteType.Land, 4.9f, royalPost, 2.9f, 3.2f, 2.5f, 3.0f);
-        Route rout_7 = new Route(auckland, sydney, RouteType.Air, 3.0f, fedEx, 6.6f, 6.2f, 5.5f, 5.0f);
-        Route rout_8 = new Route(auckland, sydney, RouteType.Sea, 7.5f, pacificaMails, 4.0f, 3.5f, 3.5f, 3.0f);
-        Route rout_9 = new Route(auckland, singapore, RouteType.Sea, 10.5f, pacificaMails, 4.8f, 4.6f, 4.5f, 4.2f);
-        Route rout_10 = new Route(sydney, hongkong, RouteType.Air, 4.8f, fedEx, 8.8f, 7.6f, 6.5f, 6.5f);
-        Route rout_11 = new Route(singapore, guangzhou, RouteType.Sea, 4, pacificaMails, 3.2f, 3.7f, 3.0f, 3.2f);
-        Route rout_12 = new Route(hongkong, guangzhou, RouteType.Sea, 0.5f, fedEx, 1.2f, 0.7f, 1.0f, 0.5f);
-        Route rout_13 = new Route(guangzhou, moscow, RouteType.Land, 14.0f, fedEx, 9.6f, 9.9f, 8.5f, 8.5f);
-        Route rout_14 = new Route(guangzhou, moscow, RouteType.Air, 5.5f, fedEx, 13.5f, 14.5f, 12.0f, 12.5f);
+        Route rout_1 = new Route(1, dunedin, christchurch, RouteType.Land, 4.0f, royalPost, 1.2f, 0.7f, 1.0f, 0.5f);
+        Route rout_2 = new Route(2, dunedin, christchurch, RouteType.Land, 3.2f, nzFast, 1.4f, 0.9f, 1.1f, 0.6f);
+        Route rout_3 = new Route(3, christchurch, wellington, RouteType.Air, 1.2f, royalPost, 1.9f, 1.3f, 1.6f, 0.9f);
+        Route rout_4 = new Route(4, christchurch, wellington, RouteType.Air, 1.1f, nzFast, 1.8f, 1.3f, 1.7f, 1.0f);
+        Route rout_5 = new Route(5, dunedin, auckland, RouteType.Air, 4.5f, nzFast, 3.9f, 4.0f, 3.2f, 3.5f);
+        Route rout_6 = new Route(6, christchurch, auckland, RouteType.Land, 4.9f, royalPost, 2.9f, 3.2f, 2.5f, 3.0f);
+        Route rout_7 = new Route(7, auckland, sydney, RouteType.Air, 3.0f, fedEx, 6.6f, 6.2f, 5.5f, 5.0f);
+        Route rout_8 = new Route(8, auckland, sydney, RouteType.Sea, 7.5f, pacificaMails, 4.0f, 3.5f, 3.5f, 3.0f);
+        Route rout_9 = new Route(9, auckland, singapore, RouteType.Sea, 10.5f, pacificaMails, 4.8f, 4.6f, 4.5f, 4.2f);
+        Route rout_10 = new Route(10, sydney, hongkong, RouteType.Air, 4.8f, fedEx, 8.8f, 7.6f, 6.5f, 6.5f);
+        Route rout_11 = new Route(11, singapore, guangzhou, RouteType.Sea, 4, pacificaMails, 3.2f, 3.7f, 3.0f, 3.2f);
+        Route rout_12 = new Route(12, hongkong, guangzhou, RouteType.Sea, 0.5f, fedEx, 1.2f, 0.7f, 1.0f, 0.5f);
+        Route rout_13 = new Route(13, guangzhou, moscow, RouteType.Land, 14.0f, fedEx, 9.6f, 9.9f, 8.5f, 8.5f);
+        Route rout_14 = new Route(14, guangzhou, moscow, RouteType.Air, 5.5f, fedEx, 13.5f, 14.5f, 12.0f, 12.5f);
 
         addRoute(rout_1);
         addRoute(rout_2);
@@ -116,34 +116,40 @@ public class KPSmartModel {
 
         // 4. deliver several Mails
 
-        /*
-         * currently the routing system is empty, so no valid routes can be found
-         */
-
         // this routes should not be rout_5, dunedin to auckland by air
-        List<Route> routesForMail_1 = routingSystem.findRoutes(dunedin, auckland, Priority.Domestic_Standard);
+        Mail mail_1 = new Mail(1, dunedin, auckland, 2500, 3000, Priority.Domestic_Standard);
+        List<Route> routesForMail_1 = routingSystem.findRoutes(mail_1);
         if (isValidRouteChain(routesForMail_1)) {
-            deliverMail(new Mail(1, dunedin, auckland, 2500, 3000, Priority.Domestic_Standard, routesForMail_1));
+            mail_1.setRoutes(routesForMail_1);
+            deliverMail(mail_1);
         }
 
-        List<Route> routesForMail_2 = routingSystem.findRoutes(dunedin, moscow, Priority.International_Standard);
+        Mail mail_2 = new Mail(2, dunedin, moscow, 6200, 30000, Priority.International_Standard);
+        List<Route> routesForMail_2 = routingSystem.findRoutes(mail_2);
         if (isValidRouteChain(routesForMail_2)) {
-            deliverMail(new Mail(2, dunedin, moscow, 6200, 30000, Priority.International_Standard, routesForMail_2));
+            mail_2.setRoutes(routesForMail_2);
+            deliverMail(mail_2);
         }
 
-        List<Route> routesForMail_3 = routingSystem.findRoutes(dunedin, hongkong, Priority.International_Air);
+        Mail mail_3 = new Mail(3, dunedin, hongkong, 99000, 10000, Priority.International_Air);
+        List<Route> routesForMail_3 = routingSystem.findRoutes(mail_3);
         if (isValidRouteChain(routesForMail_3)) {
-            deliverMail(new Mail(3, dunedin, hongkong, 99000, 10000, Priority.International_Air, routesForMail_3));
+            mail_3.setRoutes(routesForMail_3);
+            deliverMail(mail_3);
         }
 
-        List<Route> routesForMail_4 = routingSystem.findRoutes(auckland, sydney, Priority.International_Air);
+        Mail mail_4 = new Mail(4, auckland, sydney, 500, 100, Priority.International_Air);
+        List<Route> routesForMail_4 = routingSystem.findRoutes(mail_4);
         if (isValidRouteChain(routesForMail_4)) {
-            deliverMail(new Mail(4, auckland, sydney, 500, 100, Priority.International_Air, routesForMail_4));
+            mail_4.setRoutes(routesForMail_4);
+            deliverMail(mail_4);
         }
 
-        List<Route> routesForMail_5 = routingSystem.findRoutes(christchurch, auckland, Priority.Domestic_Standard);
+        Mail mail_5 = new Mail(5, christchurch, auckland, 8800, 8800, Priority.Domestic_Standard);
+        List<Route> routesForMail_5 = routingSystem.findRoutes(mail_5);
         if (isValidRouteChain(routesForMail_5)) {
-            deliverMail(new Mail(5, christchurch, auckland, 8800, 8800, Priority.Domestic_Standard, routesForMail_5));
+            mail_5.setRoutes(routesForMail_5);
+            deliverMail(mail_5);
         }
 
         // 5. update customer price
@@ -177,10 +183,25 @@ public class KPSmartModel {
     /**
      * This method checks if the given routes is legal, i.e. not null and not empty
      *
-     * @param routes  the routes to be checked
+     * @param routes the routes to be checked
      * @return
      */
     private boolean isValidRouteChain(List<Route> routes) {
+        // TODO: delete these prints.
+        System.out.println();
+        System.out.println("========== Finding Routes ===========");
+
+        if (routes == null) {
+            System.out.println("Routes is null");
+        } else if (routes.isEmpty()) {
+            System.out.println("Routes is empty");
+        } else {
+            routes.forEach(System.out::println);
+        }
+
+        System.out.println("======================================");
+        System.out.println();
+
         return routes != null && !routes.isEmpty();
     }
 
@@ -204,11 +225,13 @@ public class KPSmartModel {
     private void addRoute(Route route) {
         routingSystem.addRoute(route);
         eventLogger.logEvent(new RouteAdditionEvent(currentStaff, LocalDateTime.now(), route));
+        // TODO: need to self-increment the route id here.
     }
 
     private void deliverMail(Mail mail) {
         mails.add(mail);
         eventLogger.logEvent(new MailDeliveryEvent(currentStaff, LocalDateTime.now(), mail));
+        // TODO: need to self-increment the mail id here.
     }
 
     private void updateCustomerPrice(int routeId, float newPricePerGram, float newPricePerVolume) {

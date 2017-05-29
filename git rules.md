@@ -1,6 +1,6 @@
 **** **NOTE: NEVER WORK OF THE MASTER BRANCH** ****
 
-_MOST IMPORTANT COMMANDS USED EVERTIME_
+_MOST IMPORTANT COMMANDS USED EVERY TIME_
 
 to pull files from online:  
 `git pull` or `git pull origin <branch name>`
@@ -17,10 +17,10 @@ to push:
  or  
  `git push origin <branch name>`
 
-to merge braches go to the branch you want to merge onto, and then:  
+to merge branches go to the branch you want to merge onto, and then:  
 `git merge <branch name>`
 
-to change branchs:  
+to change branches:  
 `git checkout <branch name>`
 
 

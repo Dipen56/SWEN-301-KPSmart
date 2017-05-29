@@ -22,10 +22,10 @@ public class Mail {
     private Priority priority;
 
     /**
-     * A series of routes that connects origin to destionation.
+     * A series of routes that connects origin to destination.
      * <p>
      * IMPORTANT: Mail object itself is not responsible for checking the validity of the routes. Make sure it's valid
-     * before constructing or updating the Mail object.
+     * before passing in routes.
      */
     private List<Route> routes;
 
@@ -39,11 +39,9 @@ public class Mail {
      *       to check if we can meet that requirement before updating the routes.
      */
 
-    public Mail(int mailID, NZLocation origin, Location destination, float weight, float volume, Priority priority, List<Route> routes) {
-        if (origin.equals(destination)) {
+    public Mail(int mailID, NZLocation origin, Location destination, float weight, float volume, Priority priority) {
+        if (origin.id == destination.id) {
             throw new IllegalArgumentException("Invalid mail: origin and destination cannot be the same");
-        } else if (routes == null || routes.isEmpty()) {
-            throw new IllegalArgumentException("Invalid mail: parameter 'routes' is illegal");
         }
 
         this.mailID = mailID;
@@ -52,10 +50,49 @@ public class Mail {
         this.weight = weight;
         this.volume = volume;
         this.priority = priority;
+    }
+
+    public int getMailID() {
+        return mailID;
+    }
+
+    public float getWeight() {
+        return weight;
+    }
+
+    public float getVolume() {
+        return volume;
+    }
+
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public List<Route> getRoutes() {
+        return routes;
+    }
+
+    public NZLocation getOrigin() {
+        return this.origin;
+    }
+
+    public Location getDestination() {
+        return this.destination;
+    }
+
+    public void setRoutes(List<Route> routes) {
+        if (routes == null || routes.isEmpty()) {
+            throw new IllegalArgumentException("Invalid mail: parameter 'routes' is illegal");
+        }
+
         this.routes = routes;
     }
 
     public float getRevenue() {
+        if (routes == null || routes.isEmpty()) {
+            throw new UnsupportedOperationException("This mail has no valid routes, please set the routes before calculating");
+        }
+
         return routes.stream()
                 .map(route -> route.getRevenue(weight, volume))
                 .reduce(0.0f, (sum, revenue) -> sum += revenue)
@@ -64,12 +101,20 @@ public class Mail {
 
 
     public float getExpenditure() {
+        if (routes == null || routes.isEmpty()) {
+            throw new UnsupportedOperationException("This mail has no valid routes, please set the routes before calculating");
+        }
+
         return routes.stream()
                 .map(route -> route.getExpenditure(weight, volume))
                 .reduce(0.0f, (sum, expenditure) -> sum += expenditure);
     }
 
     public float getDuration() {
+        if (routes == null || routes.isEmpty()) {
+            throw new UnsupportedOperationException("This mail has no valid routes, please set the routes before calculating");
+        }
+
         return routes.stream()
                 .map(Route::getDuration)
                 .reduce(0.0f, (sum, duration) -> sum += duration);

@@ -12,7 +12,6 @@ public enum Priority {
     Domestic_Air,
     Domestic_Standard;
 
-
     public float getPriceFactor() {
         switch (this) {
             case International_Air:

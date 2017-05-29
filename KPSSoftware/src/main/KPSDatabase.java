@@ -4,7 +4,6 @@ import model.event.Event;
 import model.staff.Clerk;
 import model.staff.Manager;
 import model.staff.Staff;
-
 import org.dom4j.*;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;

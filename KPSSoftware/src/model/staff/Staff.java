@@ -22,11 +22,10 @@ public abstract class Staff {
     private ArrayList<Staff> accounts;
     private Staff currentUser;
 
-    public Staff(int uid, String username, String password,boolean manager) {
+    public Staff(int uid, String username, String password) {
         this.setUID(uid);
         this.setUserName(username);
         this.setPassword(password);
-        this.manager = manager;
     }
 
     public Staff(){

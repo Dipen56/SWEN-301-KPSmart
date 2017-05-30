@@ -1,10 +1,11 @@
 package main;
 
 import model.KPSmartModel;
+import model.database.KPSDatabase;
 import view.GUI;
 
 /**
- * Created by Dipen on 18/04/2017.
+ * Created by Dipen on 18/04/2017. This class is used to start up the KPS Application.
  */
 public class KPSMain {
 
@@ -19,13 +20,7 @@ public class KPSMain {
     }
 
     public static void main(String[] args) {
-
-        /*
-         * FIXME: Sorry Patrick, have to comment it out.
-         *        We shouldn't push broken code to master.
-         */
-
-        // KPSDatabase db = new KPSDatabase();
+       // KPSDatabase db = new KPSDatabase();
         new KPSMain().run();
     }
 }

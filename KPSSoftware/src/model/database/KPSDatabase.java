@@ -1,4 +1,4 @@
-package main;
+package model.database;
 
 import model.event.Event;
 import model.staff.Clerk;
@@ -130,6 +130,7 @@ public class KPSDatabase {
      * @return true if loaded successfully
      */
     private static boolean loadUsers(){
+
         try {
             logins.clear();
             // Get and read file
@@ -172,6 +173,7 @@ public class KPSDatabase {
                     }
                 }
                 // adding clerk to list of all users
+                System.out.println(logins.size());
                 logins.add(cur);
             }
             // get all manager nodes
@@ -210,6 +212,7 @@ public class KPSDatabase {
                 logins.add(cur);
             }
             // output for testing
+
             System.out.println("Successfully loaded: " + logins.size() + " user logins");
         } catch (DocumentException e) { return false; }
         return true;

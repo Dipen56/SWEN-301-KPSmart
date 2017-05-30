@@ -1,4 +1,4 @@
-package main;
+package model.database;
 
 /**
  * This class is used to populate the initial data, so the programme won't have to be demonstrated with blank data.

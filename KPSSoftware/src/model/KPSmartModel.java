@@ -1,5 +1,7 @@
 package model;
 
+import controller.LoginScreenController;
+import model.database.KPSDatabase;
 import model.event.*;
 import model.location.InternationalLocation;
 import model.location.NZCity;
@@ -36,8 +38,12 @@ public class KPSmartModel {
     private EventLogger eventLogger;
     private RoutingSystem routingSystem;
     private List<Mail> mails;
-
-    // =======================================================================================
+    //===============================
+    //Dipen
+    //===============================
+    private KPSDatabase database;
+    //============Controllers===================
+    private static LoginScreenController loginScreenController;
 
 
     /**
@@ -45,8 +51,15 @@ public class KPSmartModel {
      * For now this constructor generates many fake data and models for testing.
      */
     public KPSmartModel() {
-        generateEvents();
+        //generateEvents();
+        //=====================
+        //Created by Dipen
+        //=====================
+        database = new KPSDatabase();
+        LoginScreenController.setKpSmartModel(this);
+
     }
+
 
     /**
      * generates Events. THIS IS ONLY A METHOD FOR TESTING PURPOSE.
@@ -179,6 +192,29 @@ public class KPSmartModel {
         //        b. each step will have the corresponding events logged.
 
     }
+
+    /**
+     * =================================================================================================================
+     * These methods made by Dipen
+     * =================================================================================================================
+     */
+    public boolean authenticateLogin(String username, String password) {
+
+
+        boolean temp= KPSDatabase.checkLogin(username, password);
+        System.out.println(temp);
+        return temp;
+
+    }
+
+    public static void setLoginScreenController(LoginScreenController loginController) {
+        loginScreenController = loginController;
+    }
+    /**
+     * =================================================================================================================
+     * END
+     * =================================================================================================================
+     */
 
     /**
      * This method checks if the given routes is legal, i.e. not null and not empty

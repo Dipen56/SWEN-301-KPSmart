@@ -1,4 +1,4 @@
-import main.KPSDatabase;
+import model.database.KPSDatabase;
 import org.junit.*;
 //import org.junit.jupiter.api.Test;
 

@@ -46,14 +46,14 @@ public class LoginScreenController {
         String password = passwordTextfield.getText();
         // checks given user name and password against database
         if (kpSmartModel.authenticateLogin(username,password)) {
-
-//            Parent homescreen = FXMLLoader.load(LoginScreenController.class.getResource("/fxml/home screen.fxml"));
-//            Scene homeSecne = new Scene(homescreen);
-//            Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//            tempStage.setScene(homeSecne);
-//            tempStage.show();
+            // For Testing use username: Bob password: test123
+            Parent homescreen = FXMLLoader.load(LoginScreenController.class.getResource("/fxml/home screen.fxml"));
+            Scene homeSecne = new Scene(homescreen);
+            Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            tempStage.setScene(homeSecne);
+            tempStage.show();
         } else {
-            authticationError.setText("Check username and password and try again");
+            authticationError.setText("Incorrect try again :(");
             //DialogBox.displayMsg("Invaild Input", "Please Check your Username and Password are correct and try again");
         }
     }

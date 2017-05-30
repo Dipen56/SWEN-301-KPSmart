@@ -199,12 +199,7 @@ public class KPSmartModel {
      * =================================================================================================================
      */
     public boolean authenticateLogin(String username, String password) {
-
-
-        boolean temp= KPSDatabase.checkLogin(username, password);
-        System.out.println(temp);
-        return temp;
-
+        return KPSDatabase.checkLogin(username, password);
     }
 
     public static void setLoginScreenController(LoginScreenController loginController) {

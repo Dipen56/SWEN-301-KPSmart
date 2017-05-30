@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <users>
+  <clerk uid="2" name="Steve" password="test123">
+    <first>Steve</first>
+    <last>Jobs</last>
+    <email>sjobs@email.com</email>
+    <phone>123 456 7890</phone>
+  </clerk>
   <manager uid="0" name="Bob" password="test123">
     <first>Bob</first>
     <last>Jones</last>
@@ -13,10 +19,4 @@
     <email>jsmith@email.com</email>
     <phone>123 456 7890</phone>
   </manager>
-  <clerk uid="2" name="Steve" password="test123">
-    <first>Steve</first>
-    <last>Jobs</last>
-    <email>sjobs@email.com</email>
-    <phone>123 456 7890</phone>
-  </clerk>
 </users>

@@ -1,5 +1,6 @@
 package model;
 
+import controller.ChangePasswordController;
 import controller.HomeScreenController;
 import controller.LoginScreenController;
 import controller.UserSettingController;
@@ -49,6 +50,7 @@ public class KPSmartModel {
     private static LoginScreenController loginScreenController;
     private static HomeScreenController homeScreenController;
     private static UserSettingController userSettingController;
+    private static ChangePasswordController changePasswordController;
 
 
     /**
@@ -64,6 +66,7 @@ public class KPSmartModel {
         LoginScreenController.setKpSmartModel(this);
         HomeScreenController.setKpSmartModel(this);
         UserSettingController.setKpSmartModel(this);
+        ChangePasswordController.setKpSmartModel(this);
 
     }
 
@@ -79,7 +82,7 @@ public class KPSmartModel {
 
         // 1. Add 2 users, 1 manager, 1 clerk
         registeredStaff.put(1, new Manager(1, "123", "123", true));
-        registeredStaff.put(2, new Clerk(2, "123", "123",false));
+        registeredStaff.put(2, new Clerk(2, "123", "123", false));
 
         // 2. Login the manager
         login(1);
@@ -209,6 +212,10 @@ public class KPSmartModel {
         return currentStaffTemp;
     }
 
+    public String changeUserPassword(String oldPassword, String newPassword, String retypePassword) {
+        return currentStaffTemp.editPassword(oldPassword, newPassword, retypePassword);
+    }
+
     public boolean authenticateLogin(String username, String password) {
         Staff staff = KPSDatabase.checkLogin(username, password);
         if (staff != null) {
@@ -223,8 +230,10 @@ public class KPSmartModel {
             loginScreenController = (LoginScreenController) controllers;
         } else if (controllers instanceof HomeScreenController) {
             homeScreenController = (HomeScreenController) controllers;
-        }else if (controllers instanceof  UserSettingController){
-            userSettingController = (UserSettingController)controllers;
+        } else if (controllers instanceof UserSettingController) {
+            userSettingController = (UserSettingController) controllers;
+        } else if (controllers instanceof ChangePasswordController) {
+            changePasswordController = (ChangePasswordController) controllers;
         }
 
     }

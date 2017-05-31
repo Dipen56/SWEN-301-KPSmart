@@ -155,7 +155,7 @@ public class KPSDatabase {
                 String password = node.valueOf("@password");
                 UID += uid;
                 // creating clerk to add to list of all users
-                Clerk cur = new Clerk(uid, name, password,false);
+                Staff cur = new Clerk(uid, name, password,false);
                 // iterate over stored info and update clerk
                 Element element = (Element) node;
                 Iterator<Element> itr = element.elementIterator();
@@ -191,7 +191,7 @@ public class KPSDatabase {
                 String password = node.valueOf("@password");
                 UID += uid;
                 // creating manager to add to list of all users
-                Manager cur = new Manager(uid, name, password, true);
+                Staff cur = new Manager(uid, name, password, true);
                 // iterate over stored info and update clerk
                 Element element = (Element) node;
                 Iterator<Element> itr = element.elementIterator();

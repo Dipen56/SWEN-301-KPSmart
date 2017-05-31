@@ -1,14 +1,20 @@
 package controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import model.KPSmartModel;
+import model.staff.Staff;
 import view.DialogBox;
 
 import java.io.IOException;
@@ -18,9 +24,28 @@ import java.util.ResourceBundle;
 /**
  * Created by Dipen on 25/05/2017.
  */
-public class changePasswordController {
-    public Label userLable;
-    public ImageView avatar;
+public class ChangePasswordController implements Initializable {
+    private static KPSmartModel kpSmartModel;
+    @FXML
+    private Label userLable;
+    @FXML
+    private ImageView avatar;
+    @FXML
+    private Button manageUser;
+    @FXML
+    private Button addNewUser;
+    @FXML
+    private PasswordField oldPassword;
+    @FXML
+    private PasswordField newPassword;
+    @FXML
+    private PasswordField retypePassword;
+    @FXML
+    private Label errorLabel;
+
+    public ChangePasswordController() {
+        KPSmartModel.setLoginScreenController(this);
+    }
 
     /**
      * this method is used by the buttons on the left side menu to change change the scene.
@@ -31,13 +56,13 @@ public class changePasswordController {
     public void changeScenes(ActionEvent event) throws IOException {
 
         if (event.toString().contains("AddNewUser")) {
-            Parent changePasswordScreen = FXMLLoader.load(changePasswordController.class.getResource("/fxml/AddNewUser.fxml"));
+            Parent changePasswordScreen = FXMLLoader.load(ChangePasswordController.class.getResource("/fxml/AddNewUser.fxml"));
             Scene changePasswordScene = new Scene(changePasswordScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(changePasswordScene);
             tempStage.show();
         } else if (event.toString().contains("ManageUser")) {
-            Parent manageUserScreen = FXMLLoader.load(changePasswordController.class.getResource("/fxml/ManageUser.fxml"));
+            Parent manageUserScreen = FXMLLoader.load(ChangePasswordController.class.getResource("/fxml/ManageUser.fxml"));
             Scene manageUserScene = new Scene(manageUserScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(manageUserScene);
@@ -46,7 +71,7 @@ public class changePasswordController {
         } else if (event.toString().contains("logout")) {
             //TODO; POP up dialog box to ask the user if they are sure want to logout
             DialogBox.LogoutyMsg("Logout", "Are you sure to logout?");
-            Parent loginScreen = FXMLLoader.load(changePasswordController.class.getResource("/fxml/login screen.fxml"));
+            Parent loginScreen = FXMLLoader.load(ChangePasswordController.class.getResource("/fxml/login screen.fxml"));
             Scene loginScene = new Scene(loginScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(loginScene);
@@ -60,15 +85,16 @@ public class changePasswordController {
      * @param event
      */
     public void handleButtons(ActionEvent event) {
-        if (event.toString().contains("Exit")) {
-            returnUserManagement(event);
-        } else if (event.toString().contains("reset")) {
+        if (event.toString().contains("reset")) {
             clearContent(event);
         } else if (event.toString().contains("discard")) {
             returnUserManagement(event);
         } else if (event.toString().contains("accept")) {
-            //TODO: retive information from the field and pass to logic...
-            System.out.println("accpted");
+            String vaildPassword = kpSmartModel.changeUserPassword(oldPassword.getText(), newPassword.getText(), retypePassword.getText());
+            errorLabel.setText(vaildPassword);
+            oldPassword.clear();
+            newPassword.clear();
+            retypePassword.clear();
         }
 
     }
@@ -81,17 +107,21 @@ public class changePasswordController {
      */
 
     public void initialize(URL location, ResourceBundle resources) {
-        //TODO: change this based on real information
-        userLable.setText("Clerk Buttercup");
-        avatar.setImage(new Image(controller.changePasswordController.class.getResourceAsStream("/img/buttercup.png")));
-        //TODO: if clerk disable reviewLogs button. reviewLogs.setVisible(false);
-
+        Staff staff = kpSmartModel.getCurrentUser();
+        userLable.setText(staff.getFirstName());
+        avatar.setImage(new Image(ChangePasswordController.class.getResourceAsStream("/img/" + staff.getUID() + ".png")));
+        if (!staff.isManager()) {
+            manageUser.setVisible(false);
+            manageUser.setDisable(false);
+            addNewUser.setVisible(false);
+            addNewUser.setVisible(false);
+        }
     }
 
     private void clearContent(ActionEvent event) {
         Parent changePasswordScreen = null;
         try {
-            changePasswordScreen = FXMLLoader.load(changePasswordController.class.getResource("/fxml/ChangePassword.fxml"));
+            changePasswordScreen = FXMLLoader.load(ChangePasswordController.class.getResource("/fxml/ChangePassword.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -105,7 +135,7 @@ public class changePasswordController {
     private void returnUserManagement(ActionEvent event) {
         Parent userManagementscreen = null;
         try {
-            userManagementscreen = FXMLLoader.load(changePasswordController.class.getResource("/fxml/user settings.fxml"));
+            userManagementscreen = FXMLLoader.load(ChangePasswordController.class.getResource("/fxml/user settings.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -113,5 +143,14 @@ public class changePasswordController {
         Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         tempStage.setScene(userManagementScene);
         tempStage.show();
+    }
+
+    /**
+     * to set the KPSmodels class reference.
+     *
+     * @param kpsModel
+     */
+    public static void setKpSmartModel(KPSmartModel kpsModel) {
+        kpSmartModel = kpsModel;
     }
 }

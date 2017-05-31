@@ -74,14 +74,14 @@ public class KPSDatabase {
         }
         // create new employee and add to logins
         if (isManager) {
-            Manager manager = new Manager(UID++, name, pass);
+            Manager manager = new Manager(UID++, name, pass,isManager);
             manager.setFirstName(firstName);
             manager.setLastName(lastName);
             manager.setEmail(email);
             manager.setPhoneNumber(phone);
             return logins.add(manager);
         } else {
-            Clerk clerk = new Clerk(UID++, name, pass);
+            Clerk clerk = new Clerk(UID++, name, pass,isManager);
             clerk.setFirstName(firstName);
             clerk.setLastName(lastName);
             clerk.setEmail(email);
@@ -113,19 +113,19 @@ public class KPSDatabase {
      *
      * @param username username
      * @param pass     password
-     * @return true if name and password match known login
+     * @return Stuff if name and password match known login else null
      */
-    public static boolean checkLogin(String username, String pass) {
+    public static Staff checkLogin(String username, String pass) {
         // checks all employee logins
         for (Staff employee : logins) {
             if (employee.getUserName().equals(username) &&
                     employee.getPassword().equals(pass)) {
                 // return true if match found
-                return true;
+                return employee;
             }
         }
         // return false if no match found
-        return false;
+        return null;
     }
 
     /**
@@ -155,7 +155,7 @@ public class KPSDatabase {
                 String password = node.valueOf("@password");
                 UID += uid;
                 // creating clerk to add to list of all users
-                Clerk cur = new Clerk(uid, name, password);
+                Clerk cur = new Clerk(uid, name, password,false);
                 // iterate over stored info and update clerk
                 Element element = (Element) node;
                 Iterator<Element> itr = element.elementIterator();
@@ -191,7 +191,7 @@ public class KPSDatabase {
                 String password = node.valueOf("@password");
                 UID += uid;
                 // creating manager to add to list of all users
-                Manager cur = new Manager(uid, name, password);
+                Manager cur = new Manager(uid, name, password, true);
                 // iterate over stored info and update clerk
                 Element element = (Element) node;
                 Iterator<Element> itr = element.elementIterator();

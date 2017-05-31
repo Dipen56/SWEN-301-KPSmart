@@ -1,7 +1,7 @@
 package controller;
 
 /**
- * Created by Dipen on 18/04/2017.
+ * Created by Dipen on 18/04/2017. This class represents the controller for the login screen.
  */
 
 import javafx.event.ActionEvent;
@@ -21,17 +21,28 @@ import java.io.IOException;
 
 
 public class LoginScreenController {
+    //this is the the main model class with whom all the interactions will take palce.
     private static KPSmartModel kpSmartModel;
-    //this variables are links to there FXML counterparts
+    //this variables are links to there FXML files counterparts
     @FXML
     private TextField usernameTextfield;
     @FXML
     private PasswordField passwordTextfield;
     @FXML
     private Label authticationError;
-    public LoginScreenController(){
+
+    /**
+     * Constructor for the login screen controller.
+     */
+    public LoginScreenController() {
         KPSmartModel.setLoginScreenController(this);
     }
+
+    /**
+     * to set the KPSmodels class reference.
+     *
+     * @param kpsModel
+     */
     public static void setKpSmartModel(KPSmartModel kpsModel) {
         kpSmartModel = kpsModel;
     }
@@ -44,17 +55,19 @@ public class LoginScreenController {
     public void performLogin(ActionEvent event) throws IOException {
         String username = usernameTextfield.getText();
         String password = passwordTextfield.getText();
-        // checks given user name and password against database
-        if (kpSmartModel.authenticateLogin(username,password)) {
-            // For Testing use username: Bob password: test123
+        // checks given user name and password against database if correct will take you user the KPS Software.
+        if (kpSmartModel.authenticateLogin(username, password)) {
+            // for testing us the  username: Bob password: test123
             Parent homescreen = FXMLLoader.load(LoginScreenController.class.getResource("/fxml/home screen.fxml"));
             Scene homeSecne = new Scene(homescreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(homeSecne);
             tempStage.show();
         } else {
+            // the details are wrong will ask the user re-enter.
             authticationError.setText("Incorrect try again :(");
-            //DialogBox.displayMsg("Invaild Input", "Please Check your Username and Password are correct and try again");
+            usernameTextfield.clear();
+            passwordTextfield.clear();
         }
     }
 }

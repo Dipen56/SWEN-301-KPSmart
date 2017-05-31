@@ -11,6 +11,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import model.KPSmartModel;
+import model.staff.Staff;
 import view.DialogBox;
 
 import java.io.IOException;
@@ -21,11 +23,15 @@ import java.util.ResourceBundle;
  * Created by Dipen on 25/04/2017.
  */
 public class HomeScreenController implements Initializable {
+    private static KPSmartModel kpSmartModel;
     public Label userLable;
     public Button reviewLogs;
     public ImageView avatar;
     public Button setting;
 
+    public HomeScreenController() {
+        KPSmartModel.setLoginScreenController(this);
+    }
 
     /**
      * this method is used by the buttons on the left side menu to change change the scene.
@@ -101,13 +107,26 @@ public class HomeScreenController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //TODO: change this based on real information
-        userLable.setText("Clerk Buttercup");
-        avatar.setImage(new Image(controller.SendMailScreenController.class.getResourceAsStream("/img/buttercup.png")));
+        Staff staff = kpSmartModel.getCurrentUser();
+        userLable.setText(staff.getFirstName());
+        avatar.setImage(new Image(SendMailScreenController.class.getResourceAsStream("/img/"+staff.getUID()+".png")));
         ImageView settingImage = new ImageView(new Image(getClass().getResourceAsStream("/img/setting-icon.png")));
         settingImage.setFitHeight(55);
         settingImage.setFitWidth(50);
         setting.setGraphic(settingImage);
         //TODO: if clerk disable reviewLogs button. reviewLogs.setVisible(false);
+        if(!staff.isManager()){
+            reviewLogs.setDisable(true);
+            reviewLogs.setVisible(false);
+        }
+    }
 
+    /**
+     * to set the KPSmodels class reference.
+     *
+     * @param kpsModel
+     */
+    public static void setKpSmartModel(KPSmartModel kpsModel) {
+        kpSmartModel = kpsModel;
     }
 }

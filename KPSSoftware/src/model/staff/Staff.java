@@ -22,17 +22,20 @@ public abstract class Staff {
     private ArrayList<Staff> accounts;
     private Staff currentUser;
 
-    public Staff(int uid, String username, String password) {
+    public Staff(int uid, String username, String password, boolean manager) {
         this.setUID(uid);
         this.setUserName(username);
         this.setPassword(password);
+        this.setManager(manager);
+
     }
 
-    public Staff(){
+    public Staff() {
         accounts = new ArrayList<Staff>();
     }
 
     // USER ACCOUNT METHODS
+
     /**
      * This methods checks if a given login user name and password match
      * those of this staff member. Returns true if both match and false
@@ -167,7 +170,9 @@ public abstract class Staff {
         return email;
     }
 
-    public void setEmail(String email) { this.email = email; }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -177,9 +182,10 @@ public abstract class Staff {
         this.phoneNumber = phoneNumber;
     }
 
-   public void setManager(boolean manager) {
+    public void setManager(boolean manager) {
         this.manager = manager;
     }
+
     public boolean isManager() {
         return manager;
     }

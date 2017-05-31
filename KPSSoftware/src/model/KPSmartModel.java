@@ -1,5 +1,6 @@
 package model;
 
+import controller.HomeScreenController;
 import controller.LoginScreenController;
 import model.database.KPSDatabase;
 import model.event.*;
@@ -42,8 +43,10 @@ public class KPSmartModel {
     //Dipen
     //===============================
     private KPSDatabase database;
+    private Staff currentStaffTemp; // TODO: change name to currentStaff later
     //============Controllers===================
     private static LoginScreenController loginScreenController;
+    private static HomeScreenController homeScreenController;
 
 
     /**
@@ -57,6 +60,7 @@ public class KPSmartModel {
         //=====================
         database = new KPSDatabase();
         LoginScreenController.setKpSmartModel(this);
+        HomeScreenController.setKpSmartModel(this);
 
     }
 
@@ -71,8 +75,8 @@ public class KPSmartModel {
         routingSystem = new RoutingSystem();
 
         // 1. Add 2 users, 1 manager, 1 clerk
-        registeredStaff.put(1, new Manager(1, "123", "123"));
-        registeredStaff.put(2, new Clerk(2, "123", "123"));
+        registeredStaff.put(1, new Manager(1, "123", "123", true));
+        registeredStaff.put(2, new Clerk(2, "123", "123",false));
 
         // 2. Login the manager
         login(1);
@@ -198,12 +202,26 @@ public class KPSmartModel {
      * These methods made by Dipen
      * =================================================================================================================
      */
-    public boolean authenticateLogin(String username, String password) {
-        return KPSDatabase.checkLogin(username, password);
+    public Staff getCurrentUser() {
+        return currentStaffTemp;
     }
 
-    public static void setLoginScreenController(LoginScreenController loginController) {
-        loginScreenController = loginController;
+    public boolean authenticateLogin(String username, String password) {
+        Staff staff = KPSDatabase.checkLogin(username, password);
+        if (staff != null) {
+            currentStaffTemp = staff;
+            return true;
+        }
+        return false;
+    }
+
+    public static void setLoginScreenController(Object controllers) {
+        if (controllers instanceof LoginScreenController) {
+            loginScreenController = (LoginScreenController) controllers;
+        } else if (controllers instanceof HomeScreenController) {
+            homeScreenController = (HomeScreenController) controllers;
+        }
+
     }
     /**
      * =================================================================================================================

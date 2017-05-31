@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -20,21 +21,28 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by Dipen on 25/04/2017.
+ * Created by Dipen on 25/04/2017. this class represents the controller for the home screen.
  */
 public class HomeScreenController implements Initializable {
     private static KPSmartModel kpSmartModel;
-    public Label userLable;
-    public Button reviewLogs;
-    public ImageView avatar;
-    public Button setting;
+    @FXML
+    private Label userLable;
+    @FXML
+    private Button reviewLogs;
+    @FXML
+    private ImageView avatar;
+    @FXML
+    private Button setting;
 
+    /**
+     * the constructor is used to set the reference to this class
+     */
     public HomeScreenController() {
         KPSmartModel.setLoginScreenController(this);
     }
 
     /**
-     * this method is used by the buttons on the left side menu to change change the scene.
+     * this method is used to change betweeen screens.
      *
      * @param event
      * @throws IOException
@@ -88,7 +96,6 @@ public class HomeScreenController implements Initializable {
             tempStage.setScene(loginScene);
             tempStage.show();
         } else if (event.toString().contains("setting")) {
-            //TODO
             Parent usermanagementScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/user settings.fxml"));
             Scene usermanagementScene = new Scene(usermanagementScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -106,16 +113,15 @@ public class HomeScreenController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //TODO: change this based on real information
         Staff staff = kpSmartModel.getCurrentUser();
         userLable.setText(staff.getFirstName());
-        avatar.setImage(new Image(SendMailScreenController.class.getResourceAsStream("/img/"+staff.getUID()+".png")));
+        avatar.setImage(new Image(SendMailScreenController.class.getResourceAsStream("/img/" + staff.getUID() + ".png")));
         ImageView settingImage = new ImageView(new Image(getClass().getResourceAsStream("/img/setting-icon.png")));
         settingImage.setFitHeight(55);
         settingImage.setFitWidth(50);
         setting.setGraphic(settingImage);
-        //TODO: if clerk disable reviewLogs button. reviewLogs.setVisible(false);
-        if(!staff.isManager()){
+        // disables features of the KPS which should not be avabliable certain users types.
+        if (!staff.isManager()) {
             reviewLogs.setDisable(true);
             reviewLogs.setVisible(false);
         }

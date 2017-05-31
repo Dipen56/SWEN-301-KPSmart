@@ -1,14 +1,19 @@
 package controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import model.KPSmartModel;
+import model.staff.Staff;
 import view.DialogBox;
 
 import java.io.IOException;
@@ -16,11 +21,25 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by Dipen on 25/04/2017.
+ * Created by Dipen on 25/04/2017. this class represents the user setting controller.
  */
-public class UserSettingController {
-    public Label userLable;
-    public ImageView avatar;
+public class UserSettingController implements Initializable {
+    private static KPSmartModel kpSmartModel;
+    @FXML
+    private Label userLable;
+    @FXML
+    private ImageView avatar;
+    @FXML
+    private Button manageUser;
+    @FXML
+    private Button addNewUser;
+
+    /**
+     * this constructor is used to set the reference for the model.
+     */
+    public UserSettingController() {
+        KPSmartModel.setLoginScreenController(this);
+    }
 
     /**
      * this method is used by the buttons on the left side menu to change change the scene.
@@ -73,7 +92,7 @@ public class UserSettingController {
      */
     public void handleButtons(ActionEvent event) {
         if (event.toString().contains("Exit")) {
-            returnUserManagement(event);
+            returnHome(event);
         }
     }
 
@@ -83,39 +102,43 @@ public class UserSettingController {
      * @param location
      * @param resources
      */
-
     public void initialize(URL location, ResourceBundle resources) {
-        //TODO: change this based on real information
-        userLable.setText("Clerk Buttercup");
-        avatar.setImage(new Image(controller.SendMailScreenController.class.getResourceAsStream("/img/buttercup.png")));
-        //TODO: if clerk disable reviewLogs button. reviewLogs.setVisible(false);
+        Staff staff = kpSmartModel.getCurrentUser();
+        userLable.setText(staff.getFirstName());
+        avatar.setImage(new Image(SendMailScreenController.class.getResourceAsStream("/img/" + staff.getUID() + ".png")));
+        if (!staff.isManager()) {
+            manageUser.setVisible(false);
+            manageUser.setDisable(false);
+            addNewUser.setVisible(false);
+            addNewUser.setVisible(false);
+        }
 
     }
 
-    private void clearContent(ActionEvent event) {
-        Parent changePasswordScreen = null;
+    /**
+     * this method is used to allow the user to return back home.
+     *
+     * @param event
+     */
+    private void returnHome(ActionEvent event) {
+        Parent homeScreen = null;
         try {
-            changePasswordScreen = FXMLLoader.load(UserSettingController.class.getResource("/fxml/ChangePassword.fxml"));
+            homeScreen = FXMLLoader.load(UserSettingController.class.getResource("/fxml/user settings.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Scene changePasswordScene = new Scene(changePasswordScreen);
+        Scene homeScene = new Scene(homeScreen);
         Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        tempStage.setScene(changePasswordScene);
+        tempStage.setScene(homeScene);
         tempStage.show();
     }
 
-
-    private void returnUserManagement(ActionEvent event) {
-        Parent userManagementscreen = null;
-        try {
-            userManagementscreen = FXMLLoader.load(UserSettingController.class.getResource("/fxml/user settings.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Scene userManagementScene = new Scene(userManagementscreen);
-        Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        tempStage.setScene(userManagementScene);
-        tempStage.show();
+    /**
+     * to set the KPSmodels class reference.
+     *
+     * @param kpsModel
+     */
+    public static void setKpSmartModel(KPSmartModel kpsModel) {
+        kpSmartModel = kpsModel;
     }
 }

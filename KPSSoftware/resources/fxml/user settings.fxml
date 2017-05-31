@@ -40,21 +40,22 @@
                         <Font name="System Bold" size="15.0"/>
                     </font>
                 </Button>
-                <Button id="ManageUser" mnemonicParsing="false" onAction="#changeScenes" prefHeight="60.0"
+                <Button fx:id="manageUser" mnemonicParsing="false" onAction="#changeScenes" prefHeight="60.0"
                         prefWidth="110.0" styleClass="main-button" stylesheets="@../css/style.css" text="Manage Users"
                         textAlignment="CENTER" textFill="WHITE" wrapText="true">
                     <font>
                         <Font name="System Bold" size="15.0"/>
                     </font>
                 </Button>
-                <Button id="AddNewUser" mnemonicParsing="false" onAction="#changeScenes" prefHeight="60.0"
+                <Button fx:id="addNewUser" mnemonicParsing="false" onAction="#changeScenes" prefHeight="60.0"
                         prefWidth="110.0" styleClass="main-button" stylesheets="@../css/style.css" text="Add New User"
                         textAlignment="CENTER" textFill="WHITE" wrapText="true">
                     <font>
                         <Font name="System Bold" size="15.0"/>
                     </font>
                 </Button>
-                <Button id="logout" mnemonicParsing="false" onAction="#changeScenes" prefHeight="60.0" prefWidth="110.0"
+                <Button fx:id="logout" mnemonicParsing="false" onAction="#changeScenes" prefHeight="60.0"
+                        prefWidth="110.0"
                         styleClass="logout-button" stylesheets="@../css/style.css" text="Log Out" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="15.0"/>

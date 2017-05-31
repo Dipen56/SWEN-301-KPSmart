@@ -2,6 +2,7 @@ package model;
 
 import controller.HomeScreenController;
 import controller.LoginScreenController;
+import controller.UserSettingController;
 import model.database.KPSDatabase;
 import model.event.*;
 import model.location.InternationalLocation;
@@ -47,6 +48,7 @@ public class KPSmartModel {
     //============Controllers===================
     private static LoginScreenController loginScreenController;
     private static HomeScreenController homeScreenController;
+    private static UserSettingController userSettingController;
 
 
     /**
@@ -61,6 +63,7 @@ public class KPSmartModel {
         database = new KPSDatabase();
         LoginScreenController.setKpSmartModel(this);
         HomeScreenController.setKpSmartModel(this);
+        UserSettingController.setKpSmartModel(this);
 
     }
 
@@ -220,6 +223,8 @@ public class KPSmartModel {
             loginScreenController = (LoginScreenController) controllers;
         } else if (controllers instanceof HomeScreenController) {
             homeScreenController = (HomeScreenController) controllers;
+        }else if (controllers instanceof  UserSettingController){
+            userSettingController = (UserSettingController)controllers;
         }
 
     }

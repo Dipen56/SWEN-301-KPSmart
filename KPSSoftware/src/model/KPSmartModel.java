@@ -215,9 +215,80 @@ public class KPSmartModel {
         return KPSDatabase.getLogins();
     }
 
-    public Staff getSelectedUser(String name) {
+    public void deleteUser(String selectedUser) {
+        Staff tempStaff = null;
         for (Staff s : KPSDatabase.getLogins()) {
-            String[] names = name.split(" ");
+            String[] names = selectedUser.split(" ");
+            if (s.getFirstName().equals(names[0]) && s.getLastName().equals(names[1])) {
+                tempStaff = s;
+            }
+        }
+        KPSDatabase.getLogins().remove(tempStaff);
+        assert KPSDatabase.getLogins().size() == 1;
+    }
+
+    public boolean updateStaffInformation(String selectedUser, String firstName, String lastName, String email, String phone, boolean changeRole) {
+        Staff tempStaff = null;
+        for (Staff s : KPSDatabase.getLogins()) {
+            String[] names = selectedUser.split(" ");
+            if (s.getFirstName().equals(names[0]) && s.getLastName().equals(names[1])) {
+                tempStaff = s;
+            }
+        }
+        if (tempStaff == null) {
+            return false;
+        }
+        if (changeRole) {
+            //if the user wants to change roles to manager
+            KPSDatabase.getLogins().remove(tempStaff);
+            assert KPSDatabase.getLogins().size() == 1;
+            Staff newStaff = new Manager(tempStaff.getUID(), tempStaff.getUserName(), tempStaff.getPassword(), true);
+            if (!firstName.equals("")) {
+                tempStaff.setFirstName(firstName);
+            } else {
+                newStaff.setFirstName(tempStaff.getFirstName());
+            }
+            if (!lastName.equals("")) {
+                tempStaff.setLastName(lastName);
+            } else {
+                newStaff.setLastName(tempStaff.getLastName());
+            }
+            if (!email.equals("")) {
+                tempStaff.setEmail(email);
+            } else {
+                newStaff.setEmail(tempStaff.getEmail());
+            }
+            if (!phone.equals(phone)) {
+                tempStaff.setPhoneNumber(phone);
+            } else {
+                newStaff.setPhoneNumber(tempStaff.getPhoneNumber());
+            }
+            KPSDatabase.getLogins().add(newStaff);
+            assert KPSDatabase.getLogins().size() == 2;
+            return true;
+
+        } else {
+            // if the user just want ot update an users information
+            if (!firstName.equals("")) {
+                tempStaff.setFirstName(firstName);
+            }
+            if (!lastName.equals("")) {
+                tempStaff.setLastName(lastName);
+            }
+            if (!email.equals("")) {
+                tempStaff.setEmail(email);
+            }
+            if (!phone.equals(phone)) {
+                tempStaff.setPhoneNumber(phone);
+            }
+            return true;
+        }
+
+    }
+
+    public Staff getSelectedUser(String selectedUser) {
+        for (Staff s : KPSDatabase.getLogins()) {
+            String[] names = selectedUser.split(" ");
             if (s.getFirstName().equals(names[0]) && s.getLastName().equals(names[1])) {
                 return s;
             }

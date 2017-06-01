@@ -104,8 +104,18 @@ public class ManageUserController implements Initializable {
         } else if (event.toString().contains("discard")) {
             returnUserManagement(event);
         } else if (event.toString().contains("update")) {
+            if (selectUser.getValue() != null) {
+                //TODO create a label and implement value input check.
+                boolean vaildUpdate = kpSmartModel.updateStaffInformation((String) selectUser.getValue(), firstNameTextField.getText(),
+                        lastNameTextField.getText(), emailTextField.getText(), phoneNumberTextField.getText(), changeRoleCheckBox.isSelected());
+                clearContent(event);
+            }
 
         } else if (event.toString().contains("deleteButton")) {
+            if (selectUser.getValue() != null) {
+                kpSmartModel.deleteUser((String) selectUser.getValue());
+                clearContent(event);
+            }
 
         } else if (event.toString().contains("selectUser")) {
             Staff staff = kpSmartModel.getSelectedUser((String) selectUser.getValue());
@@ -115,10 +125,17 @@ public class ManageUserController implements Initializable {
             emailAddress.setText("Email: " + staff.getEmail());
             phoneNumber.setText("Phone: " + staff.getPhoneNumber());
             username.setText("Username; " + staff.getUserName());
+            if (staff.getFirstName().equals(kpSmartModel.getCurrentUser().getFirstName()) && staff.getLastName().equals(kpSmartModel.getCurrentUser().getLastName())) {
+                deleteButton.setDisable(true);
+            } else {
+                deleteButton.setDisable(false);
+            }
             if (staff.isManager()) {
                 userRole.setText("Role: Manager");
+                changeRoleCheckBox.setDisable(true);
             } else {
                 userRole.setText("Role: Clerk");
+                changeRoleCheckBox.setDisable(false);
             }
         }
 

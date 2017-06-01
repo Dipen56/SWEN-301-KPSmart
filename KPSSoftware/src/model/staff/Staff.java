@@ -37,7 +37,7 @@ public abstract class Staff {
         } else if (newPassword.matches("[^a-zA-Z0-9]")) {
             // FIXME: 31/05/2017 the regex is not working :(((((((
             return "New passwords must only contain alphanumeric ";
-        } else if (newPassword.length() <6) {
+        } else if (newPassword.length() < 6) {
             return "New passwords must be minimum 6 characters";
         } else {
             password = newPassword;
@@ -87,6 +87,7 @@ public abstract class Staff {
     }
 
     public void setLastName(String lastName) {
+
         this.lastName = lastName;
     }
 

@@ -258,7 +258,7 @@ public class KPSmartModel {
             } else {
                 newStaff.setEmail(tempStaff.getEmail());
             }
-            if (!phone.equals(phone)) {
+            if (!phone.equals("")) {
                 tempStaff.setPhoneNumber(phone);
             } else {
                 newStaff.setPhoneNumber(tempStaff.getPhoneNumber());
@@ -278,7 +278,7 @@ public class KPSmartModel {
             if (!email.equals("")) {
                 tempStaff.setEmail(email);
             }
-            if (!phone.equals(phone)) {
+            if (!phone.equals("")) {
                 tempStaff.setPhoneNumber(phone);
             }
             return true;

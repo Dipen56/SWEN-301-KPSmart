@@ -124,7 +124,7 @@ public class ManageUserController implements Initializable {
             lastName.setText("Last Name: " + staff.getLastName());
             emailAddress.setText("Email: " + staff.getEmail());
             phoneNumber.setText("Phone: " + staff.getPhoneNumber());
-            username.setText("Username; " + staff.getUserName());
+            username.setText("Username: " + staff.getUserName());
             if (staff.getFirstName().equals(kpSmartModel.getCurrentUser().getFirstName()) && staff.getLastName().equals(kpSmartModel.getCurrentUser().getLastName())) {
                 deleteButton.setDisable(true);
             } else {

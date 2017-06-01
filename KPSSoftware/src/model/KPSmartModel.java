@@ -1,9 +1,6 @@
 package model;
 
-import controller.ChangePasswordController;
-import controller.HomeScreenController;
-import controller.LoginScreenController;
-import controller.UserSettingController;
+import controller.*;
 import model.database.KPSDatabase;
 import model.event.*;
 import model.location.InternationalLocation;
@@ -51,6 +48,7 @@ public class KPSmartModel {
     private static HomeScreenController homeScreenController;
     private static UserSettingController userSettingController;
     private static ChangePasswordController changePasswordController;
+    private static ManageUserController manageUserControllerl;
 
 
     /**
@@ -67,6 +65,7 @@ public class KPSmartModel {
         HomeScreenController.setKpSmartModel(this);
         UserSettingController.setKpSmartModel(this);
         ChangePasswordController.setKpSmartModel(this);
+        ManageUserController.setKpSmartModel(this);
 
     }
 
@@ -212,6 +211,21 @@ public class KPSmartModel {
         return currentStaffTemp;
     }
 
+    public List<Staff> getAllUsers() {
+        return KPSDatabase.getLogins();
+    }
+
+    public Staff getSelectedUser(String name) {
+        for (Staff s : KPSDatabase.getLogins()) {
+            String[] names = name.split(" ");
+            if (s.getFirstName().equals(names[0]) && s.getLastName().equals(names[1])) {
+                return s;
+            }
+
+        }
+        return null;
+    }
+
     public String changeUserPassword(String oldPassword, String newPassword, String retypePassword) {
         return currentStaffTemp.editPassword(oldPassword, newPassword, retypePassword);
     }
@@ -234,6 +248,8 @@ public class KPSmartModel {
             userSettingController = (UserSettingController) controllers;
         } else if (controllers instanceof ChangePasswordController) {
             changePasswordController = (ChangePasswordController) controllers;
+        } else if (controllers instanceof ManageUserController) {
+            manageUserControllerl = (ManageUserController) controllers;
         }
 
     }

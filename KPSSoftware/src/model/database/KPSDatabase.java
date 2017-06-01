@@ -35,10 +35,7 @@ public class KPSDatabase {
     // field for the list of events
     private List<Event> eventLogFile;
 
-    // returns the list of staff logins
-    public static List<Staff> getLogins() {
-        return logins;
-    }
+
 
     /*
         KPSDATABASE CONSTRUCTOR
@@ -54,7 +51,10 @@ public class KPSDatabase {
         Document document = reader.read(url);
         return document;
     }
-
+    // returns the list of staff logins
+    public static List<Staff> getLogins() {
+        return logins;
+    }
     /**
      * Checks user name isnt taken and create a new user
      *

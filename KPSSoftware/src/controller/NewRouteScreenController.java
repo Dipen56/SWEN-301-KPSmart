@@ -120,7 +120,7 @@ public class NewRouteScreenController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         //TODO: change this based on real information
         userLable.setText("Manager Patrick");
-        avatar.setImage(new Image(controller.SendMailScreenController.class.getResourceAsStream("/img/user.png")));
+        avatar.setImage(new Image(controller.SendMailScreenController.class.getResourceAsStream("/img/0.png")));
         //TODO: if clerk disable reviewLogs button. reviewLogs.setVisible(false);
 
     }

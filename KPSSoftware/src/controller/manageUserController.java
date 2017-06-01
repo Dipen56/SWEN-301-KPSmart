@@ -36,13 +36,13 @@ public class manageUserController {
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(changePasswordScene);
             tempStage.show();
-        }  else if (event.toString().contains("AddNewUser")) {
+        } else if (event.toString().contains("addNewUser")) {
             Parent addNewUserScreen = FXMLLoader.load(manageUserController.class.getResource("/fxml/AddNewUser.fxml"));
             Scene addNewUserScene = new Scene(addNewUserScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(addNewUserScene);
             tempStage.show();
-        }  else if (event.toString().contains("logout")) {
+        } else if (event.toString().contains("logout")) {
             //TODO; POP up dialog box to ask the user if they are sure want to logout
             DialogBox.LogoutyMsg("Logout", "Are you sure to logout?");
             Parent loginScreen = FXMLLoader.load(manageUserController.class.getResource("/fxml/login screen.fxml"));
@@ -74,7 +74,7 @@ public class manageUserController {
     public void initialize(URL location, ResourceBundle resources) {
         //TODO: change this based on real information
         userLable.setText("Clerk Buttercup");
-        avatar.setImage(new Image(controller.SendMailScreenController.class.getResourceAsStream("/img/buttercup.png")));
+        avatar.setImage(new Image(controller.SendMailScreenController.class.getResourceAsStream("/img/0.png")));
         //TODO: if clerk disable reviewLogs button. reviewLogs.setVisible(false);
 
     }

@@ -55,14 +55,14 @@ public class ChangePasswordController implements Initializable {
      */
     public void changeScenes(ActionEvent event) throws IOException {
 
-        if (event.toString().contains("AddNewUser")) {
+        if (event.toString().contains("addNewUser")) {
             Parent changePasswordScreen = FXMLLoader.load(ChangePasswordController.class.getResource("/fxml/AddNewUser.fxml"));
             Scene changePasswordScene = new Scene(changePasswordScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(changePasswordScene);
             tempStage.show();
-        } else if (event.toString().contains("ManageUser")) {
-            Parent manageUserScreen = FXMLLoader.load(ChangePasswordController.class.getResource("/fxml/ManageUser.fxml"));
+        } else if (event.toString().contains("manageUser")) {
+            Parent manageUserScreen = FXMLLoader.load(ChangePasswordController.class.getResource("/fxml/manage user.fxml"));
             Scene manageUserScene = new Scene(manageUserScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(manageUserScene);

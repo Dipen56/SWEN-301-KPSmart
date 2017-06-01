@@ -21,7 +21,7 @@
                         <ImageView fx:id="avatar" fitHeight="59.0" fitWidth="65.0" layoutX="26.0" pickOnBounds="true"
                                    preserveRatio="true">
                             <image>
-                                <Image url="@../img/user.png"/>
+                                <Image url="@../img/0.png"/>
                             </image>
                         </ImageView>
                         <Label fx:id="userLable" alignment="CENTER" layoutY="61.0" prefHeight="26.0" prefWidth="110.0"

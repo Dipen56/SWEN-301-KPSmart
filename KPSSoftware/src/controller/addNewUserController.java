@@ -37,7 +37,7 @@ public class addNewUserController {
             tempStage.setScene(changePasswordScene);
             tempStage.show();
         } else if (event.toString().contains("ManageUser")) {
-            Parent manageUserScreen = FXMLLoader.load(addNewUserController.class.getResource("/fxml/ManageUser.fxml"));
+            Parent manageUserScreen = FXMLLoader.load(addNewUserController.class.getResource("/fxml/manage user.fxml"));
             Scene manageUserScene = new Scene(manageUserScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(manageUserScene);

@@ -117,7 +117,7 @@ public class TransportCostScreenController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         //TODO: change this based on real information
         userLable.setText("Manager Betty");
-        avatar.setImage(new Image(SendMailScreenController.class.getResourceAsStream("/img/female-user.png")));
+        avatar.setImage(new Image(SendMailScreenController.class.getResourceAsStream("/img/0.png")));
         //TODO: if clerk disable reviewLogs button. reviewLogs.setVisible(false);
 
     }

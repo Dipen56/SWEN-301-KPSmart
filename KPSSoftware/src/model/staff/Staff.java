@@ -43,7 +43,6 @@ public abstract class Staff {
             password = newPassword;
             return "Password change successfull";
         }
-
     }
 
 

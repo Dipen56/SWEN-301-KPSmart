@@ -55,14 +55,14 @@ public class UserSettingController implements Initializable {
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(changePasswordScene);
             tempStage.show();
-        } else if (event.toString().contains("ManageUser")) {
-            Parent manageUserScreen = FXMLLoader.load(UserSettingController.class.getResource("/fxml/ManageUser.fxml"));
+        } else if (event.toString().contains("manageUser")) {
+            Parent manageUserScreen = FXMLLoader.load(UserSettingController.class.getResource("/fxml/manage user.fxml"));
             Scene manageUserScene = new Scene(manageUserScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(manageUserScene);
             tempStage.show();
 
-        } else if (event.toString().contains("AddNewUser")) {
+        } else if (event.toString().contains("addNewUser")) {
             Parent addNewUserScreen = FXMLLoader.load(UserSettingController.class.getResource("/fxml/AddNewUser.fxml"));
             Scene addNewUserScene = new Scene(addNewUserScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();

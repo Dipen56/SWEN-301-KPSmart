@@ -49,6 +49,7 @@ public class KPSmartModel {
     private static UserSettingController userSettingController;
     private static ChangePasswordController changePasswordController;
     private static ManageUserController manageUserControllerl;
+    private static AddNewUserController addNewUserController;
 
 
     /**
@@ -66,6 +67,7 @@ public class KPSmartModel {
         UserSettingController.setKpSmartModel(this);
         ChangePasswordController.setKpSmartModel(this);
         ManageUserController.setKpSmartModel(this);
+        AddNewUserController.setKpSmartModel(this);
 
     }
 
@@ -227,6 +229,10 @@ public class KPSmartModel {
         assert KPSDatabase.getLogins().size() == 1;
     }
 
+    public boolean addNewUser(String firstName, String lastName, String email, String phone, String userName, boolean isManager) {
+        return KPSDatabase.addUser(userName, "test123", firstName, lastName, email, phone, isManager);
+    }
+
     public boolean updateStaffInformation(String selectedUser, String firstName, String lastName, String email, String phone, boolean changeRole) {
         Staff tempStaff = null;
         for (Staff s : KPSDatabase.getLogins()) {
@@ -321,6 +327,8 @@ public class KPSmartModel {
             changePasswordController = (ChangePasswordController) controllers;
         } else if (controllers instanceof ManageUserController) {
             manageUserControllerl = (ManageUserController) controllers;
+        } else if (controllers instanceof AddNewUserController) {
+            addNewUserController = (AddNewUserController) controllers;
         }
 
     }

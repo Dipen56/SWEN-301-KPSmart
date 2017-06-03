@@ -38,14 +38,7 @@ public class LoginScreenController {
         KPSmartModel.setLoginScreenController(this);
     }
 
-    /**
-     * to set the KPSmodels class reference.
-     *
-     * @param kpsModel
-     */
-    public static void setKpSmartModel(KPSmartModel kpsModel) {
-        kpSmartModel = kpsModel;
-    }
+
 
     /**
      * this method is connected to the login button as well is the text fields, and is used to perform the steps
@@ -56,6 +49,7 @@ public class LoginScreenController {
         String username = usernameTextfield.getText();
         String password = passwordTextfield.getText();
         // checks given user name and password against database if correct will take you user the KPS Software.
+        System.out.println(kpSmartModel);
         if (kpSmartModel.authenticateLogin(username, password)) {
             // for testing us the  username: Bob password: test123
             Parent homescreen = FXMLLoader.load(LoginScreenController.class.getResource("/fxml/home screen.fxml"));
@@ -69,5 +63,13 @@ public class LoginScreenController {
             usernameTextfield.clear();
             passwordTextfield.clear();
         }
+    }
+    /**
+     * to set the KPSmodels class reference.
+     *
+     * @param kpsModel
+     */
+    public static void setKpSmartModel(KPSmartModel kpsModel) {
+        kpSmartModel = kpsModel;
     }
 }

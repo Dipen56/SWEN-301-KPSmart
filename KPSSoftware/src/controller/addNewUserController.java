@@ -168,3 +168,4 @@ public class AddNewUserController implements Initializable {
         kpSmartModel = kpsModel;
     }
 }
+

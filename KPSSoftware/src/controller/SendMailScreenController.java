@@ -116,7 +116,7 @@ public class SendMailScreenController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         //TODO: change this based on real information
         userLable.setText("Manager Dipen");
-        avatar.setImage(new Image(SendMailScreenController.class.getResourceAsStream("/img/oldman-user.jpg")));
+        avatar.setImage(new Image(SendMailScreenController.class.getResourceAsStream("/img/0.png")));
         //TODO: if clerk disable reviewLogs button. reviewLogs.setVisible(false);
         //TODO: forall comboboxs originCombobox.getItems().addAll("Wellington","Auckland");
 

@@ -1,6 +1,7 @@
 package model;
 
 import controller.*;
+import model.database.DataPopulater;
 import model.database.KPSDatabase;
 import model.event.*;
 import model.location.InternationalLocation;
@@ -68,6 +69,9 @@ public class KPSmartModel {
         ChangePasswordController.setKpSmartModel(this);
         ManageUserController.setKpSmartModel(this);
         AddNewUserController.setKpSmartModel(this);
+        boolean temp =DataPopulater.addLocations("Wellington", true);
+        System.out.println(temp);
+        DataPopulater.saveLocations();
 
     }
 

@@ -1,6 +1,8 @@
 package model.database;
 
+import model.location.InternationalLocation;
 import model.location.Location;
+import model.location.NZCity;
 import model.location.NZLocation;
 import model.route.Route;
 import model.staff.Clerk;
@@ -25,11 +27,23 @@ import java.util.List;
  * @version 2017/5/20
  */
 public class DataPopulater {
-    private static final String USER_PATH = DataPopulater.class.getResource("/xml/preload-data.xml").getPath();
+   // private static final String USER_PATH = "KPSSoftware/resources/xml/preload-data.xml";
+    private static final String USER_PATH = "/xml/preload-data.xml";
     private static List<Location> locations = new ArrayList<>();
     private static List<Route> routes = new ArrayList<>();
     private static List<TransportFirm> transportFirms= new ArrayList<>();
 
+
+    public static boolean addLocations(String lccationName, boolean isInternational ){
+        if(isInternational){
+            Location location = new InternationalLocation(locations.size()+1,lccationName);
+            return locations.add(location);
+        }else{
+            NZCity.valueOf(lccationName);
+            Location location= new NZLocation(locations.size()+1,NZCity.Auckland);
+            return locations.add(location);
+        }
+    }
 
     /**
      * Saves user data back to user-login file
@@ -37,58 +51,45 @@ public class DataPopulater {
      * @return true if saved successfully
      */
     public static boolean saveLocations() {
+
         // create new document
         Document document = DocumentHelper.createDocument();
         Element root = document.addElement("locations");
-        // count number of clerks and managers processed
+        // count number of Domistic and international locations.
         int internationalCount = 0, domisticCount = 0;
         // process all employees
         for (Location location : locations) {
             if (location instanceof NZLocation) {
-                internationalCount++;
+                domisticCount++;
                 // saving a clerk
                 Element a1 = root.addElement("NZLocation")
                         .addAttribute("locationId", Integer.toString(location.getId()))
-                        .addAttribute("name", employee.getUserName())
-                        .addAttribute("password", employee.getPassword());
-                a1.addElement("first")
-                        .addText(employee.getFirstName());
-                a1.addElement("last")
-                        .addText(employee.getLastName());
-                a1.addElement("email")
-                        .addText(employee.getEmail());
-                a1.addElement("phone")
-                        .addText(employee.getPhoneNumber());
+                        .addAttribute("locationName", location.getLocationName());
             } else {
-                managerCount++;
+                internationalCount++;
                 // saving a manager
-                Element a1 = root.addElement("manager")
-                        .addAttribute("uid", Integer.toString(employee.getUID()))
-                        .addAttribute("name", employee.getUserName())
-                        .addAttribute("password", employee.getPassword());
-                a1.addElement("first")
-                        .addText(employee.getFirstName());
-                a1.addElement("last")
-                        .addText(employee.getLastName());
-                a1.addElement("email")
-                        .addText(employee.getEmail());
-                a1.addElement("phone")
-                        .addText(employee.getPhoneNumber());
+                Element a1 = root.addElement("InternationalLocation")
+                        .addAttribute("locationId", Integer.toString(location.getId()))
+                        .addAttribute("locationName", location.getLocationName());
             }
         }
-        // writing user-logins document
+        // writing locations document
         try {
-            // creating XML writer
-            XMLWriter writer;
+
+            XMLWriter writer=null;
             // format and write document to file
             OutputFormat format = OutputFormat.createPrettyPrint();
-            writer = new XMLWriter(new FileWriter(USER_PATH), format);
+            // creating XML writer
+            // FIXME: 4/06/2017  the filewrite me is not working it gets stucks here
+            
+            writer = new XMLWriter(new FileWriter("/xml/preload-data.xml"), format);
+            System.out.println("here");
             writer.write(document);
             // close writer
+
             writer.close();
             // output for testing
-
-            System.out.println("Successfully saved: " + (clerkCount + managerCount) + " user logins");
+            System.out.println("Successfully saved: " + (internationalCount + domisticCount) + " Locations");
         } catch (IOException e) {
             return false;
         }

@@ -30,7 +30,7 @@
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></Button>
-            <Button id="route-button" mnemonicParsing="false" prefHeight="60.0" prefWidth="110.0" styleClass="main-button" stylesheets="@../css/style.css" text="Route Discontinue" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+            <Button id="routeId-button" mnemonicParsing="false" prefHeight="60.0" prefWidth="110.0" styleClass="main-button" stylesheets="@../css/style.css" text="Route Discontinue" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></Button>
@@ -42,7 +42,7 @@
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></Button>
-            <Button id="new-route" mnemonicParsing="false" prefHeight="60.0" prefWidth="109.0" styleClass="main-button" stylesheets="@../css/style.css" text="New Route" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+            <Button id="new-routeId" mnemonicParsing="false" prefHeight="60.0" prefWidth="109.0" styleClass="main-button" stylesheets="@../css/style.css" text="New Route" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></Button>
@@ -95,7 +95,7 @@
             </Label>
             <ImageView fitHeight="87.0" fitWidth="150.0" layoutX="433.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../img/route-closed.jpg" />
+                  <Image url="@../img/routeId-closed.jpg" />
                </image>
             </ImageView>
             <Button id="send-mail" layoutX="119.0" layoutY="456.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="101.0" styleClass="logout-button" stylesheets="@../css/style.css" text="Accept" textFill="WHITE">

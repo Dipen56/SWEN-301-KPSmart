@@ -382,40 +382,40 @@ public class KPSmartModel {
 
     private void addRoute(Route route) {
         routingSystem.addRoute(route);
-        eventLogger.logEvent(new RouteAdditionEvent(currentStaff, LocalDateTime.now(), route));
+        eventLogger.logEvent(new RouteAdditionEvent(currentStaff.getUID(), LocalDateTime.now(), route.id));
         // TODO: need to self-increment the route id here.
     }
 
     private void deliverMail(Mail mail) {
         mails.add(mail);
-        eventLogger.logEvent(new MailDeliveryEvent(currentStaff, LocalDateTime.now(), mail));
+        eventLogger.logEvent(new MailDeliveryEvent(currentStaff.getUID(), LocalDateTime.now(), mail.id));
         // TODO: need to self-increment the mail id here.
     }
 
     private void updateCustomerPrice(int routeId, float newPricePerGram, float newPricePerVolume) {
-        Route route = routingSystem.getRouteById(routeId);
+        Route route = routingSystem.findRouteById(routeId);
         float oldPricePerGram = route.getPricePerGram();
         float oldPricePerVolume = route.getPricePerVolume();
 
         routingSystem.updateRoutePriceById(routeId, newPricePerGram, newPricePerVolume);
-        eventLogger.logEvent(new CustomerPriceUpdateEvent(currentStaff, LocalDateTime.now(), routeId,
+        eventLogger.logEvent(new CustomerPriceUpdateEvent(currentStaff.getUID(), LocalDateTime.now(), routeId,
                 oldPricePerGram, oldPricePerVolume, newPricePerGram, newPricePerVolume));
 
     }
 
     private void updateTransportCost(int routeId, float newCostPerGram, float newCostPerVolume) {
-        Route route = routingSystem.getRouteById(routeId);
+        Route route = routingSystem.findRouteById(routeId);
         float oldCostPerGram = route.getCostPerGram();
         float oldCostPerVolume = route.getCostPerVolume();
 
         routingSystem.updateRouteCostById(routeId, newCostPerGram, newCostPerVolume);
-        eventLogger.logEvent(new TransportCostUpdateEvent(currentStaff, LocalDateTime.now(), routeId,
+        eventLogger.logEvent(new TransportCostUpdateEvent(currentStaff.getUID(), LocalDateTime.now(), routeId,
                 oldCostPerGram, oldCostPerVolume, newCostPerGram, newCostPerVolume));
 
     }
 
     private void deleteRoute(int routeId) {
         routingSystem.deleteRouteById(routeId);
-        eventLogger.logEvent(new RouteDeletionEvent(currentStaff, LocalDateTime.now(), routeId));
+        eventLogger.logEvent(new RouteDeletionEvent(currentStaff.getUID(), LocalDateTime.now(), routeId));
     }
 }

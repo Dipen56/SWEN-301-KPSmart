@@ -61,7 +61,7 @@
                         <Font name="System Bold" size="15.0"/>
                     </font>
                 </Button>
-                <Button id="newRoute" onAction="#changeScenes" mnemonicParsing="false" prefHeight="60.0" prefWidth="109.0"
+                <Button id="routeId" onAction="#changeScenes" mnemonicParsing="false" prefHeight="60.0" prefWidth="109.0"
                         styleClass="main-button" stylesheets="@../css/style.css" text="New Route" textAlignment="CENTER"
                         textFill="WHITE" wrapText="true">
                     <font>
@@ -128,7 +128,7 @@
                 <ImageView fitHeight="87.0" fitWidth="150.0" layoutX="446.0" layoutY="10.0" pickOnBounds="true"
                            preserveRatio="true">
                     <image>
-                        <Image url="@../img/new-route.png"/>
+                        <Image url="@../img/new-routeId.png"/>
                     </image>
                 </ImageView>
                 <Button id="accept" onAction="#handleButtons" layoutX="112.0" layoutY="516.0" mnemonicParsing="false" prefHeight="36.0"

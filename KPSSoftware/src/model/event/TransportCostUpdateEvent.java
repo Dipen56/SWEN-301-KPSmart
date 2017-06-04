@@ -1,7 +1,5 @@
 package model.event;
 
-import model.staff.Staff;
-
 import java.time.LocalDateTime;
 
 /**
@@ -12,15 +10,45 @@ import java.time.LocalDateTime;
  */
 public class TransportCostUpdateEvent extends Event {
 
+    /**
+     * The id of the updated route
+     */
     private int routeId;
+
+    /**
+     * The cost per gram before update
+     */
     private float oldCostPerGram;
+
+    /**
+     * the cost per volume before update
+     */
     private float oldCostPerVolume;
+
+    /**
+     * the new cost per gram after update
+     */
     private float newCostPerGram;
+
+    /**
+     * the new cost per volume after update
+     */
     private float newCostPerVolume;
 
-    public TransportCostUpdateEvent(Staff staff, LocalDateTime timeStamp, int routeId, float oldCostPerGram,
+    /**
+     * Constructor
+     *
+     * @param staffId
+     * @param timeStamp
+     * @param routeId
+     * @param oldCostPerGram
+     * @param oldCostPerVolume
+     * @param newCostPerGram
+     * @param newCostPerVolume
+     */
+    public TransportCostUpdateEvent(int staffId, LocalDateTime timeStamp, int routeId, float oldCostPerGram,
                                     float oldCostPerVolume, float newCostPerGram, float newCostPerVolume) {
-        super(staff, timeStamp);
+        super(staffId, timeStamp);
         this.routeId = routeId;
         this.oldCostPerGram = oldCostPerGram;
         this.oldCostPerVolume = oldCostPerVolume;

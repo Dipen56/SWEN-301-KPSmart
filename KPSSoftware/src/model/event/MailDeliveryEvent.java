@@ -1,30 +1,37 @@
 package model.event;
 
-import model.mail.Mail;
-import model.staff.Staff;
-
 import java.time.LocalDateTime;
 
 /**
- * This class represents an event of mail delivery
+ * This class represents an event of mailId delivery
  *
  * @author Hector
  * @version 2017/5/20
  */
 public class MailDeliveryEvent extends Event {
 
-    private Mail newMail;
+    /**
+     * The id of delivered Mail
+     */
+    private int mailId;
 
-    public MailDeliveryEvent(Staff staff, LocalDateTime timeStamp, Mail newMail) {
-        super(staff, timeStamp);
-        this.newMail = newMail;
+    /**
+     * Constructor
+     *
+     * @param staffId
+     * @param timeStamp
+     * @param mailId
+     */
+    public MailDeliveryEvent(int staffId, LocalDateTime timeStamp, int mailId) {
+        super(staffId, timeStamp);
+        this.mailId = mailId;
     }
 
     @Override
     public String toString() {
         return "MailDeliveryEvent{" +
                 super.toString() +
-                ", newMail=" + newMail +
+                ", mailId=" + mailId +
                 '}';
     }
 }

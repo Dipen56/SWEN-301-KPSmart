@@ -9,11 +9,22 @@ package model.location;
  */
 public abstract class Location {
 
+    /**
+     * The id of this location
+     */
     public final int id;
 
+    /**
+     * Constructor
+     *
+     * @param locationId
+     */
     public Location(int locationId) {
         this.id = locationId;
     }
 
+    /**
+     * @return the name of this location
+     */
     public abstract String getLocationName();
 }

@@ -7,24 +7,52 @@ package model.mail;
  * @version 2017/5/20
  */
 public enum Priority {
-    International_Air,
-    International_Standard,
-    Domestic_Air,
-    Domestic_Standard;
+    International_Air, International_Standard, Domestic_Air, Domestic_Standard;
 
+    /**
+     * The price factor for international priorities. International priorities are more expensive than domestic
+     * priorities.
+     */
+    private static final float INTERNATIONAL_AIR_FACTOR = 1.25f;
+
+    /**
+     * The price factor for international priorities. International priorities are more expensive than domestic
+     * priorities.
+     */
+    private static final float INTERNATIONAL_STANDARD_FACTOR = 1.15f;
+
+    /**
+     * The price factor for domestic priorities.
+     */
+    private static final float DOMESTIC_AIR_FACTOR = 1.1f;
+
+    /**
+     * The price factor for international priorities. International priorities are more expensive than domestic
+     * priorities.
+     */
+    private static final float DOMESTIC_STANDARD_FACTOR = 1.0f;
+
+    /**
+     * @return the price factor
+     */
     public float getPriceFactor() {
         switch (this) {
             case International_Air:
+                return INTERNATIONAL_AIR_FACTOR;
             case International_Standard:
-                return 1.2f;
+                return INTERNATIONAL_STANDARD_FACTOR;
             case Domestic_Air:
+                return DOMESTIC_AIR_FACTOR;
             case Domestic_Standard:
-                return 1.0f;
+                return DOMESTIC_STANDARD_FACTOR;
             default:
                 return 0;  // dead code
         }
     }
 
+    /**
+     * @return <i>true</i> if it's international priority, or <i>false</i> if it's domestic priority.
+     */
     public boolean isInternational() {
         switch (this) {
             case International_Air:
@@ -38,6 +66,9 @@ public enum Priority {
         }
     }
 
+    /**
+     * @return <i>true</i> if it's air priority, or <i>false</i> if it's standard priority.
+     */
     public boolean isAir() {
         switch (this) {
             case International_Air:

@@ -5,26 +5,77 @@ import model.location.Location;
 import model.transportFirm.TransportFirm;
 
 /**
- * This class represents a postal route between two cities.
+ * This class represents a postal route between two locations.
  *
  * @author Hector
  * @version 2017/5/20
  */
 public class Route {
 
+    /**
+     * The id of this route
+     */
     public final int id;
+
+    /**
+     * The type of this route
+     */
     public final RouteType routeType;
 
+    /**
+     * The start location of this route
+     */
     private final Location start;
+
+    /**
+     * The end location of this route
+     */
     private final Location end;
+
+    /**
+     * The duration that this route takes to go from start to end
+     */
     private final float duration;
+
+    /**
+     * The company operating on thie route
+     */
     private final TransportFirm transportFirm;
 
+    /**
+     * The price per gram
+     */
     private float pricePerGram;
+
+    /**
+     * The price per volume
+     */
     private float pricePerVolume;
+
+    /**
+     * The cost per gram
+     */
     private float costPerGram;
+
+    /**
+     * The cost per volume
+     */
     private float costPerVolume;
 
+    /**
+     * Constructor
+     *
+     * @param id
+     * @param start
+     * @param end
+     * @param routeType
+     * @param duration
+     * @param transportFirm
+     * @param pricePerGram
+     * @param pricePerVolume
+     * @param costPerGram
+     * @param costPerVolume
+     */
     public Route(int id, Location start, Location end, RouteType routeType, float duration, TransportFirm transportFirm,
                  float pricePerGram, float pricePerVolume, float costPerGram, float costPerVolume) {
         if (start.id == end.id) {
@@ -43,62 +94,127 @@ public class Route {
         this.costPerVolume = costPerVolume;
     }
 
+    /**
+     * @return the start location
+     */
     public Location getStartLocation() {
         return start;
     }
 
+    /**
+     * @return the end location
+     */
     public Location getEndLocation() {
         return end;
     }
 
+    /**
+     * @return the price per gram
+     */
     public float getPricePerGram() {
         return pricePerGram;
     }
 
+    /**
+     * Set the price per gram
+     *
+     * @param pricePerGram
+     */
     public void setPricePerGram(float pricePerGram) {
         this.pricePerGram = pricePerGram;
     }
 
+    /**
+     * @return the price per volume
+     */
     public float getPricePerVolume() {
         return pricePerVolume;
     }
 
+    /**
+     * Set the price per volume
+     *
+     * @param pricePerVolume
+     */
     public void setPricePerVolume(float pricePerVolume) {
         this.pricePerVolume = pricePerVolume;
     }
 
+    /**
+     * @return the cost per gram
+     */
     public float getCostPerGram() {
         return costPerGram;
     }
 
+    /**
+     * Set the cost per gram
+     *
+     * @param costPerGram
+     */
     public void setCostPerGram(float costPerGram) {
         this.costPerGram = costPerGram;
     }
 
+    /**
+     * @return the cost per volume
+     */
     public float getCostPerVolume() {
         return costPerVolume;
     }
 
+    /**
+     * Set the cost per volume
+     *
+     * @param costPerVolume
+     */
     public void setCostPerVolume(float costPerVolume) {
         this.costPerVolume = costPerVolume;
     }
 
+    /**
+     * Calculate the revenue of this route.
+     *
+     * @param weight the weight used to calculate the mail's revenue
+     * @param volume the volume used to calculate the mail's revenue
+     * @return the revenue of this route.
+     */
     public float getRevenue(float weight, float volume) {
         return pricePerGram * weight + pricePerVolume * volume;
     }
 
+    /**
+     * Calculate the expenditure(cost) of this route.
+     *
+     * @param weight the weight used to calculate the mail's expenditure(cost)
+     * @param volume the volume used to calculate the mail's expenditure(cost)
+     * @return the expenditure(cost) of this route.
+     */
     public float getExpenditure(float weight, float volume) {
         return costPerGram * weight + costPerVolume * volume;
     }
 
+    /**
+     * Calculate the profit of this route.
+     *
+     * @param weight the weight used to calculate the mail's profit
+     * @param volume the volume used to calculate the mail's profit
+     * @return the profit of this route.
+     */
     public float getNetProfit(float weight, float volume) {
         return getRevenue(weight, volume) - getExpenditure(weight, volume);
     }
 
+    /**
+     * @return the duration that this route takes to go from start to end
+     */
     public float getDuration() {
         return duration;
     }
 
+    /**
+     * @return true if this route is international route, or false if it's domestic
+     */
     public boolean isInternationalRoute() {
         return start instanceof InternationalLocation || end instanceof InternationalLocation;
     }

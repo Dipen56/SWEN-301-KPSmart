@@ -8,8 +8,17 @@ package model.location;
  */
 public class NZLocation extends Location {
 
+    /**
+     * The name of this New Zealand location
+     */
     private final NZCity city;
 
+    /**
+     * Constructor
+     *
+     * @param locationId
+     * @param city
+     */
     public NZLocation(int locationId, NZCity city) {
         super(locationId);
         this.city = city;

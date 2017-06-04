@@ -8,9 +8,15 @@ package model.location;
  * @version 2017/5/20
  */
 public abstract class Location {
+
     //TODO shoould we change this to private
     public final int id;
 
+    /**
+     * Constructor
+     *
+     * @param locationId
+     */
     public Location(int locationId) {
         this.id = locationId;
     }
@@ -19,5 +25,8 @@ public abstract class Location {
         return id;
     }
 
+    /**
+     * @return the name of this location
+     */
     public abstract String getLocationName();
 }

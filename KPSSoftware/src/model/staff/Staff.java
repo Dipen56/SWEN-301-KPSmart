@@ -1,14 +1,11 @@
 package model.staff;
 
-import java.util.ArrayList;
-
 /**
  * User class of the KPS, which has a username,
  * password and a boolean to represent manager status.
  *
  * @author Betty
  */
-
 public abstract class Staff {
     private int UID;
     private String userName;
@@ -41,15 +38,14 @@ public abstract class Staff {
             return "New passwords must be minimum 6 characters";
         } else {
             password = newPassword;
-            return "Password change successfull";
+            return "Password change successful";
         }
     }
 
-
     /*
      * Getter and Setter methods.
-     *
      */
+
     public int getUID() {
         return UID;
     }
@@ -115,7 +111,6 @@ public abstract class Staff {
         return manager;
     }
 
-
     @Override
     public String toString() {
         return "Staff{" +
@@ -124,5 +119,4 @@ public abstract class Staff {
                 ", password='" + password + '\'' +
                 '}';
     }
-
 }

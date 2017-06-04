@@ -1,24 +1,52 @@
 package model.route;
 
 /**
- * This class represents a node used in path finding with dijkstra algorithm
+ * This class represents the node used in path finding with dijkstra algorithm
  *
  * @author Hector
  * @version 2017/5/29
  */
 public class DijkstraNode implements Comparable<DijkstraNode> {
 
+    /**
+     * The GraphNode that this DijkstraNode is representing for
+     */
     private GraphNode graphNode;
+
+    /**
+     * The DijkstraNode that this Node comes from, i.e. the parent node along the path.
+     */
     private DijkstraNode cameFrom;
+
+    /**
+     * The Graph edge connecting this node and the parent node
+     */
     private GraphEdge edgeToParent;
+
+    /**
+     * The total profit from the root node till this node.
+     */
     private double profitFromStart = 0;
 
+    /**
+     * Constructor
+     *
+     * @param selfNode
+     * @param fromNode
+     * @param edgeToParent
+     */
     public DijkstraNode(GraphNode selfNode, DijkstraNode fromNode, GraphEdge edgeToParent) {
         this.graphNode = selfNode;
         this.cameFrom = fromNode;
         this.edgeToParent = edgeToParent;
     }
 
+    /**
+     * This method updates the total profit from the root node till this node.
+     *
+     * @param weight the weight used to calculate the mail's revenue
+     * @param volume the volume used to calculate the mail's revenue
+     */
     public void updateProfitFromStart(float weight, float volume) {
         if (cameFrom == null) {
             this.profitFromStart = 0;
@@ -27,26 +55,48 @@ public class DijkstraNode implements Comparable<DijkstraNode> {
         }
     }
 
+    /**
+     * @return the GraphNode that this DijkstraNode is representing for
+     */
     public GraphNode getGraphNode() {
         return this.graphNode;
     }
 
+    /**
+     * @return the parent node along the path, i.e. which node do I came from?
+     */
     public DijkstraNode getCameFromNode() {
         return this.cameFrom;
     }
 
+    /**
+     * @return the graph edge connecting this node and the parent node
+     */
     public GraphEdge getEdgeToParent() {
         return this.edgeToParent;
     }
 
+    /**
+     * This method sets the graph edge connecting this node and the parent node
+     *
+     * @param edgeToParent
+     */
     public void setEdgeToParent(GraphEdge edgeToParent) {
         this.edgeToParent = edgeToParent;
     }
 
+    /**
+     * @return The total profit from the root node till this node.
+     */
     public double getProfitFromStart() {
         return this.profitFromStart;
     }
 
+    /**
+     * This method updates the total profit from the root node till this node.
+     *
+     * @param newCostFromStart
+     */
     public void setProfitFromStart(double newCostFromStart) {
         this.profitFromStart = newCostFromStart;
     }

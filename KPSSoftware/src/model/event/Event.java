@@ -1,7 +1,5 @@
 package model.event;
 
-import model.staff.Staff;
-
 import java.time.LocalDateTime;
 
 /**
@@ -12,16 +10,29 @@ import java.time.LocalDateTime;
  */
 public abstract class Event {
 
-    private Staff staff;
+    /**
+     * tThe staffId who logged this event
+     */
+    private int staffId;
+
+    /**
+     * The time stamp of when this event happened
+     */
     private LocalDateTime timeStamp;
 
-    public Event(Staff staff, LocalDateTime timeStamp) {
-        this.staff = staff;
+    /**
+     * Constructor
+     *
+     * @param staffId
+     * @param timeStamp
+     */
+    public Event(int staffId, LocalDateTime timeStamp) {
+        this.staffId = staffId;
         this.timeStamp = timeStamp;
     }
 
     @Override
     public String toString() {
-        return "staff=" + staff + ", timeStamp=" + timeStamp;
+        return "staffId=" + staffId + ", timeStamp=" + timeStamp;
     }
 }

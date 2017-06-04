@@ -9,8 +9,17 @@ package model.location;
  */
 public class InternationalLocation extends Location {
 
+    /**
+     * The name of the city
+     */
     private final String cityName;
 
+    /**
+     * Constructor
+     *
+     * @param locationId
+     * @param cityName
+     */
     public InternationalLocation(int locationId, String cityName) {
         super(locationId);
         this.cityName = cityName;

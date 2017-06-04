@@ -1,8 +1,5 @@
 package model.event;
 
-import model.route.Route;
-import model.staff.Staff;
-
 import java.time.LocalDateTime;
 
 /**
@@ -13,18 +10,28 @@ import java.time.LocalDateTime;
  */
 public class RouteAdditionEvent extends Event {
 
-    private Route newRoute;
+    /**
+     * The id of the added route
+     */
+    private int routeId;
 
-    public RouteAdditionEvent(Staff staff, LocalDateTime timeStamp, Route newRoute) {
-        super(staff, timeStamp);
-        this.newRoute = newRoute;
+    /**
+     * Constructor
+     *
+     * @param staffId
+     * @param timeStamp
+     * @param routeId
+     */
+    public RouteAdditionEvent(int staffId, LocalDateTime timeStamp, int routeId) {
+        super(staffId, timeStamp);
+        this.routeId = routeId;
     }
 
     @Override
     public String toString() {
         return "RouteAdditionEvent{" +
                 super.toString() +
-                ", newRoute=" + newRoute +
+                ", routeId=" + routeId +
                 '}';
     }
 }

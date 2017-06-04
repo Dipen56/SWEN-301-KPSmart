@@ -1,7 +1,5 @@
 package model.event;
 
-import model.staff.Staff;
-
 import java.time.LocalDateTime;
 
 /**
@@ -12,18 +10,28 @@ import java.time.LocalDateTime;
  */
 public class RouteDeletionEvent extends Event {
 
-    private int deletedRouteId;
+    /**
+     * The id of deleted route
+     */
+    private int routeId;
 
-    public RouteDeletionEvent(Staff staff, LocalDateTime timeStamp, int deletedRouteId) {
-        super(staff, timeStamp);
-        this.deletedRouteId = deletedRouteId;
+    /**
+     * Constructor
+     *
+     * @param staffId
+     * @param timeStamp
+     * @param routeId
+     */
+    public RouteDeletionEvent(int staffId, LocalDateTime timeStamp, int routeId) {
+        super(staffId, timeStamp);
+        this.routeId = routeId;
     }
 
     @Override
     public String toString() {
         return "RouteDeletionEvent{" +
                 super.toString() +
-                ", deletedRouteId=" + deletedRouteId +
+                ", routeId=" + routeId +
                 '}';
     }
 }

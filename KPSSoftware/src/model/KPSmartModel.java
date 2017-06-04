@@ -69,7 +69,7 @@ public class KPSmartModel {
         ChangePasswordController.setKpSmartModel(this);
         ManageUserController.setKpSmartModel(this);
         AddNewUserController.setKpSmartModel(this);
-        boolean temp =DataPopulater.addLocations("Wellington", true);
+        boolean temp =DataPopulater.addLocations("Wellingtonnn", true);
         System.out.println(temp);
         DataPopulater.saveLocations();
 

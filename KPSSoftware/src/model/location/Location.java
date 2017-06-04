@@ -9,7 +9,6 @@ package model.location;
  */
 public abstract class Location {
 
-    //TODO shoould we change this to private
     public final int id;
 
     /**
@@ -19,10 +18,6 @@ public abstract class Location {
      */
     public Location(int locationId) {
         this.id = locationId;
-    }
-
-    public int getId() {
-        return id;
     }
 
     /**

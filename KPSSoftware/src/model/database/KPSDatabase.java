@@ -25,8 +25,8 @@ import java.util.List;
 public class KPSDatabase {
 
     // field storing the path to the user data file
-    //private static final String USER_PATH = "KPSSoftware/resources/xml/user-logins.xml";
-    private static final String USER_PATH = KPSDatabase.class.getResource("/xml/user-logins.xml").getPath();
+    private static final String USER_PATH = "KPSSoftware/resources/xml/user-logins.xml";
+    //private static final String USER_PATH = KPSDatabase.class.getResource("/xml/user-logins.xml").getPath();
     // field storing uid for new users
     private static int UID = 0;
 

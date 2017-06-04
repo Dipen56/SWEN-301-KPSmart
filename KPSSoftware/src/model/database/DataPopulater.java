@@ -14,6 +14,8 @@ import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
@@ -27,20 +29,20 @@ import java.util.List;
  * @version 2017/5/20
  */
 public class DataPopulater {
-   // private static final String USER_PATH = "KPSSoftware/resources/xml/preload-data.xml";
-    private static final String USER_PATH = "/xml/preload-data.xml";
+    private static final String USER_PATH = "KPSSoftware/resources/xml/preload-data.xml";
+    // private static final String USER_PATH = "/xml/preload-data.xml";
     private static List<Location> locations = new ArrayList<>();
     private static List<Route> routes = new ArrayList<>();
-    private static List<TransportFirm> transportFirms= new ArrayList<>();
+    private static List<TransportFirm> transportFirms = new ArrayList<>();
 
 
-    public static boolean addLocations(String lccationName, boolean isInternational ){
-        if(isInternational){
-            Location location = new InternationalLocation(locations.size()+1,lccationName);
+    public static boolean addLocations(String lccationName, boolean isInternational) {
+        if (isInternational) {
+            Location location = new InternationalLocation(locations.size() + 1, lccationName);
             return locations.add(location);
-        }else{
+        } else {
             NZCity.valueOf(lccationName);
-            Location location= new NZLocation(locations.size()+1,NZCity.Auckland);
+            Location location = new NZLocation(locations.size() + 1, NZCity.Auckland);
             return locations.add(location);
         }
     }
@@ -63,31 +65,25 @@ public class DataPopulater {
                 domisticCount++;
                 // saving a clerk
                 Element a1 = root.addElement("NZLocation")
-                        .addAttribute("locationId", Integer.toString(location.getId()))
+                        .addAttribute("locationId", Integer.toString(location.id))
                         .addAttribute("locationName", location.getLocationName());
             } else {
                 internationalCount++;
                 // saving a manager
                 Element a1 = root.addElement("InternationalLocation")
-                        .addAttribute("locationId", Integer.toString(location.getId()))
+                        .addAttribute("locationId", Integer.toString(location.id))
                         .addAttribute("locationName", location.getLocationName());
             }
         }
         // writing locations document
         try {
 
-            XMLWriter writer=null;
-            // format and write document to file
             OutputFormat format = OutputFormat.createPrettyPrint();
-            // creating XML writer
-            // FIXME: 4/06/2017  the filewrite me is not working it gets stucks here
-            
-            writer = new XMLWriter(new FileWriter("/xml/preload-data.xml"), format);
-            System.out.println("here");
+// FIXME: 5/06/2017 can't get this to save to the right location it creating and saving to the rourte folder.
+            XMLWriter writer = new XMLWriter(new FileWriter("perload-data.xml"), format);
             writer.write(document);
-            // close writer
-
             writer.close();
+
             // output for testing
             System.out.println("Successfully saved: " + (internationalCount + domisticCount) + " Locations");
         } catch (IOException e) {

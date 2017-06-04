@@ -9,6 +9,9 @@ package model.location;
  */
 public abstract class Location {
 
+    /**
+     * The id of this location
+     */
     public final int id;
 
     /**

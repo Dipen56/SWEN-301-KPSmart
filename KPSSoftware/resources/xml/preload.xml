@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<locations>
+  <NZLocation locationId="1" locationName="Auckland"/>
+  <NZLocation locationId="2" locationName="Auckland"/>
+  <NZLocation locationId="3" locationName="Auckland"/>
+  <NZLocation locationId="4" locationName="Auckland"/>
+  <NZLocation locationId="5" locationName="Auckland"/>
+  <NZLocation locationId="6" locationName="Auckland"/>
+  <NZLocation locationId="7" locationName="Auckland"/>
+  <InternationalLocation locationId="8" locationName="Sydney"/>
+  <InternationalLocation locationId="9" locationName="Singapore"/>
+  <InternationalLocation locationId="10" locationName="HongKong"/>
+  <InternationalLocation locationId="11" locationName="GuangZhou"/>
+  <InternationalLocation locationId="12" locationName="Moscow"/>
+  <InternationalLocation locationId="13" locationName="Mumbai"/>
+  <InternationalLocation locationId="14" locationName="NewYork"/>
+  <InternationalLocation locationId="15" locationName="London"/>
+</locations>
+

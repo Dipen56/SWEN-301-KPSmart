@@ -69,11 +69,13 @@ public class KPSmartModel {
         ChangePasswordController.setKpSmartModel(this);
         ManageUserController.setKpSmartModel(this);
         AddNewUserController.setKpSmartModel(this);
-        boolean temp =DataPopulater.addLocations("Wellingtonnn", true);
-        System.out.println(temp);
-        DataPopulater.saveLocations();
+        new DataPopulater();
+//        boolean temp =DataPopulater.addLocations("Wellington", false);
+//        System.out.println(temp);
+//        DataPopulater.saveLocations();
 
     }
+
 
 
     /**
@@ -213,6 +215,7 @@ public class KPSmartModel {
      * These methods made by Dipen
      * =================================================================================================================
      */
+
     public Staff getCurrentUser() {
         return currentStaffTemp;
     }

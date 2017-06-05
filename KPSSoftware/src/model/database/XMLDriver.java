@@ -144,16 +144,22 @@ public class XMLDriver {
      * @return true if successful, or false if failed.
      */
     public static boolean writeLocation(Location location) {
-        //  data of location
-        String id = String.valueOf(location.id);
-        String elementName = location.getClass().getSimpleName();
-        String cityName = location.getLocationName();
-
         // read from XML file to get the existing locations
         Document document = readDocumentFrom(LOCATION_XML_FILE_NAME);
         if (document == null) {
             return false;
         }
+
+        // if XML file has this id already, do not add it.
+        Node existingNode = document.selectSingleNode("/Locations/*[@id='" + location.id + "']");
+        if (existingNode != null) {
+            return false;
+        }
+
+        // metadata of location
+        String id = String.valueOf(location.id);
+        String elementName = location.getClass().getSimpleName();
+        String cityName = location.getLocationName();
 
         // Update the maxID
         document.getRootElement().addAttribute("maxId", id);
@@ -248,6 +254,18 @@ public class XMLDriver {
      * @return true if successful, or false if failed.
      */
     public static boolean writeMail(Mail mail) {
+        // read from XML file to get the existing locations
+        Document document = readDocumentFrom(MAIL_XML_FILE_NAME);
+        if (document == null) {
+            return false;
+        }
+
+        // if XML file has this id already, do not add it.
+        Node existingNode = document.selectSingleNode("/Mails/*[@id='" + mail.id + "']");
+        if (existingNode != null) {
+            return false;
+        }
+
         //  metadata of Mail
         String elementName = "Mail";
         String id = String.valueOf(mail.id);
@@ -257,11 +275,6 @@ public class XMLDriver {
         String volume = String.valueOf(mail.getVolume());
         String priority = mail.getPriority().toString();
 
-        // read from XML file to get the existing locations
-        Document document = readDocumentFrom(MAIL_XML_FILE_NAME);
-        if (document == null) {
-            return false;
-        }
 
         // Update the maxID
         document.getRootElement().addAttribute("maxId", id);
@@ -357,6 +370,18 @@ public class XMLDriver {
      * @return true if successful, or false if failed.
      */
     public static boolean writeRoute(Route route) {
+        // read from XML file to get the existing locations
+        Document document = readDocumentFrom(ROUTE_XML_FILE_NAME);
+        if (document == null) {
+            return false;
+        }
+
+        // if XML file has this id already, do not add it.
+        Node existingNode = document.selectSingleNode("/Routes/*[@id='" + route.id + "']");
+        if (existingNode != null) {
+            return false;
+        }
+
         //  metadata of route
         String elementName = "Route";
         String id = String.valueOf(route.id);
@@ -369,12 +394,6 @@ public class XMLDriver {
         String pricePerVolume = String.valueOf(route.getCostPerVolume());
         String costPerGram = String.valueOf(route.getCostPerGram());
         String costPerVolume = String.valueOf(route.getCostPerVolume());
-
-        // read from XML file to get the existing locations
-        Document document = readDocumentFrom(ROUTE_XML_FILE_NAME);
-        if (document == null) {
-            return false;
-        }
 
         // Update the maxID
         document.getRootElement().addAttribute("maxId", id);
@@ -479,6 +498,18 @@ public class XMLDriver {
      * @return true if successful, or false if failed.
      */
     public static boolean writeStaff(Staff staff) {
+        // read from XML file to get the existing locations
+        Document document = readDocumentFrom(STAFF_XML_FILE_NAME);
+        if (document == null) {
+            return false;
+        }
+
+        // if XML file has this id already, do not add it.
+        Node existingNode = document.selectSingleNode("/Staffs/*[@id='" + staff.id + "']");
+        if (existingNode != null) {
+            return false;
+        }
+
         //  metadata of staff
         String elementName = "Staff";
         String id = String.valueOf(staff.id);
@@ -489,12 +520,6 @@ public class XMLDriver {
         String email = staff.getEmail();
         String phoneNumber = staff.getPhoneNumber();
         String isManager = String.valueOf(staff.isManager());
-
-        // read from XML file to get the existing locations
-        Document document = readDocumentFrom(STAFF_XML_FILE_NAME);
-        if (document == null) {
-            return false;
-        }
 
         // Update the maxID
         document.getRootElement().addAttribute("maxId", id);

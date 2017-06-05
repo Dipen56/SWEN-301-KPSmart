@@ -119,7 +119,7 @@ public class ManageUserController implements Initializable {
 
         } else if (event.toString().contains("selectUser")) {
             Staff staff = kpSmartModel.getSelectedUser((String) selectUser.getValue());
-            userImage.setImage(new Image(ManageUserController.class.getResourceAsStream("/img/" + staff.getUID() + ".png")));
+            userImage.setImage(new Image(ManageUserController.class.getResourceAsStream("/img/" + staff.id + ".png")));
             firstName.setText("First Name: " + staff.getFirstName());
             lastName.setText("Last Name: " + staff.getLastName());
             emailAddress.setText("Email: " + staff.getEmail());
@@ -151,7 +151,7 @@ public class ManageUserController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpSmartModel.getCurrentUser();
         userLable.setText(staff.getFirstName());
-        avatar.setImage(new Image(ManageUserController.class.getResourceAsStream("/img/" + staff.getUID() + ".png")));
+        avatar.setImage(new Image(ManageUserController.class.getResourceAsStream("/img/" + staff.id + ".png")));
         for (Staff s : kpSmartModel.getAllUsers()) {
             selectUser.getItems().add(s.getFirstName() + " " + s.getLastName());
         }

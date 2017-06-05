@@ -22,8 +22,8 @@ public class RouteAdditionEvent extends Event {
      * @param timeStamp
      * @param routeId
      */
-    public RouteAdditionEvent(int staffId, LocalDateTime timeStamp, int routeId) {
-        super(staffId, timeStamp);
+    public RouteAdditionEvent(int id, int staffId, LocalDateTime timeStamp, int routeId) {
+        super(id, staffId, timeStamp);
         this.routeId = routeId;
     }
 

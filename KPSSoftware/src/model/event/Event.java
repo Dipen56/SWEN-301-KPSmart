@@ -11,7 +11,12 @@ import java.time.LocalDateTime;
 public abstract class Event {
 
     /**
-     * tThe staffId who logged this event
+     * The id of this event
+     */
+    public final int id;
+
+    /**
+     * The staffId who logged this event
      */
     private int staffId;
 
@@ -26,13 +31,18 @@ public abstract class Event {
      * @param staffId
      * @param timeStamp
      */
-    public Event(int staffId, LocalDateTime timeStamp) {
+    public Event(int id, int staffId, LocalDateTime timeStamp) {
+        this.id = id;
         this.staffId = staffId;
         this.timeStamp = timeStamp;
     }
 
     @Override
     public String toString() {
-        return "staffId=" + staffId + ", timeStamp=" + timeStamp;
+        return "Event{" +
+                "id=" + id +
+                ", staffId=" + staffId +
+                ", timeStamp=" + timeStamp +
+                '}';
     }
 }

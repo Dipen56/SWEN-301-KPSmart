@@ -46,9 +46,9 @@ public class TransportCostUpdateEvent extends Event {
      * @param newCostPerGram
      * @param newCostPerVolume
      */
-    public TransportCostUpdateEvent(int staffId, LocalDateTime timeStamp, int routeId, float oldCostPerGram,
+    public TransportCostUpdateEvent(int id, int staffId, LocalDateTime timeStamp, int routeId, float oldCostPerGram,
                                     float oldCostPerVolume, float newCostPerGram, float newCostPerVolume) {
-        super(staffId, timeStamp);
+        super(id, staffId, timeStamp);
         this.routeId = routeId;
         this.oldCostPerGram = oldCostPerGram;
         this.oldCostPerVolume = oldCostPerVolume;

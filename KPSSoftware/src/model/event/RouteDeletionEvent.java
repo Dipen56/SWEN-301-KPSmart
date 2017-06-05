@@ -22,8 +22,8 @@ public class RouteDeletionEvent extends Event {
      * @param timeStamp
      * @param routeId
      */
-    public RouteDeletionEvent(int staffId, LocalDateTime timeStamp, int routeId) {
-        super(staffId, timeStamp);
+    public RouteDeletionEvent(int id, int staffId, LocalDateTime timeStamp, int routeId) {
+        super(id, staffId, timeStamp);
         this.routeId = routeId;
     }
 

@@ -11,22 +11,22 @@ public class NZLocation extends Location {
     /**
      * The name of this New Zealand location
      */
-    private final NZCity city;
+    private final NZCity cityName;
 
     /**
      * Constructor
      *
      * @param locationId
-     * @param city
+     * @param cityName
      */
-    public NZLocation(int locationId, NZCity city) {
+    public NZLocation(int locationId, NZCity cityName) {
         super(locationId);
-        this.city = city;
+        this.cityName = cityName;
     }
 
     @Override
     public String getLocationName() {
-        return city.toString();
+        return cityName.toString();
     }
 
     @Override
@@ -38,18 +38,18 @@ public class NZLocation extends Location {
 
         NZLocation that = (NZLocation) o;
 
-        return city == that.city;
+        return cityName == that.cityName;
     }
 
     @Override
     public int hashCode() {
-        return city.hashCode();
+        return cityName.hashCode();
     }
 
     @Override
     public String toString() {
         return "NZLocation{" +
-                "location=" + city +
+                "location=" + cityName +
                 '}';
     }
 }

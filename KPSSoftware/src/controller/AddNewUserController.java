@@ -128,7 +128,7 @@ public class AddNewUserController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpSmartModel.getCurrentUser();
         userLable.setText(staff.getFirstName());
-        avatar.setImage(new Image(AddNewUserController.class.getResourceAsStream("/img/" + staff.getUID() + ".png")));
+        avatar.setImage(new Image(AddNewUserController.class.getResourceAsStream("/img/" + staff.id + ".png")));
 
     }
 

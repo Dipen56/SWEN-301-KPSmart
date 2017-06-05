@@ -2,25 +2,25 @@ package model.staff;
 
 /**
  * User class of the KPS, which has a username,
- * password and a boolean to represent manager status.
+ * password and a boolean to represent isManager status.
  *
  * @author Betty
  */
-public abstract class Staff {
-    private int UID;
+public class Staff {
+    public final int id;
     private String userName;
     private String password;
     private String firstName;
     private String lastName;
     private String email;
     private String phoneNumber;
-    private boolean manager;
+    private boolean isManager;
 
-    public Staff(int uid, String username, String password, boolean manager) {
-        this.setUID(uid);
-        this.setUserName(username);
-        this.setPassword(password);
-        this.setManager(manager);
+    public Staff(int id, String userName, String password, boolean isManager) {
+        this.id = id;
+        this.userName = userName;
+        this.password = password;
+        this.isManager = isManager;
     }
 
     // USER ACCOUNT METHODS
@@ -45,14 +45,6 @@ public abstract class Staff {
     /*
      * Getter and Setter methods.
      */
-
-    public int getUID() {
-        return UID;
-    }
-
-    public void setUID(int uID) {
-        UID = uID;
-    }
 
     public String getUserName() {
         return userName;
@@ -103,20 +95,25 @@ public abstract class Staff {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setManager(boolean manager) {
-        this.manager = manager;
+    public void setIsManager(boolean isManager) {
+        this.isManager = isManager;
     }
 
     public boolean isManager() {
-        return manager;
+        return isManager;
     }
 
     @Override
     public String toString() {
         return "Staff{" +
-                "UID=" + UID +
+                "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", isManager=" + isManager +
                 '}';
     }
 }

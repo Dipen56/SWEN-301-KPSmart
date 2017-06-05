@@ -3,6 +3,7 @@ package model;
 import controller.*;
 import model.database.DataPopulater;
 import model.database.KPSDatabase;
+import model.database.XMLDriver;
 import model.event.*;
 import model.location.InternationalLocation;
 import model.location.NZCity;
@@ -12,10 +13,7 @@ import model.mail.Priority;
 import model.route.Route;
 import model.route.RouteType;
 import model.route.RoutingSystem;
-import model.staff.Clerk;
-import model.staff.Manager;
 import model.staff.Staff;
-import model.transportFirm.TransportFirm;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -31,18 +29,24 @@ import java.util.Map;
  */
 public class KPSmartModel {
 
+    private int maxEventId;
+    private int maxLocationId;
+    private int maxMailId;
+    private int maxRouteId;
+    private int maxStaffId;
+
     private Staff currentStaff;
 
     // ======= Mock data, existing in memory. Will be stored in DB in final version ==========
 
     private Map<Integer, Staff> registeredStaff;
-    private EventLogger eventLogger;
     private RoutingSystem routingSystem;
     private List<Mail> mails;
+
     //===============================
     //Dipen
     //===============================
-    private KPSDatabase database;
+    // private KPSDatabase database;
     private Staff currentStaffTemp; // TODO: change name to currentStaff later
     //============Controllers===================
     private static LoginScreenController loginScreenController;
@@ -59,16 +63,19 @@ public class KPSmartModel {
      */
     public KPSmartModel() {
         //generateEvents();
+
         //=====================
         //Created by Dipen
         //=====================
-        database = new KPSDatabase();
+        // database = new KPSDatabase();
         LoginScreenController.setKpSmartModel(this);
         HomeScreenController.setKpSmartModel(this);
         UserSettingController.setKpSmartModel(this);
         ChangePasswordController.setKpSmartModel(this);
         ManageUserController.setKpSmartModel(this);
         AddNewUserController.setKpSmartModel(this);
+
+
         new DataPopulater();
 //        boolean temp =DataPopulater.addLocations("Wellington", false);
 //        System.out.println(temp);
@@ -77,19 +84,17 @@ public class KPSmartModel {
     }
 
 
-
     /**
      * generates Events. THIS IS ONLY A METHOD FOR TESTING PURPOSE.
      */
     private void generateEvents() {
         registeredStaff = new HashMap<>();
-        eventLogger = new EventLogger();
         mails = new ArrayList<>();
         routingSystem = new RoutingSystem();
 
         // 1. Add 2 users, 1 manager, 1 clerk
-        registeredStaff.put(1, new Manager(1, "123", "123", true));
-        registeredStaff.put(2, new Clerk(2, "123", "123", false));
+        registeredStaff.put(1, new Staff(1, "123", "123", true));
+        registeredStaff.put(2, new Staff(2, "123", "123", false));
 
         // 2. Login the manager
         login(1);
@@ -109,10 +114,10 @@ public class KPSmartModel {
         InternationalLocation guangzhou = new InternationalLocation(11, "GuangZhou");
         InternationalLocation moscow = new InternationalLocation(12, "Moscow");
 
-        TransportFirm royalPost = new TransportFirm("RoyalPost");
-        TransportFirm nzFast = new TransportFirm("NZFast");
-        TransportFirm pacificaMails = new TransportFirm("PacificaMails");
-        TransportFirm fedEx = new TransportFirm("FedEx");
+        String royalPost = "RoyalPost";
+        String nzFast = "NZFast";
+        String pacificaMails = "PacificaMails";
+        String fedEx = "FedEx";
 
         Route rout_1 = new Route(1, dunedin, christchurch, RouteType.Land, 4.0f, royalPost, 1.2f, 0.7f, 1.0f, 0.5f);
         Route rout_2 = new Route(2, dunedin, christchurch, RouteType.Land, 3.2f, nzFast, 1.4f, 0.9f, 1.1f, 0.6f);
@@ -210,6 +215,66 @@ public class KPSmartModel {
 
     }
 
+
+    /**
+     * Log in the staff with the given staff id.
+     *
+     * @param staffId
+     * @return
+     */
+    public boolean login(int staffId) {
+        Staff staff = registeredStaff.get(staffId);
+
+        if (staff == null) {
+            return false;
+        } else {
+            this.currentStaff = staff;
+            return true;
+        }
+    }
+
+    public void deliverMail(Mail mail) {
+        mails.add(mail);
+        XMLDriver.writeEvent(new MailDeliveryEvent(1, currentStaff.id, LocalDateTime.now(), mail.id));
+        // TODO: need to self-increment the mail id here.
+    }
+
+    public void updateCustomerPrice(int routeId, float newPricePerGram, float newPricePerVolume) {
+        Route route = routingSystem.findRouteById(routeId);
+        float oldPricePerGram = route.getPricePerGram();
+        float oldPricePerVolume = route.getPricePerVolume();
+
+        routingSystem.updateRoutePriceById(routeId, newPricePerGram, newPricePerVolume);
+        XMLDriver.writeEvent(new CustomerPriceUpdateEvent(2, currentStaff.id, LocalDateTime.now(), routeId,
+                oldPricePerGram, oldPricePerVolume, newPricePerGram, newPricePerVolume));
+
+    }
+
+    public void updateTransportCost(int routeId, float newCostPerGram, float newCostPerVolume) {
+        Route route = routingSystem.findRouteById(routeId);
+        float oldCostPerGram = route.getCostPerGram();
+        float oldCostPerVolume = route.getCostPerVolume();
+
+        routingSystem.updateRouteCostById(routeId, newCostPerGram, newCostPerVolume);
+        XMLDriver.writeEvent(new TransportCostUpdateEvent(3, currentStaff.id, LocalDateTime.now(), routeId,
+                oldCostPerGram, oldCostPerVolume, newCostPerGram, newCostPerVolume));
+
+    }
+
+
+    public void addRoute(Route route) {
+        routingSystem.addRoute(route);
+
+        XMLDriver.writeEvent(new RouteAdditionEvent(4, currentStaff.id, LocalDateTime.now(), route.id));
+        // TODO: need to self-increment the route id here.
+    }
+
+    public void deleteRoute(int routeId) {
+        routingSystem.deleteRouteById(routeId);
+        XMLDriver.writeEvent(new RouteDeletionEvent(5, currentStaff.id, LocalDateTime.now(), routeId));
+    }
+
+
     /**
      * =================================================================================================================
      * These methods made by Dipen
@@ -255,7 +320,7 @@ public class KPSmartModel {
             //if the user wants to change roles to manager
             KPSDatabase.getLogins().remove(tempStaff);
             assert KPSDatabase.getLogins().size() == 1;
-            Staff newStaff = new Manager(tempStaff.getUID(), tempStaff.getUserName(), tempStaff.getPassword(), true);
+            Staff newStaff = new Staff(tempStaff.id, tempStaff.getUserName(), tempStaff.getPassword(), true);
             if (!firstName.equals("")) {
                 tempStaff.setFirstName(firstName);
             } else {
@@ -368,61 +433,5 @@ public class KPSmartModel {
         System.out.println();
 
         return routes != null && !routes.isEmpty();
-    }
-
-    /**
-     * Log in the staff with the given staff id.
-     *
-     * @param staffId
-     * @return
-     */
-    public boolean login(int staffId) {
-        Staff staff = registeredStaff.get(staffId);
-
-        if (staff == null) {
-            return false;
-        } else {
-            this.currentStaff = staff;
-            return true;
-        }
-    }
-
-    private void addRoute(Route route) {
-        routingSystem.addRoute(route);
-        eventLogger.logEvent(new RouteAdditionEvent(currentStaff.getUID(), LocalDateTime.now(), route.id));
-        // TODO: need to self-increment the route id here.
-    }
-
-    private void deliverMail(Mail mail) {
-        mails.add(mail);
-        eventLogger.logEvent(new MailDeliveryEvent(currentStaff.getUID(), LocalDateTime.now(), mail.id));
-        // TODO: need to self-increment the mail id here.
-    }
-
-    private void updateCustomerPrice(int routeId, float newPricePerGram, float newPricePerVolume) {
-        Route route = routingSystem.findRouteById(routeId);
-        float oldPricePerGram = route.getPricePerGram();
-        float oldPricePerVolume = route.getPricePerVolume();
-
-        routingSystem.updateRoutePriceById(routeId, newPricePerGram, newPricePerVolume);
-        eventLogger.logEvent(new CustomerPriceUpdateEvent(currentStaff.getUID(), LocalDateTime.now(), routeId,
-                oldPricePerGram, oldPricePerVolume, newPricePerGram, newPricePerVolume));
-
-    }
-
-    private void updateTransportCost(int routeId, float newCostPerGram, float newCostPerVolume) {
-        Route route = routingSystem.findRouteById(routeId);
-        float oldCostPerGram = route.getCostPerGram();
-        float oldCostPerVolume = route.getCostPerVolume();
-
-        routingSystem.updateRouteCostById(routeId, newCostPerGram, newCostPerVolume);
-        eventLogger.logEvent(new TransportCostUpdateEvent(currentStaff.getUID(), LocalDateTime.now(), routeId,
-                oldCostPerGram, oldCostPerVolume, newCostPerGram, newCostPerVolume));
-
-    }
-
-    private void deleteRoute(int routeId) {
-        routingSystem.deleteRouteById(routeId);
-        eventLogger.logEvent(new RouteDeletionEvent(currentStaff.getUID(), LocalDateTime.now(), routeId));
     }
 }

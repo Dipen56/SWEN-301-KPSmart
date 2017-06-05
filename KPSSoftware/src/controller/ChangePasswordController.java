@@ -109,7 +109,7 @@ public class ChangePasswordController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpSmartModel.getCurrentUser();
         userLable.setText(staff.getFirstName());
-        avatar.setImage(new Image(ChangePasswordController.class.getResourceAsStream("/img/" + staff.getUID() + ".png")));
+        avatar.setImage(new Image(ChangePasswordController.class.getResourceAsStream("/img/" + staff.id + ".png")));
         if (!staff.isManager()) {
             manageUser.setVisible(false);
             manageUser.setDisable(false);

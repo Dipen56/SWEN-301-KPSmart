@@ -7,5 +7,21 @@ package model.route;
  * @version 2017/5/20
  */
 public enum RouteType {
-    Air, Land, Sea
+    Air, Land, Sea;
+
+    /**
+     * Given a string, find the matched RouteType.
+     *
+     * @param typeName
+     * @return
+     */
+    public static RouteType createFromString(String typeName) {
+        for (RouteType routeType : RouteType.values()) {
+            if (routeType.toString().equals(typeName)) {
+                return routeType;
+            }
+        }
+
+        return null;
+    }
 }

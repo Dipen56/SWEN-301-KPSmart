@@ -45,9 +45,9 @@ public class CustomerPriceUpdateEvent extends Event {
      * @param newPricePerGram
      * @param newPricePerVolume
      */
-    public CustomerPriceUpdateEvent(int staffId, LocalDateTime timeStamp, int routeId, float oldPricePerGram,
+    public CustomerPriceUpdateEvent(int id, int staffId, LocalDateTime timeStamp, int routeId, float oldPricePerGram,
                                     float oldPricePerVolume, float newPricePerGram, float newPricePerVolume) {
-        super(staffId, timeStamp);
+        super(id, staffId, timeStamp);
         this.routeId = routeId;
         this.oldPricePerGram = oldPricePerGram;
         this.oldPricePerVolume = oldPricePerVolume;

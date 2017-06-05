@@ -115,7 +115,7 @@ public class HomeScreenController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpSmartModel.getCurrentUser();
         userLable.setText(staff.getFirstName());
-        avatar.setImage(new Image(SendMailScreenController.class.getResourceAsStream("/img/" + staff.getUID() + ".png")));
+        avatar.setImage(new Image(SendMailScreenController.class.getResourceAsStream("/img/" + staff.id + ".png")));
         ImageView settingImage = new ImageView(new Image(getClass().getResourceAsStream("/img/setting-icon.png")));
         settingImage.setFitHeight(55);
         settingImage.setFitWidth(50);

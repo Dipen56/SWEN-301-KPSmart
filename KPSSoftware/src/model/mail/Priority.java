@@ -81,4 +81,25 @@ public enum Priority {
                 return false;  // dead code
         }
     }
+
+    /**
+     * Given a string, find the matched Priority.
+     *
+     * @param priorityString
+     * @return
+     */
+    public static Priority createPriorityFrom(String priorityString) {
+        for (Priority priority : Priority.values()) {
+            if (priority.toString().equals(priorityString)) {
+                return priority;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return this.name().replace("_", " ");
+    }
 }

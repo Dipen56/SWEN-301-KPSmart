@@ -22,8 +22,8 @@ public class MailDeliveryEvent extends Event {
      * @param timeStamp
      * @param mailId
      */
-    public MailDeliveryEvent(int staffId, LocalDateTime timeStamp, int mailId) {
-        super(staffId, timeStamp);
+    public MailDeliveryEvent(int id, int staffId, LocalDateTime timeStamp, int mailId) {
+        super(id, staffId, timeStamp);
         this.mailId = mailId;
     }
 

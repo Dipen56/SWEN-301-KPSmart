@@ -2,7 +2,6 @@ package model.route;
 
 import model.location.InternationalLocation;
 import model.location.Location;
-import model.transportFirm.TransportFirm;
 
 /**
  * This class represents a postal route between two locations.
@@ -40,7 +39,7 @@ public class Route {
     /**
      * The company operating on thie route
      */
-    private final TransportFirm transportFirm;
+    private final String transportFirm;
 
     /**
      * The price per gram
@@ -76,7 +75,7 @@ public class Route {
      * @param costPerGram
      * @param costPerVolume
      */
-    public Route(int id, Location start, Location end, RouteType routeType, float duration, TransportFirm transportFirm,
+    public Route(int id, Location start, Location end, RouteType routeType, float duration, String transportFirm,
                  float pricePerGram, float pricePerVolume, float costPerGram, float costPerVolume) {
         if (start.id == end.id) {
             throw new IllegalArgumentException("Invalid route: two ends cannot be the same");
@@ -213,6 +212,13 @@ public class Route {
     }
 
     /**
+     * @return the company who run this route.
+     */
+    public String getTransportFirm() {
+        return transportFirm;
+    }
+
+    /**
      * @return true if this route is international route, or false if it's domestic
      */
     public boolean isInternationalRoute() {
@@ -259,15 +265,15 @@ public class Route {
     public String toString() {
         return "Route{" +
                 "id=" + id +
+                ", routeType=" + routeType +
                 ", start=" + start +
                 ", end=" + end +
-//                ", routeType=" + routeType +
-//                ", duration=" + duration +
-//                ", transportFirm=" + transportFirm.getName() +
-//                ", pricePerGram=" + pricePerGram +
-//                ", pricePerVolume=" + pricePerVolume +
-//                ", costPerGram=" + costPerGram +
-//                ", costPerVolume=" + costPerVolume +
+                ", duration=" + duration +
+                ", transportFirm='" + transportFirm + '\'' +
+                ", pricePerGram=" + pricePerGram +
+                ", pricePerVolume=" + pricePerVolume +
+                ", costPerGram=" + costPerGram +
+                ", costPerVolume=" + costPerVolume +
                 '}';
     }
 }

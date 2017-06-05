@@ -249,6 +249,8 @@ public class RoutingSystem {
                     path.add(backTracer.getEdgeToParent().getRoute());
                     backTracer = backTracer.getCameFromNode();
                 }
+
+                Collections.reverse(path);
                 return path;
             }
 

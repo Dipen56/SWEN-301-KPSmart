@@ -1,15 +1,12 @@
 package model.database;
 
 import model.event.Event;
-import model.staff.Clerk;
-import model.staff.Manager;
 import model.staff.Staff;
 import org.dom4j.*;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
@@ -35,8 +32,6 @@ public class KPSDatabase {
     // field for the list of events
     private List<Event> eventLogFile;
 
-
-
     /*
         KPSDATABASE CONSTRUCTOR
      */
@@ -51,10 +46,12 @@ public class KPSDatabase {
         Document document = reader.read(url);
         return document;
     }
+
     // returns the list of staff logins
     public static List<Staff> getLogins() {
         return logins;
     }
+
     /**
      * Checks user name isnt taken and create a new user
      *
@@ -74,14 +71,14 @@ public class KPSDatabase {
         }
         // create new employee and add to logins
         if (isManager) {
-            Staff manager = new Manager(UID++, name, pass,isManager);
+            Staff manager = new Staff(UID++, name, pass, isManager);
             manager.setFirstName(firstName);
             manager.setLastName(lastName);
             manager.setEmail(email);
             manager.setPhoneNumber(phone);
             return logins.add(manager);
         } else {
-            Staff clerk = new Clerk(UID++, name, pass,isManager);
+            Staff clerk = new Staff(UID++, name, pass, isManager);
             clerk.setFirstName(firstName);
             clerk.setLastName(lastName);
             clerk.setEmail(email);
@@ -155,7 +152,7 @@ public class KPSDatabase {
                 String password = node.valueOf("@password");
                 UID += uid;
                 // creating clerk to add to list of all users
-                Staff cur = new Clerk(uid, name, password,false);
+                Staff cur = new Staff(uid, name, password, false);
                 // iterate over stored info and update clerk
                 Element element = (Element) node;
                 Iterator<Element> itr = element.elementIterator();
@@ -191,7 +188,7 @@ public class KPSDatabase {
                 String password = node.valueOf("@password");
                 UID += uid;
                 // creating manager to add to list of all users
-                Staff cur = new Manager(uid, name, password, true);
+                Staff cur = new Staff(uid, name, password, true);
                 // iterate over stored info and update clerk
                 Element element = (Element) node;
                 Iterator<Element> itr = element.elementIterator();
@@ -234,41 +231,22 @@ public class KPSDatabase {
         // create new document
         Document document = DocumentHelper.createDocument();
         Element root = document.addElement("users");
-        // count number of clerks and managers processed
-        int clerkCount = 0, managerCount = 0;
+
         // process all employees
         for (Staff employee : logins) {
-            if (employee instanceof Clerk) {
-                clerkCount++;
-                // saving a clerk
-                Element a1 = root.addElement("clerk")
-                        .addAttribute("uid", Integer.toString(employee.getUID()))
-                        .addAttribute("name", employee.getUserName())
-                        .addAttribute("password", employee.getPassword());
-                a1.addElement("first")
-                        .addText(employee.getFirstName());
-                a1.addElement("last")
-                        .addText(employee.getLastName());
-                a1.addElement("email")
-                        .addText(employee.getEmail());
-                a1.addElement("phone")
-                        .addText(employee.getPhoneNumber());
-            } else {
-                managerCount++;
-                // saving a manager
-                Element a1 = root.addElement("manager")
-                        .addAttribute("uid", Integer.toString(employee.getUID()))
-                        .addAttribute("name", employee.getUserName())
-                        .addAttribute("password", employee.getPassword());
-                a1.addElement("first")
-                        .addText(employee.getFirstName());
-                a1.addElement("last")
-                        .addText(employee.getLastName());
-                a1.addElement("email")
-                        .addText(employee.getEmail());
-                a1.addElement("phone")
-                        .addText(employee.getPhoneNumber());
-            }
+            // saving a clerk
+            Element a1 = root.addElement("clerk")
+                    .addAttribute("uid", Integer.toString(employee.id))
+                    .addAttribute("name", employee.getUserName())
+                    .addAttribute("password", employee.getPassword());
+            a1.addElement("first")
+                    .addText(employee.getFirstName());
+            a1.addElement("last")
+                    .addText(employee.getLastName());
+            a1.addElement("email")
+                    .addText(employee.getEmail());
+            a1.addElement("phone")
+                    .addText(employee.getPhoneNumber());
         }
         // writing user-logins document
         try {
@@ -282,7 +260,7 @@ public class KPSDatabase {
             writer.close();
             // output for testing
 
-            System.out.println("Successfully saved: " + (clerkCount + managerCount) + " user logins");
+
         } catch (IOException e) {
             return false;
         }

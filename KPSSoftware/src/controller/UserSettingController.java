@@ -12,7 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import model.KPSmartModel;
+import main.KPSMain;
 import model.staff.Staff;
 import view.DialogBox;
 
@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
  * Created by Dipen on 25/04/2017. this class represents the user setting controller.
  */
 public class UserSettingController implements Initializable {
-    private static KPSmartModel kpSmartModel;
+    private static KPSMain kpsMain;
     @FXML
     private Label userLable;
     @FXML
@@ -38,7 +38,7 @@ public class UserSettingController implements Initializable {
      * this constructor is used to set the reference for the model.
      */
     public UserSettingController() {
-        KPSmartModel.setLoginScreenController(this);
+        KPSMain.setLoginScreenController(this);
     }
 
     /**
@@ -103,7 +103,7 @@ public class UserSettingController implements Initializable {
      * @param resources
      */
     public void initialize(URL location, ResourceBundle resources) {
-        Staff staff = kpSmartModel.getCurrentUser();
+        Staff staff = kpsMain.getCurrentStaff();
         userLable.setText(staff.getFirstName());
         avatar.setImage(new Image(SendMailScreenController.class.getResourceAsStream("/img/" + staff.id + ".png")));
         if (!staff.isManager()) {
@@ -134,11 +134,11 @@ public class UserSettingController implements Initializable {
     }
 
     /**
-     * to set the KPSmodels class reference.
+     * to set the KPSMain class reference.
      *
-     * @param kpsModel
+     * @param kpsMain
      */
-    public static void setKpSmartModel(KPSmartModel kpsModel) {
-        kpSmartModel = kpsModel;
+    public static void setKPSMain(KPSMain kpsMain) {
+        UserSettingController.kpsMain = kpsMain;
     }
 }

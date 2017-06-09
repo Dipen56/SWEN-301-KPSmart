@@ -1,6 +1,6 @@
 package model.database;
 
-import model.event.Event;
+import model.event.*;
 import model.location.InternationalLocation;
 import model.location.Location;
 import model.location.NZCity;
@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -113,25 +114,345 @@ public class XMLDriver {
     private XMLDriver() {}
 
     // ===============================================================
-    //                EVENTS
-    // TODO: events functions are not done yet
+    //                            EVENTS
     // ===============================================================
 
-    public static boolean writeEvent(Event event) {
-        return false;
+    /**
+     * Write the given CustomerPriceUpdateEvent object into "events.xml"
+     *
+     * @param event
+     * @return true if successful, or false if failed.
+     */
+    public static boolean writeCustomerPriceUpdateEvent(CustomerPriceUpdateEvent event) {
+        // read from XML file to get the existing events
+        Document document = readDocumentFrom(EVENT_XML_FILE_NAME);
+        if (document == null) {
+            return false;
+        }
+
+        // if XML file has this id already, do not add it.
+        Node existingNode = document.selectSingleNode("/Events/*[@id='" + event.id + "']");
+        if (existingNode != null) {
+            return false;
+        }
+
+        //  metadata of CustomerPriceUpdateEvent
+        String elementName = "CustomerPriceUpdateEvent";
+        String id = String.valueOf(event.id);
+        String staffId = String.valueOf(event.getStaffId());
+        String timeStamp = String.valueOf(event.getTimeStamp().toString());
+        String routeId = String.valueOf(event.getRouteId());
+        String oldPricePerGram = String.valueOf(event.getOldPricePerGram());
+        String oldPricePerVolume = String.valueOf(event.getOldPricePerVolume());
+        String newPricePerGram = String.valueOf(event.getNewPricePerGram());
+        String newPricePerVolume = String.valueOf(event.getNewPricePerVolume());
+
+        // Update the maxID
+        document.getRootElement().addAttribute("maxId", id);
+
+        // create the new event node
+        List<Element> events = document.getRootElement().elements();
+
+        Element newEvent = DocumentHelper.createElement(elementName);
+        newEvent.addAttribute("id", id);
+
+        attachChildNode(newEvent, "staffId", staffId);
+        attachChildNode(newEvent, "timeStamp", timeStamp);
+        attachChildNode(newEvent, "routeId", routeId);
+        attachChildNode(newEvent, "oldPricePerGram", oldPricePerGram);
+        attachChildNode(newEvent, "oldPricePerVolume", oldPricePerVolume);
+        attachChildNode(newEvent, "newPricePerGram", newPricePerGram);
+        attachChildNode(newEvent, "newPricePerVolume", newPricePerVolume);
+
+        events.add(newEvent);
+
+        // write the DOM tree back into XML
+        return writeDocumentTo(document, EVENT_XML_WRITE_PATH);
     }
 
-//    public static Map<Integer, Event> readEvents() {
-//
-//    }
-//
-//    public static Event readEventById(int eventId) {
-//
-//    }
-//
-//    public static int getMaxEventId() {
-//
-//    }
+    /**
+     * Write the given TransportCostUpdateEvent object into "events.xml"
+     *
+     * @param event
+     * @return true if successful, or false if failed.
+     */
+    public static boolean writeTransportCostUpdateEvent(TransportCostUpdateEvent event) {
+        // read from XML file to get the existing events
+        Document document = readDocumentFrom(EVENT_XML_FILE_NAME);
+        if (document == null) {
+            return false;
+        }
+
+        // if XML file has this id already, do not add it.
+        Node existingNode = document.selectSingleNode("/Events/*[@id='" + event.id + "']");
+        if (existingNode != null) {
+            return false;
+        }
+
+        //  metadata of TransportCostUpdateEvent
+        String elementName = "TransportCostUpdateEvent";
+        String id = String.valueOf(event.id);
+        String staffId = String.valueOf(event.getStaffId());
+        String timeStamp = String.valueOf(event.getTimeStamp().toString());
+        String routeId = String.valueOf(event.getRouteId());
+        String oldCostPerGram = String.valueOf(event.getOldCostPerGram());
+        String oldCostPerVolume = String.valueOf(event.getOldCostPerVolume());
+        String newCostPerGram = String.valueOf(event.getNewCostPerGram());
+        String newCostPerVolume = String.valueOf(event.getNewCostPerVolume());
+
+        // Update the maxID
+        document.getRootElement().addAttribute("maxId", id);
+
+        // create the new event node
+        List<Element> events = document.getRootElement().elements();
+
+        Element newEvent = DocumentHelper.createElement(elementName);
+        newEvent.addAttribute("id", id);
+
+        attachChildNode(newEvent, "staffId", staffId);
+        attachChildNode(newEvent, "timeStamp", timeStamp);
+        attachChildNode(newEvent, "routeId", routeId);
+        attachChildNode(newEvent, "oldCostPerGram", oldCostPerGram);
+        attachChildNode(newEvent, "oldCostPerVolume", oldCostPerVolume);
+        attachChildNode(newEvent, "newCostPerGram", newCostPerGram);
+        attachChildNode(newEvent, "newCostPerVolume", newCostPerVolume);
+
+        events.add(newEvent);
+
+        // write the DOM tree back into XML
+        return writeDocumentTo(document, EVENT_XML_WRITE_PATH);
+    }
+
+    /**
+     * Write the given MailDeliveryEvent object into "events.xml"
+     *
+     * @param event
+     * @return true if successful, or false if failed.
+     */
+    public static boolean writeMailDeliveryEvent(MailDeliveryEvent event) {
+        // read from XML file to get the existing events
+        Document document = readDocumentFrom(EVENT_XML_FILE_NAME);
+        if (document == null) {
+            return false;
+        }
+
+        // if XML file has this id already, do not add it.
+        Node existingNode = document.selectSingleNode("/Events/*[@id='" + event.id + "']");
+        if (existingNode != null) {
+            return false;
+        }
+
+        //  metadata of MailDeliveryEvent
+        String elementName = "MailDeliveryEvent";
+        String id = String.valueOf(event.id);
+        String staffId = String.valueOf(event.getStaffId());
+        String timeStamp = String.valueOf(event.getTimeStamp().toString());
+        String mailId = String.valueOf(event.getMailId());
+
+        // Update the maxID
+        document.getRootElement().addAttribute("maxId", id);
+
+        // create the new event node
+        List<Element> events = document.getRootElement().elements();
+
+        Element newEvent = DocumentHelper.createElement(elementName);
+        newEvent.addAttribute("id", id);
+
+        attachChildNode(newEvent, "staffId", staffId);
+        attachChildNode(newEvent, "timeStamp", timeStamp);
+        attachChildNode(newEvent, "mailId", mailId);
+
+        events.add(newEvent);
+
+        // write the DOM tree back into XML
+        return writeDocumentTo(document, EVENT_XML_WRITE_PATH);
+    }
+
+    /**
+     * Write the given RouteAdditionEvent object into "events.xml"
+     *
+     * @param event
+     * @return true if successful, or false if failed.
+     */
+    public static boolean writeRouteAdditionEvent(RouteAdditionEvent event) {
+        // read from XML file to get the existing events
+        Document document = readDocumentFrom(EVENT_XML_FILE_NAME);
+        if (document == null) {
+            return false;
+        }
+
+        // if XML file has this id already, do not add it.
+        Node existingNode = document.selectSingleNode("/Events/*[@id='" + event.id + "']");
+        if (existingNode != null) {
+            return false;
+        }
+
+        //  metadata of RouteAdditionEvent
+        String elementName = "RouteAdditionEvent";
+        String id = String.valueOf(event.id);
+        String staffId = String.valueOf(event.getStaffId());
+        String timeStamp = String.valueOf(event.getTimeStamp().toString());
+        String routeId = String.valueOf(event.getRouteId());
+
+        // Update the maxID
+        document.getRootElement().addAttribute("maxId", id);
+
+        // create the new event node
+        List<Element> events = document.getRootElement().elements();
+
+        Element newEvent = DocumentHelper.createElement(elementName);
+        newEvent.addAttribute("id", id);
+
+        attachChildNode(newEvent, "staffId", staffId);
+        attachChildNode(newEvent, "timeStamp", timeStamp);
+        attachChildNode(newEvent, "routeId", routeId);
+
+        events.add(newEvent);
+
+        // write the DOM tree back into XML
+        return writeDocumentTo(document, EVENT_XML_WRITE_PATH);
+    }
+
+    /**
+     * Write the given RouteDeactivationEvent object into "events.xml"
+     *
+     * @param event
+     * @return true if successful, or false if failed.
+     */
+    public static boolean writeRouteDeactivationEvent(RouteDeactivationEvent event) {
+        // read from XML file to get the existing events
+        Document document = readDocumentFrom(EVENT_XML_FILE_NAME);
+        if (document == null) {
+            return false;
+        }
+
+        // if XML file has this id already, do not add it.
+        Node existingNode = document.selectSingleNode("/Events/*[@id='" + event.id + "']");
+        if (existingNode != null) {
+            return false;
+        }
+
+        //  metadata of RouteAdditionEvent
+        String elementName = "RouteDeactivationEvent";
+        String id = String.valueOf(event.id);
+        String staffId = String.valueOf(event.getStaffId());
+        String timeStamp = String.valueOf(event.getTimeStamp().toString());
+        String routeId = String.valueOf(event.getRouteId());
+
+        // Update the maxID
+        document.getRootElement().addAttribute("maxId", id);
+
+        // create the new event node
+        List<Element> events = document.getRootElement().elements();
+
+        Element newEvent = DocumentHelper.createElement(elementName);
+        newEvent.addAttribute("id", id);
+
+        attachChildNode(newEvent, "staffId", staffId);
+        attachChildNode(newEvent, "timeStamp", timeStamp);
+        attachChildNode(newEvent, "routeId", routeId);
+
+        events.add(newEvent);
+
+        // write the DOM tree back into XML
+        return writeDocumentTo(document, EVENT_XML_WRITE_PATH);
+    }
+
+    /**
+     * Read from XML file to get all recorded events
+     *
+     * @return a Map of events where the key is event id, and the value is the Event object
+     */
+    public static Map<Integer, Event> readEvents() {
+        Map<Integer, Event> events = new HashMap<>();
+
+        // read from XML file to get the existing locations
+        Document document = readDocumentFrom(EVENT_XML_FILE_NAME);
+        if (document == null) {
+            return null;
+        }
+
+        // get all event nodes from XML and construct them into all kinds of event objects
+        List<Node> eventNodes = document.selectNodes("/Events/*");
+        eventNodes.forEach(node -> {
+            int id = Integer.parseInt(node.valueOf("@id"));
+            int staffId = Integer.parseInt(node.valueOf("./staffId"));
+            LocalDateTime timeStamp = LocalDateTime.parse(node.valueOf("./timeStamp"));
+
+            String eventClassName = node.getName();
+
+            switch (eventClassName) {
+                case "CustomerPriceUpdateEvent":
+                    int routeId_cpu = Integer.parseInt(node.valueOf("./routeId"));
+                    double oldPricePerGram = Float.parseFloat(node.valueOf("./oldPricePerGram"));
+                    double oldPricePerVolume = Float.parseFloat(node.valueOf("./oldPricePerVolume"));
+                    double newPricePerGram = Float.parseFloat(node.valueOf("./newPricePerGram"));
+                    double newPricePerVolume = Float.parseFloat(node.valueOf("./newPricePerVolume"));
+
+                    events.put(id, new CustomerPriceUpdateEvent(id, staffId, timeStamp, routeId_cpu, oldPricePerGram,
+                            oldPricePerVolume, newPricePerGram, newPricePerVolume));
+                    break;
+
+                case "TransportCostUpdateEvent":
+                    int routeId_tcu = Integer.parseInt(node.valueOf("./routeId"));
+                    double oldCostPerGram = Float.parseFloat(node.valueOf("./oldCostPerGram"));
+                    double oldCostPerVolume = Float.parseFloat(node.valueOf("./oldCostPerVolume"));
+                    double newCostPerGram = Float.parseFloat(node.valueOf("./newCostPerGram"));
+                    double newCostPerVolume = Float.parseFloat(node.valueOf("./newCostPerVolume"));
+
+                    events.put(id, new CustomerPriceUpdateEvent(id, staffId, timeStamp, routeId_tcu, oldCostPerGram,
+                            oldCostPerVolume, newCostPerGram, newCostPerVolume));
+                    break;
+
+                case "MailDeliveryEvent":
+                    int mailId = Integer.parseInt(node.valueOf("./mailId"));
+                    events.put(id, new MailDeliveryEvent(id, staffId, timeStamp, mailId));
+                    break;
+
+                case "RouteAdditionEvent":
+                    int routeId_ra = Integer.parseInt(node.valueOf("./routeId"));
+                    events.put(id, new RouteAdditionEvent(id, staffId, timeStamp, routeId_ra));
+                    break;
+
+                case "RouteDeactivationEvent":
+                    int routeId_rd = Integer.parseInt(node.valueOf("./routeId"));
+                    events.put(id, new RouteDeactivationEvent(id, staffId, timeStamp, routeId_rd));
+                    break;
+
+                default:
+            }
+        });
+
+        return events;
+    }
+
+    /**
+     * Given a event ID, read the XML file, and find the Event with the given id.
+     *
+     * @param eventId
+     * @return the Event object with the specified ID, or null if cannot find it.
+     */
+    public static Event readEventById(int eventId) {
+        Map<Integer, Event> events = readEvents();
+
+        if (events == null) {
+            return null;
+        }
+
+        return events.get(eventId);
+    }
+
+    /**
+     * @return the max ID of events recorded in XML file.
+     */
+    public static int getMaxEventId() {
+        Document document = readDocumentFrom(EVENT_XML_FILE_NAME);
+        if (document == null) {
+            return -1;
+        }
+
+        return Integer.parseInt(document.getRootElement().valueOf("@maxId"));
+    }
 
     // ===============================================================
     //                LOCATIONS
@@ -320,8 +641,8 @@ public class XMLDriver {
             int id = Integer.parseInt(node.valueOf("@id"));
             NZLocation origin = (NZLocation) locations.get(Integer.parseInt(node.valueOf("./originId")));
             Location destination = locations.get(Integer.parseInt(node.valueOf("./destinationId")));
-            float weight = Float.parseFloat(node.valueOf("./weight"));
-            float volume = Float.parseFloat(node.valueOf("./volume"));
+            double weight = Float.parseFloat(node.valueOf("./weight"));
+            double volume = Float.parseFloat(node.valueOf("./volume"));
             Priority priority = Priority.createPriorityFrom(node.valueOf("./priority"));
 
             Mail mail = new Mail(id, origin, destination, weight, volume, priority);
@@ -394,6 +715,7 @@ public class XMLDriver {
         String pricePerVolume = String.valueOf(route.getCostPerVolume());
         String costPerGram = String.valueOf(route.getCostPerGram());
         String costPerVolume = String.valueOf(route.getCostPerVolume());
+        String isActive = String.valueOf(route.isActive());
 
         // Update the maxID
         document.getRootElement().addAttribute("maxId", id);
@@ -413,6 +735,7 @@ public class XMLDriver {
         attachChildNode(newRoute, "pricePerVolume", pricePerVolume);
         attachChildNode(newRoute, "costPerGram", costPerGram);
         attachChildNode(newRoute, "costPerVolume", costPerVolume);
+        attachChildNode(newRoute, "isActive", isActive);
 
         routes.add(newRoute);
 
@@ -444,14 +767,16 @@ public class XMLDriver {
             RouteType routeType = RouteType.createFromString(node.valueOf("./routeType"));
             Location start = locations.get(Integer.parseInt(node.valueOf("./startId")));
             Location end = locations.get(Integer.parseInt(node.valueOf("./endId")));
-            float duration = Float.parseFloat(node.valueOf("./duration"));
+            double duration = Float.parseFloat(node.valueOf("./duration"));
             String transportFirm = node.valueOf("./transportFirm");
-            float pricePerGram = Float.parseFloat(node.valueOf("./pricePerGram"));
-            float pricePerVolume = Float.parseFloat(node.valueOf("./pricePerVolume"));
-            float costPerGram = Float.parseFloat(node.valueOf("./costPerGram"));
-            float costPerVolume = Float.parseFloat(node.valueOf("./costPerVolume"));
+            double pricePerGram = Float.parseFloat(node.valueOf("./pricePerGram"));
+            double pricePerVolume = Float.parseFloat(node.valueOf("./pricePerVolume"));
+            double costPerGram = Float.parseFloat(node.valueOf("./costPerGram"));
+            double costPerVolume = Float.parseFloat(node.valueOf("./costPerVolume"));
+            boolean isActive = Boolean.parseBoolean(node.valueOf("./isActive"));
 
             Route route = new Route(id, start, end, routeType, duration, transportFirm, pricePerGram, pricePerVolume, costPerGram, costPerVolume);
+            route.setIsActive(isActive);
 
             routes.put(id, route);
         });
@@ -487,6 +812,92 @@ public class XMLDriver {
         return Integer.parseInt(document.getRootElement().valueOf("@maxId"));
     }
 
+    /**
+     * Update the route
+     *
+     * @param routeId the id of the route that needs to be updated
+     * @param route   the route object with new properties.
+     */
+    public static boolean updateRoute(int routeId, Route route) {
+        // read from XML file to get the existing locations
+        Document document = readDocumentFrom(ROUTE_XML_FILE_NAME);
+        if (document == null) {
+            return false;
+        }
+
+        Node existingNode = document.selectSingleNode("/Routes/*[@id='" + routeId + "']");
+
+        // if we can't find this id in XML file, then return false.
+        if (existingNode == null) {
+            return false;
+        }
+
+        // remove the existing route with the given id
+        existingNode.detach();
+
+        //  metadata of route
+        String elementName = "Route";
+        String routeType = route.routeType.toString();
+        String startId = String.valueOf(route.getStartLocation().id);
+        String endId = String.valueOf(route.getEndLocation().id);
+        String duration = String.valueOf(route.getDuration());
+        String transportFirm = route.getTransportFirm();
+        String pricePerGram = String.valueOf(route.getPricePerGram());
+        String pricePerVolume = String.valueOf(route.getCostPerVolume());
+        String costPerGram = String.valueOf(route.getCostPerGram());
+        String costPerVolume = String.valueOf(route.getCostPerVolume());
+        String isActive = String.valueOf(route.isActive());
+
+        // create the new route node
+        Element newRoute = DocumentHelper.createElement(elementName);
+        newRoute.addAttribute("id", String.valueOf(routeId));
+
+        attachChildNode(newRoute, "routeType", routeType);
+        attachChildNode(newRoute, "startId", startId);
+        attachChildNode(newRoute, "endId", endId);
+        attachChildNode(newRoute, "duration", duration);
+        attachChildNode(newRoute, "transportFirm", transportFirm);
+        attachChildNode(newRoute, "pricePerGram", pricePerGram);
+        attachChildNode(newRoute, "pricePerVolume", pricePerVolume);
+        attachChildNode(newRoute, "costPerGram", costPerGram);
+        attachChildNode(newRoute, "costPerVolume", costPerVolume);
+        attachChildNode(newRoute, "isActive", isActive);
+
+        // add to root
+        List<Element> routes = document.getRootElement().elements();
+        routes.add(newRoute);
+
+        // write the DOM tree back into XML
+        return writeDocumentTo(document, ROUTE_XML_WRITE_PATH);
+    }
+
+//    /**
+//     * Delete the route
+//     *
+//     * @param routeId the id of the route that needs to be updated
+//     * @return true if the route is no longer there, or false if the action failed.
+//     */
+//    public static boolean deactivateRoute(int routeId) {
+//        // read from XML file to get the existing locations
+//        Document document = readDocumentFrom(ROUTE_XML_FILE_NAME);
+//        if (document == null) {
+//            return false;
+//        }
+//
+//        Node existingNode = document.selectSingleNode("/Routes/*[@id='" + routeId + "']");
+//
+//        // if we can't find this id in XML file, then return true. This is the idempotentness of Delete.
+//        if (existingNode == null) {
+//            return true;
+//        }
+//
+//        // remove the existing route with the given id
+//        existingNode.detach();
+//
+//        // write the DOM tree back into XML
+//        return writeDocumentTo(document, ROUTE_XML_WRITE_PATH);
+//    }
+
     // ===============================================================
     //                STAFFS
     // ===============================================================
@@ -498,7 +909,7 @@ public class XMLDriver {
      * @return true if successful, or false if failed.
      */
     public static boolean writeStaff(Staff staff) {
-        // read from XML file to get the existing locations
+        // read from XML file to get the existing staff
         Document document = readDocumentFrom(STAFF_XML_FILE_NAME);
         if (document == null) {
             return false;
@@ -545,6 +956,59 @@ public class XMLDriver {
     }
 
     /**
+     * Update the staff with the given id, and write back to "staffs.xml"
+     *
+     * @param id
+     * @param staff
+     * @return true if successful, or false if failed.
+     */
+    public static boolean updateStaff(int id, Staff staff) {
+        // read from XML file to get the existing staff
+        Document document = readDocumentFrom(STAFF_XML_FILE_NAME);
+        if (document == null) {
+            return false;
+        }
+
+        // if XML file does not has this id, return false.
+        Node existingNode = document.selectSingleNode("/Staffs/*[@id='" + id + "']");
+        if (existingNode == null) {
+            return false;
+        }
+
+        // remove the existing node
+        existingNode.detach();
+
+        //  metadata of staff
+        String elementName = "Staff";
+        String userName = staff.getUserName();
+        String password = staff.getPassword();
+        String firstName = staff.getFirstName();
+        String lastName = staff.getLastName();
+        String email = staff.getEmail();
+        String phoneNumber = staff.getPhoneNumber();
+        String isManager = String.valueOf(staff.isManager());
+
+        // create the new staff node
+        List<Element> staffs = document.getRootElement().elements();
+
+        Element newStaff = DocumentHelper.createElement(elementName);
+        newStaff.addAttribute("id", String.valueOf(id));
+
+        attachChildNode(newStaff, "userName", userName);
+        attachChildNode(newStaff, "password", password);
+        attachChildNode(newStaff, "firstName", firstName);
+        attachChildNode(newStaff, "lastName", lastName);
+        attachChildNode(newStaff, "email", email);
+        attachChildNode(newStaff, "phoneNumber", phoneNumber);
+        attachChildNode(newStaff, "isManager", isManager);
+
+        staffs.add(newStaff);
+
+        // write the DOM tree back into XML
+        return writeDocumentTo(document, STAFF_XML_WRITE_PATH);
+    }
+
+    /**
      * Read from XML file to get all recorded staffs
      *
      * @return a Map of staffs where the key is staff id, and the value is the Staff object
@@ -570,11 +1034,7 @@ public class XMLDriver {
             String phoneNumber = node.valueOf("./phoneNumber");
             Boolean isManager = Boolean.valueOf(node.valueOf("./isManager"));
 
-            Staff staff = new Staff(id, userName, password, isManager);
-            staff.setFirstName(firstName);
-            staff.setLastName(lastName);
-            staff.setEmail(email);
-            staff.setPhoneNumber(phoneNumber);
+            Staff staff = new Staff(id, userName, password, isManager, firstName, lastName, email, phoneNumber);
 
             staffs.put(id, staff);
         });
@@ -608,6 +1068,33 @@ public class XMLDriver {
         }
 
         return Integer.parseInt(document.getRootElement().valueOf("@maxId"));
+    }
+
+    /**
+     * Given a staff ID, delete the Staff with the given id from XML file.
+     *
+     * @param staffId
+     * @return true if successful, or false if failed.
+     */
+    public static boolean deleteStaffById(int staffId) {
+        // read from XML file to get the existing locations
+        Document document = readDocumentFrom(STAFF_XML_FILE_NAME);
+        if (document == null) {
+            return false;
+        }
+
+        Node existingNode = document.selectSingleNode("/Staffs/*[@id='" + staffId + "']");
+
+        // if we can't find this id in XML file, then return true. This is the idempotentness of Delete.
+        if (existingNode == null) {
+            return true;
+        }
+
+        // remove the existing route with the given id
+        existingNode.detach();
+
+        // write the DOM tree back into XML
+        return writeDocumentTo(document, STAFF_XML_WRITE_PATH);
     }
 
     // ===============================================================

@@ -13,29 +13,29 @@ public enum Priority {
      * The price factor for international priorities. International priorities are more expensive than domestic
      * priorities.
      */
-    private static final float INTERNATIONAL_AIR_FACTOR = 1.25f;
+    private static final double INTERNATIONAL_AIR_FACTOR = 1.25f;
 
     /**
      * The price factor for international priorities. International priorities are more expensive than domestic
      * priorities.
      */
-    private static final float INTERNATIONAL_STANDARD_FACTOR = 1.15f;
+    private static final double INTERNATIONAL_STANDARD_FACTOR = 1.15f;
 
     /**
      * The price factor for domestic priorities.
      */
-    private static final float DOMESTIC_AIR_FACTOR = 1.1f;
+    private static final double DOMESTIC_AIR_FACTOR = 1.1f;
 
     /**
      * The price factor for international priorities. International priorities are more expensive than domestic
      * priorities.
      */
-    private static final float DOMESTIC_STANDARD_FACTOR = 1.0f;
+    private static final double DOMESTIC_STANDARD_FACTOR = 1.0f;
 
     /**
      * @return the price factor
      */
-    public float getPriceFactor() {
+    public double getPriceFactor() {
         switch (this) {
             case International_Air:
                 return INTERNATIONAL_AIR_FACTOR;

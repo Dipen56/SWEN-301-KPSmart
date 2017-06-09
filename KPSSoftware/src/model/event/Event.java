@@ -37,12 +37,17 @@ public abstract class Event {
         this.timeStamp = timeStamp;
     }
 
-    @Override
-    public String toString() {
-        return "Event{" +
-                "id=" + id +
-                ", staffId=" + staffId +
-                ", timeStamp=" + timeStamp +
-                '}';
+    /**
+     * @return the id of the staff who logged this event
+     */
+    public int getStaffId() {
+        return this.staffId;
+    }
+
+    /**
+     * @return the timestamp of this event
+     */
+    public LocalDateTime getTimeStamp() {
+        return this.timeStamp;
     }
 }

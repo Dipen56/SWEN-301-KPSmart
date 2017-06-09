@@ -18,22 +18,22 @@ public class TransportCostUpdateEvent extends Event {
     /**
      * The cost per gram before update
      */
-    private float oldCostPerGram;
+    private double oldCostPerGram;
 
     /**
      * the cost per volume before update
      */
-    private float oldCostPerVolume;
+    private double oldCostPerVolume;
 
     /**
      * the new cost per gram after update
      */
-    private float newCostPerGram;
+    private double newCostPerGram;
 
     /**
      * the new cost per volume after update
      */
-    private float newCostPerVolume;
+    private double newCostPerVolume;
 
     /**
      * Constructor
@@ -46,14 +46,49 @@ public class TransportCostUpdateEvent extends Event {
      * @param newCostPerGram
      * @param newCostPerVolume
      */
-    public TransportCostUpdateEvent(int id, int staffId, LocalDateTime timeStamp, int routeId, float oldCostPerGram,
-                                    float oldCostPerVolume, float newCostPerGram, float newCostPerVolume) {
+    public TransportCostUpdateEvent(int id, int staffId, LocalDateTime timeStamp, int routeId, double oldCostPerGram,
+                                    double oldCostPerVolume, double newCostPerGram, double newCostPerVolume) {
         super(id, staffId, timeStamp);
         this.routeId = routeId;
         this.oldCostPerGram = oldCostPerGram;
         this.oldCostPerVolume = oldCostPerVolume;
         this.newCostPerGram = newCostPerGram;
         this.newCostPerVolume = newCostPerVolume;
+    }
+
+    /**
+     * @return the id of the updated route
+     */
+    public int getRouteId() {
+        return routeId;
+    }
+
+    /**
+     * @return the old cost per gram
+     */
+    public double getOldCostPerGram() {
+        return oldCostPerGram;
+    }
+
+    /**
+     * @return the old cost per volume
+     */
+    public double getOldCostPerVolume() {
+        return oldCostPerVolume;
+    }
+
+    /**
+     * @return the new cost per gram
+     */
+    public double getNewCostPerGram() {
+        return newCostPerGram;
+    }
+
+    /**
+     * @return the new cost per volume
+     */
+    public double getNewCostPerVolume() {
+        return newCostPerVolume;
     }
 
     @Override

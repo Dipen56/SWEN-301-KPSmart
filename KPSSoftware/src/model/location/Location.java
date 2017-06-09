@@ -27,4 +27,21 @@ public abstract class Location {
      * @return the name of this location
      */
     public abstract String getLocationName();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof Location))
+            return false;
+
+        Location location = (Location) o;
+
+        return id == location.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }

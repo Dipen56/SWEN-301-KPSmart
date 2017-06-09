@@ -12,7 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import model.KPSmartModel;
+import main.KPSMain;
 import model.staff.Staff;
 import view.DialogBox;
 
@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
  * Created by Dipen on 25/04/2017. this class represents the controller for the home screen.
  */
 public class HomeScreenController implements Initializable {
-    private static KPSmartModel kpSmartModel;
+    private static KPSMain kpsMain;
     @FXML
     private Label userLable;
     @FXML
@@ -38,7 +38,7 @@ public class HomeScreenController implements Initializable {
      * the constructor is used to set the reference to this class
      */
     public HomeScreenController() {
-        KPSmartModel.setLoginScreenController(this);
+        KPSMain.setLoginScreenController(this);
     }
 
     /**
@@ -113,7 +113,7 @@ public class HomeScreenController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Staff staff = kpSmartModel.getCurrentUser();
+        Staff staff = kpsMain.getCurrentStaff();
         userLable.setText(staff.getFirstName());
         avatar.setImage(new Image(SendMailScreenController.class.getResourceAsStream("/img/" + staff.id + ".png")));
         ImageView settingImage = new ImageView(new Image(getClass().getResourceAsStream("/img/setting-icon.png")));
@@ -128,11 +128,11 @@ public class HomeScreenController implements Initializable {
     }
 
     /**
-     * to set the KPSmodels class reference.
+     * to set the KPSMain class reference.
      *
-     * @param kpsModel
+     * @param kpsMain
      */
-    public static void setKpSmartModel(KPSmartModel kpsModel) {
-        kpSmartModel = kpsModel;
+    public static void setKPSMain(KPSMain kpsMain) {
+        HomeScreenController.kpsMain = kpsMain;
     }
 }

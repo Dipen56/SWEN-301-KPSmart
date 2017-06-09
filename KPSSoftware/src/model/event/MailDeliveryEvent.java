@@ -27,6 +27,13 @@ public class MailDeliveryEvent extends Event {
         this.mailId = mailId;
     }
 
+    /**
+     * @return the id of the delivered mail
+     */
+    public int getMailId() {
+        return mailId;
+    }
+
     @Override
     public String toString() {
         return "MailDeliveryEvent{" +

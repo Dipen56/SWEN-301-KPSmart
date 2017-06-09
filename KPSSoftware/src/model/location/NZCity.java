@@ -17,7 +17,7 @@ public enum NZCity {
      */
     public static NZCity createFromString(String cityName) {
         for (NZCity nzCity : NZCity.values()) {
-            if (nzCity.toString().equals(cityName)) {
+            if (nzCity.toString().equalsIgnoreCase(cityName)) {
                 return nzCity;
             }
         }

@@ -3,12 +3,12 @@ package model.event;
 import java.time.LocalDateTime;
 
 /**
- * This class represents an event of route deletion (transport discontinued)
+ * This class represents an event of route deactivation (transport discontinued)
  *
  * @author Hector
  * @version 2017/5/20
  */
-public class RouteDeletionEvent extends Event {
+public class RouteDeactivationEvent extends Event {
 
     /**
      * The id of deleted route
@@ -22,14 +22,21 @@ public class RouteDeletionEvent extends Event {
      * @param timeStamp
      * @param routeId
      */
-    public RouteDeletionEvent(int id, int staffId, LocalDateTime timeStamp, int routeId) {
+    public RouteDeactivationEvent(int id, int staffId, LocalDateTime timeStamp, int routeId) {
         super(id, staffId, timeStamp);
         this.routeId = routeId;
     }
 
+    /**
+     * @return the id of the deactivated route
+     */
+    public int getRouteId() {
+        return routeId;
+    }
+
     @Override
     public String toString() {
-        return "RouteDeletionEvent{" +
+        return "RouteDeactivationEvent{" +
                 super.toString() +
                 ", routeId=" + routeId +
                 '}';

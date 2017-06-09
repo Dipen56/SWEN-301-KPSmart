@@ -60,7 +60,7 @@ public class GraphEdge {
      * @param volume the volume used to calculate the mail's profit
      * @return the profit of the route.
      */
-    public double getRouteProfit(float weight, float volume) {
+    public double getRouteProfit(double weight, double volume) {
         return this.route.getNetProfit(weight, volume);
     }
 }

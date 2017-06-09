@@ -113,6 +113,7 @@ public class RouteDiscontinueScreenController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         //TODO: change this based on real information
         userLable.setText("Manager Angelo");
+        // FIXME: "/img/cool-user.png" does not exist
         avatar.setImage(new Image(controller.SendMailScreenController.class.getResourceAsStream("/img/cool-user.png")));
         //TODO: if clerk disable reviewLogs button. reviewLogs.setVisible(false);
 

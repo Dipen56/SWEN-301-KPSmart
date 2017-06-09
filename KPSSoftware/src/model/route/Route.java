@@ -34,7 +34,7 @@ public class Route {
     /**
      * The duration that this route takes to go from start to end
      */
-    private final float duration;
+    private final double duration;
 
     /**
      * The company operating on thie route
@@ -44,22 +44,27 @@ public class Route {
     /**
      * The price per gram
      */
-    private float pricePerGram;
+    private double pricePerGram;
 
     /**
      * The price per volume
      */
-    private float pricePerVolume;
+    private double pricePerVolume;
 
     /**
      * The cost per gram
      */
-    private float costPerGram;
+    private double costPerGram;
 
     /**
      * The cost per volume
      */
-    private float costPerVolume;
+    private double costPerVolume;
+
+    /**
+     * Is this route active?
+     */
+    private boolean isActive;
 
     /**
      * Constructor
@@ -75,8 +80,8 @@ public class Route {
      * @param costPerGram
      * @param costPerVolume
      */
-    public Route(int id, Location start, Location end, RouteType routeType, float duration, String transportFirm,
-                 float pricePerGram, float pricePerVolume, float costPerGram, float costPerVolume) {
+    public Route(int id, Location start, Location end, RouteType routeType, double duration, String transportFirm,
+                 double pricePerGram, double pricePerVolume, double costPerGram, double costPerVolume) throws IllegalArgumentException {
         if (start.id == end.id) {
             throw new IllegalArgumentException("Invalid route: two ends cannot be the same");
         }
@@ -91,6 +96,7 @@ public class Route {
         this.pricePerVolume = pricePerVolume;
         this.costPerGram = costPerGram;
         this.costPerVolume = costPerVolume;
+        this.isActive = true;
     }
 
     /**
@@ -110,7 +116,7 @@ public class Route {
     /**
      * @return the price per gram
      */
-    public float getPricePerGram() {
+    public double getPricePerGram() {
         return pricePerGram;
     }
 
@@ -119,14 +125,14 @@ public class Route {
      *
      * @param pricePerGram
      */
-    public void setPricePerGram(float pricePerGram) {
+    public void setPricePerGram(double pricePerGram) {
         this.pricePerGram = pricePerGram;
     }
 
     /**
      * @return the price per volume
      */
-    public float getPricePerVolume() {
+    public double getPricePerVolume() {
         return pricePerVolume;
     }
 
@@ -135,14 +141,14 @@ public class Route {
      *
      * @param pricePerVolume
      */
-    public void setPricePerVolume(float pricePerVolume) {
+    public void setPricePerVolume(double pricePerVolume) {
         this.pricePerVolume = pricePerVolume;
     }
 
     /**
      * @return the cost per gram
      */
-    public float getCostPerGram() {
+    public double getCostPerGram() {
         return costPerGram;
     }
 
@@ -151,14 +157,14 @@ public class Route {
      *
      * @param costPerGram
      */
-    public void setCostPerGram(float costPerGram) {
+    public void setCostPerGram(double costPerGram) {
         this.costPerGram = costPerGram;
     }
 
     /**
      * @return the cost per volume
      */
-    public float getCostPerVolume() {
+    public double getCostPerVolume() {
         return costPerVolume;
     }
 
@@ -167,7 +173,7 @@ public class Route {
      *
      * @param costPerVolume
      */
-    public void setCostPerVolume(float costPerVolume) {
+    public void setCostPerVolume(double costPerVolume) {
         this.costPerVolume = costPerVolume;
     }
 
@@ -178,7 +184,7 @@ public class Route {
      * @param volume the volume used to calculate the mail's revenue
      * @return the revenue of this route.
      */
-    public float getRevenue(float weight, float volume) {
+    public double getRevenue(double weight, double volume) {
         return pricePerGram * weight + pricePerVolume * volume;
     }
 
@@ -189,7 +195,7 @@ public class Route {
      * @param volume the volume used to calculate the mail's expenditure(cost)
      * @return the expenditure(cost) of this route.
      */
-    public float getExpenditure(float weight, float volume) {
+    public double getExpenditure(double weight, double volume) {
         return costPerGram * weight + costPerVolume * volume;
     }
 
@@ -200,14 +206,14 @@ public class Route {
      * @param volume the volume used to calculate the mail's profit
      * @return the profit of this route.
      */
-    public float getNetProfit(float weight, float volume) {
+    public double getNetProfit(double weight, double volume) {
         return getRevenue(weight, volume) - getExpenditure(weight, volume);
     }
 
     /**
      * @return the duration that this route takes to go from start to end
      */
-    public float getDuration() {
+    public double getDuration() {
         return duration;
     }
 
@@ -225,6 +231,20 @@ public class Route {
         return start instanceof InternationalLocation || end instanceof InternationalLocation;
     }
 
+    /**
+     * @return is this route active?
+     */
+    public boolean isActive() {
+        return this.isActive;
+    }
+
+    /**
+     * Set the route as active or inactive. An inactive route cannot be used to deliver mails.
+     */
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -234,31 +254,12 @@ public class Route {
 
         Route route = (Route) o;
 
-        return id == route.id
-                && Float.compare(route.duration, duration) == 0
-                && Float.compare(route.pricePerGram, pricePerGram) == 0
-                && Float.compare(route.pricePerVolume, pricePerVolume) == 0
-                && Float.compare(route.costPerGram, costPerGram) == 0
-                && Float.compare(route.costPerVolume, costPerVolume) == 0
-                && routeType == route.routeType
-                && start.equals(route.start)
-                && end.equals(route.end)
-                && transportFirm.equals(route.transportFirm);
+        return id == route.id;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + routeType.hashCode();
-        result = 31 * result + start.hashCode();
-        result = 31 * result + end.hashCode();
-        result = 31 * result + (duration != +0.0f ? Float.floatToIntBits(duration) : 0);
-        result = 31 * result + transportFirm.hashCode();
-        result = 31 * result + (pricePerGram != +0.0f ? Float.floatToIntBits(pricePerGram) : 0);
-        result = 31 * result + (pricePerVolume != +0.0f ? Float.floatToIntBits(pricePerVolume) : 0);
-        result = 31 * result + (costPerGram != +0.0f ? Float.floatToIntBits(costPerGram) : 0);
-        result = 31 * result + (costPerVolume != +0.0f ? Float.floatToIntBits(costPerVolume) : 0);
-        return result;
+        return id;
     }
 
     @Override

@@ -13,7 +13,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import model.KPSmartModel;
+import main.KPSMain;
 import model.staff.Staff;
 import view.DialogBox;
 
@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  * Created by Dipen on 25/05/2017.
  */
 public class ChangePasswordController implements Initializable {
-    private static KPSmartModel kpSmartModel;
+    private static KPSMain kpsMain;
     @FXML
     private Label userLable;
     @FXML
@@ -44,7 +44,7 @@ public class ChangePasswordController implements Initializable {
     private Label errorLabel;
 
     public ChangePasswordController() {
-        KPSmartModel.setLoginScreenController(this);
+        KPSMain.setLoginScreenController(this);
     }
 
     /**
@@ -90,7 +90,7 @@ public class ChangePasswordController implements Initializable {
         } else if (event.toString().contains("discard")) {
             returnUserManagement(event);
         } else if (event.toString().contains("accept")) {
-            String vaildPassword = kpSmartModel.changeUserPassword(oldPassword.getText(), newPassword.getText(), retypePassword.getText());
+            String vaildPassword = kpsMain.changeUserPassword(oldPassword.getText(), newPassword.getText(), retypePassword.getText());
             errorLabel.setText(vaildPassword);
             oldPassword.clear();
             newPassword.clear();
@@ -107,7 +107,7 @@ public class ChangePasswordController implements Initializable {
      */
 
     public void initialize(URL location, ResourceBundle resources) {
-        Staff staff = kpSmartModel.getCurrentUser();
+        Staff staff = kpsMain.getCurrentStaff();
         userLable.setText(staff.getFirstName());
         avatar.setImage(new Image(ChangePasswordController.class.getResourceAsStream("/img/" + staff.id + ".png")));
         if (!staff.isManager()) {
@@ -146,11 +146,11 @@ public class ChangePasswordController implements Initializable {
     }
 
     /**
-     * to set the KPSmodels class reference.
+     * to set the KPSMain class reference.
      *
-     * @param kpsModel
+     * @param kpsMain
      */
-    public static void setKpSmartModel(KPSmartModel kpsModel) {
-        kpSmartModel = kpsModel;
+    public static void setKPSMain(KPSMain kpsMain) {
+        ChangePasswordController.kpsMain = kpsMain;
     }
 }

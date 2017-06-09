@@ -16,11 +16,53 @@ public class Staff {
     private String phoneNumber;
     private boolean isManager;
 
+    /**
+     * Constructor
+     *
+     * @param id
+     * @param userName
+     * @param password
+     * @param isManager
+     */
     public Staff(int id, String userName, String password, boolean isManager) {
         this.id = id;
         this.userName = userName;
         this.password = password;
         this.isManager = isManager;
+    }
+
+    /**
+     * Constructor with more information
+     *
+     * @param id
+     * @param userName
+     * @param password
+     * @param isManager
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param phoneNumber
+     */
+    public Staff(int id, String userName, String password, boolean isManager, String firstName, String lastName, String email, String phoneNumber) {
+        this.id = id;
+        this.userName = userName;
+        this.password = password;
+        this.isManager = isManager;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+
+    /**
+     * Checks if the given username and password matches this Staff.
+     *
+     * @param username
+     * @param password
+     * @return true if both match, or false if not.
+     */
+    public boolean checkCredentials(String username, String password) {
+        return this.userName.equals(username) && this.password.equals(password);
     }
 
     // USER ACCOUNT METHODS

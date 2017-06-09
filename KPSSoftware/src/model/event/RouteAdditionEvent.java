@@ -27,6 +27,13 @@ public class RouteAdditionEvent extends Event {
         this.routeId = routeId;
     }
 
+    /**
+     * @return the id of the added route
+     */
+    public int getRouteId() {
+        return routeId;
+    }
+
     @Override
     public String toString() {
         return "RouteAdditionEvent{" +

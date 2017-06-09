@@ -17,22 +17,22 @@ public class CustomerPriceUpdateEvent extends Event {
     /**
      * The price per gram before update
      */
-    private float oldPricePerGram;
+    private double oldPricePerGram;
 
     /**
      * the price per volume before update
      */
-    private float oldPricePerVolume;
+    private double oldPricePerVolume;
 
     /**
      * the new price per gram after update
      */
-    private float newPricePerGram;
+    private double newPricePerGram;
 
     /**
      * the new price per volume after update
      */
-    private float newPricePerVolume;
+    private double newPricePerVolume;
 
     /**
      * Constructor
@@ -45,14 +45,49 @@ public class CustomerPriceUpdateEvent extends Event {
      * @param newPricePerGram
      * @param newPricePerVolume
      */
-    public CustomerPriceUpdateEvent(int id, int staffId, LocalDateTime timeStamp, int routeId, float oldPricePerGram,
-                                    float oldPricePerVolume, float newPricePerGram, float newPricePerVolume) {
+    public CustomerPriceUpdateEvent(int id, int staffId, LocalDateTime timeStamp, int routeId, double oldPricePerGram,
+                                    double oldPricePerVolume, double newPricePerGram, double newPricePerVolume) {
         super(id, staffId, timeStamp);
         this.routeId = routeId;
         this.oldPricePerGram = oldPricePerGram;
         this.oldPricePerVolume = oldPricePerVolume;
         this.newPricePerGram = newPricePerGram;
         this.newPricePerVolume = newPricePerVolume;
+    }
+
+    /**
+     * @return the id of the updated route
+     */
+    public int getRouteId() {
+        return routeId;
+    }
+
+    /**
+     * @return the old price per gram
+     */
+    public double getOldPricePerGram() {
+        return oldPricePerGram;
+    }
+
+    /**
+     * @return the old price per volume
+     */
+    public double getOldPricePerVolume() {
+        return oldPricePerVolume;
+    }
+
+    /**
+     * @return the new price per gram
+     */
+    public double getNewPricePerGram() {
+        return newPricePerGram;
+    }
+
+    /**
+     * @return the new price per volume
+     */
+    public double getNewPricePerVolume() {
+        return newPricePerVolume;
     }
 
     @Override

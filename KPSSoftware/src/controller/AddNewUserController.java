@@ -13,7 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import model.KPSmartModel;
+import main.KPSMain;
 import model.staff.Staff;
 import view.DialogBox;
 
@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  * Created by Dipen on 25/05/2017.
  */
 public class AddNewUserController implements Initializable {
-    private static KPSmartModel kpSmartModel;
+    private static KPSMain kpsMain;
     @FXML
     private Label userLable;
     @FXML
@@ -48,7 +48,7 @@ public class AddNewUserController implements Initializable {
     private CheckBox clerkCheckBox;
 
     public AddNewUserController() {
-        KPSmartModel.setLoginScreenController(this);
+        KPSMain.setLoginScreenController(this);
     }
 
     /**
@@ -98,24 +98,24 @@ public class AddNewUserController implements Initializable {
                     phoneTextfield.getText().equals("") || usernameTextfield.getText().equals("") || (!managerCheckBox.isSelected() && !clerkCheckBox.isSelected())) {
                 errorLabel.setText("Error :( Please make sure all the information is provided Correctly");
             } else {
-                if (managerCheckBox.isSelected()) {
-                    boolean userCreated = kpSmartModel.addNewUser(firstNameTextfield.getText(), lastNameTextfield.getText(), emailTextfield.getText(), phoneTextfield.getText(), usernameTextfield.getText(), true);
-                    if (!userCreated) {
-                        errorLabel.setText("Error :( Please try again with a different username");
-                    } else {
-                        clearContent(event);
-                    }
+                String userName = usernameTextfield.getText();
+                // FIXME: why we don't need the password to create a new user????
+                //        I set it as "123" for now.
+                String password = "123";
+                boolean isManager = managerCheckBox.isSelected();
+                String firstName = firstNameTextfield.getText();
+                String lastName = lastNameTextfield.getText();
+                String email = emailTextfield.getText();
+                String phoneNumber = phoneTextfield.getText();
+
+                boolean userCreated = kpsMain.addNewUser(userName, password, isManager, firstName, lastName, email, phoneNumber);
+                if (!userCreated) {
+                    errorLabel.setText("Error :( Please try again with a different username");
                 } else {
-                    boolean userCreated = kpSmartModel.addNewUser(firstNameTextfield.getText(), lastNameTextfield.getText(), emailTextfield.getText(), phoneTextfield.getText(), usernameTextfield.getText(), false);
-                    if (!userCreated) {
-                        errorLabel.setText("Error :( Please try again with a different username");
-                    } else {
-                        clearContent(event);
-                    }
+                    clearContent(event);
                 }
             }
         }
-
     }
 
     /**
@@ -126,7 +126,7 @@ public class AddNewUserController implements Initializable {
      */
 
     public void initialize(URL location, ResourceBundle resources) {
-        Staff staff = kpSmartModel.getCurrentUser();
+        Staff staff = kpsMain.getCurrentStaff();
         userLable.setText(staff.getFirstName());
         avatar.setImage(new Image(AddNewUserController.class.getResourceAsStream("/img/" + staff.id + ".png")));
 
@@ -160,12 +160,12 @@ public class AddNewUserController implements Initializable {
     }
 
     /**
-     * to set the KPSmodels class reference.
+     * to set the KPSMain class reference.
      *
-     * @param kpsModel
+     * @param kpsMain
      */
-    public static void setKpSmartModel(KPSmartModel kpsModel) {
-        kpSmartModel = kpsModel;
+    public static void setKPSMain(KPSMain kpsMain) {
+        AddNewUserController.kpsMain = kpsMain;
     }
 }
 

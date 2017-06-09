@@ -32,12 +32,12 @@ public class Mail {
     /**
      * The weight of this mail
      */
-    private float weight;
+    private double weight;
 
     /**
      * The volume of this mail
      */
-    private float volume;
+    private double volume;
 
     /**
      * The priority of this mail.
@@ -52,16 +52,6 @@ public class Mail {
      */
     private List<Route> routes;
 
-    /*
-     * TODO: when Mail is constructed, routes is passed in. We can't afford to find routes inside the constructor.
-     *       So before constructor is called, find routes first. If the routes can't be found, then do not construct
-     *       the Mail.
-     *
-     * TODO: when updating the mail (origin, destination, priority), find a new set of routes first, make sure there is
-     *       acceptable routes for the new parameters. e.g. the priority is changed to international air, then we need
-     *       to check if we can meet that requirement before updating the routes.
-     */
-
     /**
      * Constructor
      *
@@ -72,7 +62,7 @@ public class Mail {
      * @param volume
      * @param priority
      */
-    public Mail(int id, NZLocation origin, Location destination, float weight, float volume, Priority priority) {
+    public Mail(int id, NZLocation origin, Location destination, double weight, double volume, Priority priority) {
         if (origin.id == destination.id) {
             throw new IllegalArgumentException("Invalid mail: origin and destination cannot be the same");
         }
@@ -88,14 +78,14 @@ public class Mail {
     /**
      * @return the weight of this mail
      */
-    public float getWeight() {
+    public double getWeight() {
         return weight;
     }
 
     /**
      * @return the volume of this mail
      */
-    public float getVolume() {
+    public double getVolume() {
         return volume;
     }
 
@@ -146,44 +136,44 @@ public class Mail {
     /**
      * @return the total revenue of this mail
      */
-    public float getRevenue() {
+    public double getRevenue() {
         if (routes == null || routes.isEmpty()) {
             throw new UnsupportedOperationException("This mail has no valid routes, please set the routes before calculating");
         }
 
         // go through the routes assigned to this mail, calculate the revenue of each route, and add them together.
         return routes.stream()
-                .map(route -> route.getRevenue(weight, volume))
-                .reduce(0.0f, (sum, revenue) -> sum += revenue)
+                .mapToDouble(route -> route.getRevenue(weight, volume))
+                .reduce(0, (sum, revenue) -> sum += revenue)
                 * priority.getPriceFactor();
     }
 
     /**
      * @return the total expenditure(cost) of this mail
      */
-    public float getExpenditure() {
+    public double getExpenditure() {
         if (routes == null || routes.isEmpty()) {
             throw new UnsupportedOperationException("This mail has no valid routes, please set the routes before calculating");
         }
 
         // go through the routes assigned to this mail, calculate the cost of each route, and add them together.
         return routes.stream()
-                .map(route -> route.getExpenditure(weight, volume))
-                .reduce(0.0f, (sum, expenditure) -> sum += expenditure);
+                .mapToDouble(route -> route.getExpenditure(weight, volume))
+                .reduce(0, (sum, expenditure) -> sum += expenditure);
     }
 
     /**
      * @return the total duration of this mail.
      */
-    public float getDuration() {
+    public double getDuration() {
         if (routes == null || routes.isEmpty()) {
             throw new UnsupportedOperationException("This mail has no valid routes, please set the routes before calculating");
         }
 
         // go through the routes assigned to this mail, calculate the duration of each route, and add them together.
         return routes.stream()
-                .map(Route::getDuration)
-                .reduce(0.0f, (sum, duration) -> sum += duration);
+                .mapToDouble(Route::getDuration)
+                .reduce(0, (sum, duration) -> sum += duration);
     }
 
     @Override

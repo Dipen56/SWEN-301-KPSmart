@@ -11,7 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import model.KPSmartModel;
+import main.KPSMain;
 import model.staff.Staff;
 import view.DialogBox;
 
@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Created by Dipen on 25/05/2017.
  */
 public class ManageUserController implements Initializable {
-    private static KPSmartModel kpSmartModel;
+    private static KPSMain kpsMain;
     @FXML
     private ImageView avatar;
     @FXML
@@ -59,7 +59,7 @@ public class ManageUserController implements Initializable {
 
 
     public ManageUserController() {
-        KPSmartModel.setLoginScreenController(this);
+        KPSMain.setLoginScreenController(this);
     }
 
     /**
@@ -105,27 +105,34 @@ public class ManageUserController implements Initializable {
             returnUserManagement(event);
         } else if (event.toString().contains("update")) {
             if (selectUser.getValue() != null) {
+                String[] content = ((String) selectUser.getValue()).split(" ");
+
                 //TODO create a label and implement value input check.
-                boolean vaildUpdate = kpSmartModel.updateStaffInformation((String) selectUser.getValue(), firstNameTextField.getText(),
+                boolean vaildUpdate = kpsMain.updateStaffInformation(content[0], content[1], firstNameTextField.getText(),
                         lastNameTextField.getText(), emailTextField.getText(), phoneNumberTextField.getText(), changeRoleCheckBox.isSelected());
                 clearContent(event);
             }
 
         } else if (event.toString().contains("deleteButton")) {
             if (selectUser.getValue() != null) {
-                kpSmartModel.deleteUser((String) selectUser.getValue());
-                clearContent(event);
+                String[] content = ((String) selectUser.getValue()).split(" ");
+
+                if (kpsMain.deleteUser(content[0], content[1])) {
+                    clearContent(event);
+                }
             }
 
         } else if (event.toString().contains("selectUser")) {
-            Staff staff = kpSmartModel.getSelectedUser((String) selectUser.getValue());
+            String[] content = ((String) selectUser.getValue()).split(" ");
+            Staff staff = kpsMain.getSelectedUser(content[0], content[1]);
+
             userImage.setImage(new Image(ManageUserController.class.getResourceAsStream("/img/" + staff.id + ".png")));
             firstName.setText("First Name: " + staff.getFirstName());
             lastName.setText("Last Name: " + staff.getLastName());
             emailAddress.setText("Email: " + staff.getEmail());
             phoneNumber.setText("Phone: " + staff.getPhoneNumber());
             username.setText("Username: " + staff.getUserName());
-            if (staff.getFirstName().equals(kpSmartModel.getCurrentUser().getFirstName()) && staff.getLastName().equals(kpSmartModel.getCurrentUser().getLastName())) {
+            if (staff.getFirstName().equals(kpsMain.getCurrentStaff().getFirstName()) && staff.getLastName().equals(kpsMain.getCurrentStaff().getLastName())) {
                 deleteButton.setDisable(true);
             } else {
                 deleteButton.setDisable(false);
@@ -149,10 +156,10 @@ public class ManageUserController implements Initializable {
      */
 
     public void initialize(URL location, ResourceBundle resources) {
-        Staff staff = kpSmartModel.getCurrentUser();
+        Staff staff = kpsMain.getCurrentStaff();
         userLable.setText(staff.getFirstName());
         avatar.setImage(new Image(ManageUserController.class.getResourceAsStream("/img/" + staff.id + ".png")));
-        for (Staff s : kpSmartModel.getAllUsers()) {
+        for (Staff s : kpsMain.getAllUsers().values()) {
             selectUser.getItems().add(s.getFirstName() + " " + s.getLastName());
         }
 
@@ -186,11 +193,11 @@ public class ManageUserController implements Initializable {
     }
 
     /**
-     * to set the KPSmodels class reference.
+     * to set the KPSMain class reference.
      *
-     * @param kpsModel
+     * @param kpsMain
      */
-    public static void setKpSmartModel(KPSmartModel kpsModel) {
-        kpSmartModel = kpsModel;
+    public static void setKPSMain(KPSMain kpsMain) {
+        ManageUserController.kpsMain = kpsMain;
     }
 }

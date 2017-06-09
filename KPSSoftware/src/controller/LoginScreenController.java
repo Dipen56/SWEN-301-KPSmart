@@ -14,15 +14,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.KPSmartModel;
-import model.database.KPSDatabase;
+import main.KPSMain;
 
 import java.io.IOException;
 
 
 public class LoginScreenController {
     //this is the the main model class with whom all the interactions will take palce.
-    private static KPSmartModel kpSmartModel;
+    private static KPSMain kpsMain;
     //this variables are links to there FXML files counterparts
     @FXML
     private TextField usernameTextfield;
@@ -35,9 +34,8 @@ public class LoginScreenController {
      * Constructor for the login screen controller.
      */
     public LoginScreenController() {
-        KPSmartModel.setLoginScreenController(this);
+        KPSMain.setLoginScreenController(this);
     }
-
 
 
     /**
@@ -49,8 +47,8 @@ public class LoginScreenController {
         String username = usernameTextfield.getText();
         String password = passwordTextfield.getText();
         // checks given user name and password against database if correct will take you user the KPS Software.
-        System.out.println(kpSmartModel);
-        if (kpSmartModel.authenticateLogin(username, password)) {
+        System.out.println(kpsMain);
+        if (kpsMain.authenticateLogin(username, password)) {
             // for testing us the  username: Bob password: test123
             Parent homescreen = FXMLLoader.load(LoginScreenController.class.getResource("/fxml/home screen.fxml"));
             Scene homeSecne = new Scene(homescreen);
@@ -64,12 +62,13 @@ public class LoginScreenController {
             passwordTextfield.clear();
         }
     }
+
     /**
-     * to set the KPSmodels class reference.
+     * to set the KPSMain class reference.
      *
-     * @param kpsModel
+     * @param kpsMain
      */
-    public static void setKpSmartModel(KPSmartModel kpsModel) {
-        kpSmartModel = kpsModel;
+    public static void setKPSMain(KPSMain kpsMain) {
+        LoginScreenController.kpsMain = kpsMain;
     }
 }

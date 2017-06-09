@@ -71,18 +71,10 @@ public class KPSDatabase {
         }
         // create new employee and add to logins
         if (isManager) {
-            Staff manager = new Staff(UID++, name, pass, isManager);
-            manager.setFirstName(firstName);
-            manager.setLastName(lastName);
-            manager.setEmail(email);
-            manager.setPhoneNumber(phone);
+            Staff manager = new Staff(UID++, name, pass, isManager, firstName, lastName, email, phone);
             return logins.add(manager);
         } else {
-            Staff clerk = new Staff(UID++, name, pass, isManager);
-            clerk.setFirstName(firstName);
-            clerk.setLastName(lastName);
-            clerk.setEmail(email);
-            clerk.setPhoneNumber(phone);
+            Staff clerk = new Staff(UID++, name, pass, isManager, firstName, lastName, email, phone);
             return logins.add(clerk);
         }
     }

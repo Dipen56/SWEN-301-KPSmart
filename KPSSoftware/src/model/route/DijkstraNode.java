@@ -47,7 +47,7 @@ public class DijkstraNode implements Comparable<DijkstraNode> {
      * @param weight the weight used to calculate the mail's revenue
      * @param volume the volume used to calculate the mail's revenue
      */
-    public void updateProfitFromStart(float weight, float volume) {
+    public void updateProfitFromStart(double weight, double volume) {
         if (cameFrom == null) {
             this.profitFromStart = 0;
         } else {

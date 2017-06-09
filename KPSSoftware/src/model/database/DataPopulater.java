@@ -1,5 +1,6 @@
 package model.database;
 
+import model.event.*;
 import model.location.InternationalLocation;
 import model.location.NZCity;
 import model.location.NZLocation;
@@ -8,6 +9,8 @@ import model.mail.Priority;
 import model.route.Route;
 import model.route.RouteType;
 import model.staff.Staff;
+
+import java.time.LocalDateTime;
 
 /**
  * This class is used to populate the initial data, so the programme won't have to be demonstrated with blank data. this
@@ -21,32 +24,18 @@ public class DataPopulater {
     public DataPopulater() {
         populateStaffs();
         populateLocationsAndRoutesAndMails();
+        populateEvents();
     }
 
     private void populateStaffs() {
-        Staff staff_1 = new Staff(1, "John", "test123", false);
-        staff_1.setFirstName("John");
-        staff_1.setLastName("Smith");
-        staff_1.setEmail("jsmith@email.com");
-        staff_1.setPhoneNumber("123 456 7890");
-
-        Staff staff_2 = new Staff(2, "Bob", "test123", true);
-        staff_2.setFirstName("Bob");
-        staff_2.setLastName("Jones");
-        staff_2.setEmail("bjones@email.com");
-        staff_2.setPhoneNumber("123 456 7890");
-
-        Staff staff_3 = new Staff(3, "Steve", "test123", false);
-        staff_3.setFirstName("Steve");
-        staff_3.setLastName("Jobs");
-        staff_3.setEmail("sjobs@email.com");
-        staff_3.setPhoneNumber("123 456 7890");
-
-        Staff staff_4 = new Staff(4, "123", "123", true);
-        staff_4.setFirstName("John");
-        staff_4.setLastName("Doe");
-        staff_4.setEmail("jd@email.com");
-        staff_4.setPhoneNumber("123 456 7890");
+        Staff staff_1 = new Staff(1, "John", "test123", false, "John",
+                "Smith", "jsmith@email.com", "123 456 7890");
+        Staff staff_2 = new Staff(2, "Bob", "test123", true, "Bob",
+                "Jones", "bjones@email.com", "123 456 7890");
+        Staff staff_3 = new Staff(3, "Steve", "test123", false, "Steve",
+                "Jobs", "sjobs@email.com", "123 456 7890");
+        Staff staff_4 = new Staff(4, "123", "123", true, "John",
+                "Doe", "jd@email.com", "123 456 7890");
 
         XMLDriver.writeStaff(staff_1);
         XMLDriver.writeStaff(staff_2);
@@ -130,6 +119,20 @@ public class DataPopulater {
         XMLDriver.writeMail(mail_3);
         XMLDriver.writeMail(mail_4);
         XMLDriver.writeMail(mail_5);
+    }
+
+    private void populateEvents() {
+        CustomerPriceUpdateEvent cpuEvent = new CustomerPriceUpdateEvent(1, 1, LocalDateTime.now(), 1, 1.0f, 0.5f, 1.2f, 0.7f);
+        TransportCostUpdateEvent tcuEvent = new TransportCostUpdateEvent(2, 2, LocalDateTime.now(), 2, 1.2f, 0.8f, 1.1f, 0.6f);
+        MailDeliveryEvent mdEvent = new MailDeliveryEvent(3, 1, LocalDateTime.now(), 1);
+        RouteAdditionEvent raEvent = new RouteAdditionEvent(4, 1, LocalDateTime.now(), 14);
+        RouteDeactivationEvent rdEvent = new RouteDeactivationEvent(5, 1, LocalDateTime.now(), 3);
+
+        XMLDriver.writeCustomerPriceUpdateEvent(cpuEvent);
+        XMLDriver.writeTransportCostUpdateEvent(tcuEvent);
+        XMLDriver.writeMailDeliveryEvent(mdEvent);
+        XMLDriver.writeRouteAdditionEvent(raEvent);
+        XMLDriver.writeRouteDeactivationEvent(rdEvent);
     }
 
 //    public static boolean addLocations(String lccationName, boolean isInternational) {

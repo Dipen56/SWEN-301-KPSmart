@@ -277,14 +277,14 @@ public class KPSMain {
         double volume = 1000f;
         Priority priority = Priority.International_Air;
 
-        boolean result = kpsModel.deliverMail(originString, destinationString, weight, volume, priority);
+        int mailId = kpsModel.findRoutes(originString, destinationString, weight, volume, priority);
 
-        if (result) {
-            // success
+        if (mailId < 0) {
+            // we don't support sending mails from the given origin to the given destination
         } else {
-            // several reasons:
-            // origin and destination are not connected yet
-            // origin/destination is not in our system
+            // We can deliver the mail
+            double revenue = kpsModel.getMailRevenue(mailId);
+            double expenditure = kpsModel.getMailExpenditure(mailId);
         }
     }
 

@@ -189,7 +189,7 @@ public class KPSMain {
 
     // deliver mail
     public boolean deliverMail(String origin, String destination, double weight, double volume, Priority priority) {
-        int mailId = kpsModel.findRoutes(origin, destination, weight, volume, priority);
+        int mailId = kpsModel.processMail(origin, destination, weight, volume, priority);
 
         return true;
     }
@@ -301,7 +301,7 @@ public class KPSMain {
         double volume = 1000f;
         Priority priority = Priority.International_Air;
 
-        int mailId = kpsModel.findRoutes(originString, destinationString, weight, volume, priority);
+        int mailId = kpsModel.processMail(originString, destinationString, weight, volume, priority);
 
         if (mailId < 0) {
             // we don't support sending mails from the given origin to the given destination
@@ -341,36 +341,32 @@ public class KPSMain {
 
     // calculate business figures of all mails
     public void demonstration_getBusinessFiguresOfAllMail() {
-        double totalRevenue = kpsModel.calculateTotalRevenue();
+        Map<Integer, Mail> allMails = kpsModel.getAllMails();
 
-        double totalCost = kpsModel.calculateTotalExpenditure();
+        double totalRevenue = KPSModel.calculateTotalRevenue(allMails);
 
-        double totalProfit = kpsModel.calculateTotalProfit();
+        double totalCost = KPSModel.calculateTotalExpenditure(allMails);
+
+        double totalProfit = KPSModel.calculateTotalProfit(allMails);
     }
 
     // get a list of [origin, destination, priority] triples, aka critical routes
     public void demonstration_getCriticalRoutes() {
-        Set<Mail> criticalMails = kpsModel.getCriticalMails();
+        Map<Integer, Mail> criticalMails = kpsModel.getCriticalMails();
 
-        // for each mail:
-        criticalMails.forEach(mail -> {
+        // for each mail, to get the origin, destination, and priority
+        criticalMails.values().forEach(mail -> {
             String origin = mail.getOrigin().getLocationName();
             String destination = mail.getDestination().getLocationName();
             Priority priority = mail.getPriority();
         });
 
+        // calculate the average revenue and average expenditure:
         double numMails = criticalMails.size();
+        double totalRevenue = KPSModel.calculateTotalRevenue(criticalMails);
+        double totalCost = KPSModel.calculateTotalExpenditure(criticalMails);
 
-        double totalPrice = criticalMails.stream()
-                .mapToDouble(Mail::getRevenue)
-                .reduce(0, (result, revenue) -> result = result + revenue);
-
-        double averagePrice = totalPrice / numMails;
-
-        double totalCost = criticalMails.stream()
-                .mapToDouble(Mail::getExpenditure)
-                .reduce(0, (result, cost) -> result = result + cost);
-
+        double averageRevenue = totalRevenue / numMails;
         double averageCost = totalCost / numMails;
     }
 

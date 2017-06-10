@@ -146,7 +146,7 @@ public class KPSModel {
      * @param priority
      * @return -1 if we can't send this mail; or the id of the mail if we can.
      */
-    public int findRoutes(String originString, String destinationString, double weight, double volume, Priority priority) {
+    public int processMail(String originString, String destinationString, double weight, double volume, Priority priority) {
         NZLocation origin = findOrCreateNZLocationByString(originString);
         Location destination = findOrCreateLocationByString(destinationString);
 
@@ -174,6 +174,13 @@ public class KPSModel {
     }
 
     /**
+     * @return all mails as a map, where the key is the id of the Mail, and the value is the Mail object
+     */
+    public Map<Integer, Mail> getAllMails() {
+        return this.mails;
+    }
+
+    /**
      * @param id
      * @return the mail that matches the given id.
      */
@@ -198,35 +205,43 @@ public class KPSModel {
     }
 
     /**
-     * @return the total revenue of all mails
+     * Find all mails whose origin matches the given origin.
+     *
+     * @param originString      wanted origin name
+     * @return wanted mails as a map, where the key is the id of the Mail, and the value is the Mail object
      */
-    public double calculateTotalRevenue() {
-        return mails.values().stream()
-                .mapToDouble(Mail::getRevenue)
-                .reduce(0, (result, revenue) -> result = result + revenue);
+    public Map<Integer, Mail> getMailsByOrigin(String originString) {
+        Map<Integer, Mail> wantedMails = new HashMap<>();
+
+        this.mails.forEach((id, mail) -> {
+            String mailOrigin = mail.getOrigin().getLocationName();
+
+            if (mailOrigin.equalsIgnoreCase(originString)) {
+                wantedMails.put(mail.id, mail);
+            }
+        });
+
+        return wantedMails;
     }
 
     /**
-     * @return the total cost(expenditure) of all mails
+     * Find all mails whose destination matches the given destination.
+     *
+     * @param destinationString wanted destination name
+     * @return wanted mails as a map, where the key is the id of the Mail, and the value is the Mail object
      */
-    public double calculateTotalExpenditure() {
-        return mails.values().stream()
-                .mapToDouble(Mail::getExpenditure)
-                .reduce(0, (result, cost) -> result = result + cost);
-    }
+    public Map<Integer, Mail> getMailsByDestination(String destinationString) {
+        Map<Integer, Mail> wantedMails = new HashMap<>();
 
-    /**
-     * @return the total profit of all mails
-     */
-    public double calculateTotalProfit() {
-        return calculateTotalRevenue() - calculateTotalExpenditure();
-    }
+        this.mails.forEach((id, mail) -> {
+            String mailDestination = mail.getDestination().getLocationName();
 
-    /**
-     * @return all mails as a map, where the key is the id of the Mail, and the value is the Mail object
-     */
-    public Map<Integer, Mail> getAllMails() {
-        return this.mails;
+            if (mailDestination.equalsIgnoreCase(destinationString)) {
+                wantedMails.put(mail.id, mail);
+            }
+        });
+
+        return wantedMails;
     }
 
     /**
@@ -416,12 +431,12 @@ public class KPSModel {
     /**
      * @return all critical mails
      */
-    public Set<Mail> getCriticalMails() {
-        Set<Mail> criticalMails = new HashSet<>();
+    public Map<Integer, Mail> getCriticalMails() {
+        Map<Integer, Mail> criticalMails = new HashMap<>();
 
         mails.values().forEach(mail -> {
             if (mail.getRevenue() - mail.getExpenditure() < 0) {
-                criticalMails.add(mail);
+                criticalMails.put(mail.id, mail);
             }
         });
 
@@ -552,6 +567,36 @@ public class KPSModel {
         } else {
             return false;
         }
+    }
+
+
+    // =========================================================================
+    //                     STATIC (HELPER) METHODS
+    // =========================================================================
+
+    /**
+     * @return the total revenue of given mails
+     */
+    public static double calculateTotalRevenue(Map<Integer, Mail> mails) {
+        return mails.values().stream()
+                .mapToDouble(Mail::getRevenue)
+                .reduce(0, (result, revenue) -> result = result + revenue);
+    }
+
+    /**
+     * @return the total cost(expenditure) of given mails
+     */
+    public static double calculateTotalExpenditure(Map<Integer, Mail> mails) {
+        return mails.values().stream()
+                .mapToDouble(Mail::getExpenditure)
+                .reduce(0, (result, cost) -> result = result + cost);
+    }
+
+    /**
+     * @return the total profit of given mails
+     */
+    public static double calculateTotalProfit(Map<Integer, Mail> mails) {
+        return calculateTotalRevenue(mails) - calculateTotalExpenditure(mails);
     }
 
 

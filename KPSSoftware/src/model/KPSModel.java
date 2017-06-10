@@ -15,6 +15,7 @@ import model.staff.Staff;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /*
 TODO: consider another approach for implementing Database TRANSACTION:
@@ -207,7 +208,7 @@ public class KPSModel {
     /**
      * Find all mails whose origin matches the given origin.
      *
-     * @param originString      wanted origin name
+     * @param originString wanted origin name
      * @return wanted mails as a map, where the key is the id of the Mail, and the value is the Mail object
      */
     public Map<Integer, Mail> getMailsByOrigin(String originString) {
@@ -264,6 +265,34 @@ public class KPSModel {
         });
 
         return wantedMails;
+    }
+
+    /**
+     * Calculate the average delivery time given origin, destination, and priority
+     *
+     * @param originString
+     * @param destinationString
+     * @param priority
+     * @return -1 if there are no mails matching the given origin, destination, and priority; or the average duration of
+     * all mails that matches the given condition.
+     */
+    public double calculateAverageDeliveryTime(String originString, String destinationString, Priority priority) {
+        List<Mail> wantedMails = getMailsByOriginAndDestination(originString, destinationString).values()
+                .stream()
+                .filter(mail -> mail.getPriority().equals(priority))
+                .collect(Collectors.toList());
+
+        int numWantedMails = wantedMails.size();
+
+        if (numWantedMails == 0) {
+            return -1;
+        }
+
+        double totalDuration = wantedMails.stream()
+                .mapToDouble(Mail::getDuration)
+                .reduce(0, (result, duration) -> result = result + duration);
+
+        return totalDuration / numWantedMails;
     }
 
     // ============================================================

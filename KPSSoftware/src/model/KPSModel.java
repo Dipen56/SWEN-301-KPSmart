@@ -14,10 +14,7 @@ import model.route.RoutingSystem;
 import model.staff.Staff;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /*
 TODO: consider another approach for implementing Database TRANSACTION:
@@ -89,8 +86,10 @@ public class KPSModel {
      * Constructor
      */
     public KPSModel() {
-        reloadDataFromXML();
+        loadDataFromXML();
         routingSystem = new RoutingSystem(routes);
+        prepareRoutingSystem();
+        prepareOriginsAndDestinations();
     }
 
     // ============================================================
@@ -194,6 +193,35 @@ public class KPSModel {
      */
     public double calculateTotalProfit() {
         return calculateTotalRevenue() - calculateTotalExpenditure();
+    }
+
+    /**
+     * @return all mails as a map, where the key is the id of the Mail, and the value is the Mail object
+     */
+    public Map<Integer, Mail> getAllMails() {
+        return this.mails;
+    }
+
+    /**
+     * Find all mails whose origin matches the given origin, and destination matches the given destination.
+     *
+     * @param originString      wanted origin name
+     * @param destinationString wanted destination name
+     * @return wanted mails as a map, where the key is the id of the Mail, and the value is the Mail object
+     */
+    public Map<Integer, Mail> getMailsByOriginAndDestination(String originString, String destinationString) {
+        Map<Integer, Mail> wantedMails = new HashMap<>();
+
+        this.mails.forEach((id, mail) -> {
+            String mailOrigin = mail.getOrigin().getLocationName();
+            String mailDestination = mail.getDestination().getLocationName();
+
+            if (mailOrigin.equalsIgnoreCase(originString) && mailDestination.equalsIgnoreCase(destinationString)) {
+                wantedMails.put(mail.id, mail);
+            }
+        });
+
+        return wantedMails;
     }
 
     // ============================================================
@@ -419,7 +447,7 @@ public class KPSModel {
     }
 
     /**
-     * @return all registered staffs
+     * @return all registered staffs as a map, where the key is the id of the staff, and the value is the Staff object
      */
     public Map<Integer, Staff> getAllStaffs() {
         return this.registeredStaffs;
@@ -484,9 +512,9 @@ public class KPSModel {
 
 
     /**
-     * Reload data from XML files.
+     * Load data from XML files.
      */
-    private void reloadDataFromXML() {
+    private void loadDataFromXML() {
         events = XMLDriver.readEvents();
         locations = XMLDriver.readLocations();
         mails = XMLDriver.readMails();
@@ -498,29 +526,38 @@ public class KPSModel {
         maxMailId = XMLDriver.getMaxMailId();
         maxRouteId = XMLDriver.getMaxRouteId();
         maxStaffId = XMLDriver.getMaxStaffId();
+    }
 
+    /**
+     * Prepare the routing graph system
+     */
+    private void prepareRoutingSystem() {
+        this.routingSystem.clearAll();
+
+        routes.values().forEach(route -> {
+            routingSystem.addGraphRoute(route);
+        });
+    }
+
+    /**
+     * Prepare the set of available origins and destinations
+     */
+    private void prepareOriginsAndDestinations() {
         this.origins = new HashSet<>();
         this.destinations = new HashSet<>();
 
-        if (this.routingSystem != null) {
-            this.routingSystem.clearAll();
+        routes.values().forEach(route -> {
+            // find or create start location and end location
+            Location start = route.getStartLocation();
+            Location end = route.getEndLocation();
 
-            routes.values().forEach(route -> {
-                // find or create start location and end location
-                Location start = route.getStartLocation();
-                Location end = route.getEndLocation();
-
-                // add start and end to available origins and destinations.
-                if (start instanceof NZLocation) {
-                    NZLocation origin = (NZLocation) start;
-                    this.origins.add(origin);
-                }
-                this.destinations.add(end);
-
-                // Update the routing system
-                routingSystem.addGraphRoute(route);
-            });
-        }
+            // add start and end to available origins and destinations.
+            if (start instanceof NZLocation) {
+                NZLocation origin = (NZLocation) start;
+                this.origins.add(origin);
+            }
+            this.destinations.add(end);
+        });
     }
 
     /**
@@ -627,81 +664,4 @@ public class KPSModel {
     private boolean isValidRouteChain(List<Route> routes) {
         return routes != null && !routes.isEmpty();
     }
-
-//    /**
-//     * generates Events. THIS IS ONLY A METHOD FOR TESTING PURPOSE.
-//     */
-//    private void generateEvents() {
-//
-//        // 1. Add 2 users, 1 manager, 1 clerk
-//        registeredStaffs.put(1, new Staff(1, "123", "123", true));
-//        registeredStaffs.put(2, new Staff(2, "123", "123", false));
-//
-//        // 2. Login the manager
-//        login("123", "123");
-//
-//        // 3. Add at least 10 routes
-//        NZLocation wellington = new NZLocation(1, NZCity.Wellington);
-//        NZLocation auckland = new NZLocation(2, NZCity.Auckland);
-//        NZLocation christchurch = new NZLocation(3, NZCity.Christchurch);
-//        NZLocation dunedin = new NZLocation(4, NZCity.Dunedin);
-//        NZLocation hamilton = new NZLocation(5, NZCity.Hamilton);
-//        NZLocation parmerstonNorth = new NZLocation(6, NZCity.Palmerston_North);
-//        NZLocation rotorua = new NZLocation(7, NZCity.Rotorua);
-//
-//        InternationalLocation sydney = new InternationalLocation(8, "Sydney");
-//        InternationalLocation singapore = new InternationalLocation(9, "Singapore");
-//        InternationalLocation hongkong = new InternationalLocation(10, "HongKong");
-//        InternationalLocation guangzhou = new InternationalLocation(11, "GuangZhou");
-//        InternationalLocation moscow = new InternationalLocation(12, "Moscow");
-//
-//        String royalPost = "RoyalPost";
-//        String nzFast = "NZFast";
-//        String pacificaMails = "PacificaMails";
-//        String fedEx = "FedEx";
-//
-//        addRoute(dunedin, christchurch, RouteType.Land, 4.0f, royalPost, 1.2f, 0.7f, 1.0f, 0.5f);
-//        addRoute(dunedin, christchurch, RouteType.Land, 3.2f, nzFast, 1.4f, 0.9f, 1.1f, 0.6f);
-//        addRoute(christchurch, wellington, RouteType.Air, 1.2f, royalPost, 1.9f, 1.3f, 1.6f, 0.9f);
-//        addRoute(christchurch, wellington, RouteType.Air, 1.1f, nzFast, 1.8f, 1.3f, 1.7f, 1.0f);
-//        addRoute(dunedin, auckland, RouteType.Air, 4.5f, nzFast, 3.9f, 4.0f, 3.2f, 3.5f);
-//        addRoute(christchurch, auckland, RouteType.Land, 4.9f, royalPost, 2.9f, 3.2f, 2.5f, 3.0f);
-//        addRoute(auckland, sydney, RouteType.Air, 3.0f, fedEx, 6.6f, 6.2f, 5.5f, 5.0f);
-//        addRoute(auckland, sydney, RouteType.Sea, 7.5f, pacificaMails, 4.0f, 3.5f, 3.5f, 3.0f);
-//        addRoute(auckland, singapore, RouteType.Sea, 10.5f, pacificaMails, 4.8f, 4.6f, 4.5f, 4.2f);
-//        addRoute(sydney, hongkong, RouteType.Air, 4.8f, fedEx, 8.8f, 7.6f, 6.5f, 6.5f);
-//        addRoute(singapore, guangzhou, RouteType.Sea, 4, pacificaMails, 3.2f, 3.7f, 3.0f, 3.2f);
-//        addRoute(hongkong, guangzhou, RouteType.Sea, 0.5f, fedEx, 1.2f, 0.7f, 1.0f, 0.5f);
-//        addRoute(guangzhou, moscow, RouteType.Land, 14.0f, fedEx, 9.6f, 9.9f, 8.5f, 8.5f);
-//        addRoute(guangzhou, moscow, RouteType.Air, 5.5f, fedEx, 13.5f, 14.5f, 12.0f, 12.5f);
-//
-//        // 4. deliver several Mails
-//        deliverMail("Dunedin", "Auckland", 2500, 3000, Priority.Domestic_Standard);
-//        deliverMail("Dunedin", "Moscow", 6200, 30000, Priority.International_Standard);
-//        deliverMail("Dunedin", "HongKong", 99000, 10000, Priority.International_Air);
-//        deliverMail("Auckland", "Sydney", 500, 100, Priority.International_Air);
-//        deliverMail("Christchurch", "Auckland", 8800, 8800, Priority.Domestic_Standard);
-//
-//        // 5. update customer price
-//        int idRouteToUpdatePrice = 1;
-//        double newPricePerGram = 35.0f;
-//        double newPricePerVolume = 35.0f;
-//
-//        updateCustomerPrice(idRouteToUpdatePrice, newPricePerGram, newPricePerVolume);
-//
-//        // 6. update transport cost
-//        int idRouteToUpdateCost = 2;
-//        double newCostPerGram = 35.0f;
-//        double newCostPerVolume = 35.0f;
-//
-//        updateTransportCost(idRouteToUpdateCost, newCostPerGram, newCostPerVolume);
-//
-//        // 7. delete a route (transport discontinued)
-//        int idRouteToDelete = 3;
-//        deactivateRoute(idRouteToDelete);
-//
-//
-//        // 8. Calculate Business figures
-//        // TODO: calculate business figures. (It's Angelo's job. for now.)
-//    }
 }

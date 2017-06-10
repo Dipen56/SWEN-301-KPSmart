@@ -31,13 +31,7 @@ public class RouteDiscontinueScreenController implements Initializable {
     @FXML
     private Button reviewLogsButton;
     @FXML
-    private ComboBox originCombobox;
-    @FXML
-    private ComboBox destinationCombobox;
-    @FXML
-    private ComboBox companyCombobox;
-    @FXML
-    private ComboBox transportCombobox;
+    private ComboBox routeCombobox;
     @FXML
     private ImageView avatar;
 
@@ -132,13 +126,7 @@ public class RouteDiscontinueScreenController implements Initializable {
             reviewLogsButton.setVisible(false);
             reviewLogsButton.setDisable(false);
         }
-        for (Location loc : kpsMain.getAvailableOrigins()) {
-            originCombobox.getItems().add(loc.getLocationName());
-        }
-        for (Location loc : kpsMain.getAvailableDestinations()) {
 
-            destinationCombobox.getItems().add(loc.getLocationName());
-        }
 
     }
 

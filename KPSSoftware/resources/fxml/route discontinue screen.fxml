@@ -73,12 +73,12 @@
         </VBox>
         <AnchorPane id="home-anchorpane" prefHeight="490.0" prefWidth="586.0" styleClass="home-anchorpane" stylesheets="@../css/style.css">
             <children>
-                <Button id="reset" layoutX="237.0" layoutY="456.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="main-button" stylesheets="@../css/style.css" text="Reset" textFill="WHITE">
+                <Button id="reset" layoutX="224.0" layoutY="491.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="main-button" stylesheets="@../css/style.css" text="Reset" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Button>
-                <Button id="discard" layoutX="355.0" layoutY="456.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="discard-button" stylesheets="@../css/style.css" text="Discard" textFill="WHITE">
+                <Button id="discard" layoutX="342.0" layoutY="491.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="discard-button" stylesheets="@../css/style.css" text="Discard" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
@@ -93,22 +93,27 @@
                         <Image url="@../img/route-closed.jpg" />
                     </image>
                 </ImageView>
-                <Button id="accept" layoutX="119.0" layoutY="456.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="logout-button" stylesheets="@../css/style.css" text="Accept" textFill="WHITE">
+                <Button id="accept" layoutX="106.0" layoutY="491.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="logout-button" stylesheets="@../css/style.css" text="Accept" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Button>
-            <Label layoutX="76.0" layoutY="155.0" prefHeight="31.0" prefWidth="86.0" text="Routes:">
+            <Label layoutX="34.0" layoutY="154.0" prefHeight="31.0" prefWidth="86.0" text="Routes:">
                <font>
                   <Font name="System Bold" size="21.0" />
                </font>
             </Label>
-            <Button layoutX="444.0" layoutY="148.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="110.0" text="Discontinue " wrapText="true">
+            <Button layoutX="426.0" layoutY="147.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="101.0" text="Discontinue " wrapText="true">
                <font>
                   <Font size="17.0" />
                </font>
             </Button>
-            <ComboBox layoutX="168.0" layoutY="148.0" prefHeight="45.0" prefWidth="254.0" />
+            <ComboBox fx:id="routeCombobox" layoutX="123.0" layoutY="147.0" prefHeight="45.0" prefWidth="290.0" promptText="Please Select" />
+            <Label layoutX="120.0" layoutY="233.0" prefHeight="31.0" prefWidth="154.0" text="Affected Origin" />
+            <Label layoutX="120.0" layoutY="280.0" text="Affected Destination" />
+            <Label layoutX="120.0" layoutY="325.0" text="Transport Firm" />
+            <Label layoutX="120.0" layoutY="369.0" text="Type" />
+            <Label layoutX="120.0" layoutY="415.0" text="Status" />
             </children>
         </AnchorPane>
     </children>

@@ -135,7 +135,18 @@ public class KPSModel {
     // ============================================================
 
 
-    public boolean deliverMail(String originString, String destinationString, double weight, double volume, Priority priority) {
+    /**
+     * Find out if we can support sending mail from the given origin to the given destination. If we can't send the mail,
+     * then -1 is returned. If we can, the id of the mail is returned.
+     *
+     * @param originString
+     * @param destinationString
+     * @param weight
+     * @param volume
+     * @param priority
+     * @return -1 if we can't send this mail; or the id of the mail if we can.
+     */
+    public int findRoutes(String originString, String destinationString, double weight, double volume, Priority priority) {
         NZLocation origin = findOrCreateNZLocationByString(originString);
         Location destination = findOrCreateLocationByString(destinationString);
 
@@ -148,7 +159,7 @@ public class KPSModel {
         // if cannot find available routes, return false
         if (!isValidRouteChain(routes)) {
             maxMailId--;
-            return false;
+            return -1;
         }
 
         mail.setRoutes(routes);
@@ -159,7 +170,7 @@ public class KPSModel {
         maxEventId++;
         XMLDriver.writeMailDeliveryEvent(new MailDeliveryEvent(maxEventId, currentStaff.id, LocalDateTime.now(), mail.id));
 
-        return true;
+        return mail.id;
     }
 
     /**
@@ -168,6 +179,22 @@ public class KPSModel {
      */
     public Mail getMailById(int id) {
         return this.mails.get(id);
+    }
+
+    /**
+     * @param id the id of mail that we want to get revenue from
+     * @return the revenue of the mail
+     */
+    public double getMailRevenue(int id) {
+        return getMailById(id).getRevenue();
+    }
+
+    /**
+     * @param id the id of mail that we want to get expenditure from
+     * @return the expenditure of the mail
+     */
+    public double getMailExpenditure(int id) {
+        return getMailById(id).getExpenditure();
     }
 
     /**
@@ -377,6 +404,17 @@ public class KPSModel {
      */
     public Route getRouteById(int id) {
         return routes.get(id);
+    }
+
+    public Set<Route> getCriticalRoutes() {
+        Set<Route> criticalRoutes = new HashSet<>();
+
+        routes.values().forEach(route -> {
+
+
+        });
+
+        return criticalRoutes;
     }
 
     // ============================================================

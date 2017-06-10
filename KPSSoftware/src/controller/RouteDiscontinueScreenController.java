@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import main.KPSMain;
+import model.location.Location;
 import model.staff.Staff;
 
 import java.io.IOException;
@@ -105,14 +106,11 @@ public class RouteDiscontinueScreenController implements Initializable {
      */
     public void handleButtons(ActionEvent event) {
         if (event.toString().contains("accept")) {
-            //TODO: retive information from the field and pass to logic...
-            System.out.println("accpted");
+
         } else if (event.toString().contains("reset")) {
             clearContent(event);
 
         } else if (event.toString().contains("discard")) {
-            returnHome(event);
-        } else if (event.toString().contains("exit")) {
             returnHome(event);
         }
     }
@@ -133,6 +131,13 @@ public class RouteDiscontinueScreenController implements Initializable {
         if (!staff.isManager()) {
             reviewLogsButton.setVisible(false);
             reviewLogsButton.setDisable(false);
+        }
+        for (Location loc : kpsMain.getAvailableOrigins()) {
+            originCombobox.getItems().add(loc.getLocationName());
+        }
+        for (Location loc : kpsMain.getAvailableDestinations()) {
+
+            destinationCombobox.getItems().add(loc.getLocationName());
         }
 
     }

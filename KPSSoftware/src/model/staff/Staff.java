@@ -73,8 +73,7 @@ public class Staff {
             return "Old Passwords not match";
         } else if (!newPassword.equals(retypePassword)) {
             return "New passwords and re typed password do not match";
-        } else if (newPassword.matches("[^a-zA-Z0-9]")) {
-            // FIXME: 31/05/2017 the regex is not working :(((((((
+        } else if (newPassword.matches("^[a-zA-Z0-9]*$")) {
             return "New passwords must only contain alphanumeric ";
         } else if (newPassword.length() < 6) {
             return "New passwords must be minimum 6 characters";

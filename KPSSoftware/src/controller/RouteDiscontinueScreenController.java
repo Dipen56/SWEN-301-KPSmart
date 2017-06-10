@@ -124,7 +124,11 @@ public class RouteDiscontinueScreenController implements Initializable {
                     affectedDestinationLabel.setText("Affected Destination: " + root.getEndLocation().getLocationName());
                     transportFirmLabel.setText("Tranport Firm: " + root.getTransportFirm());
                     typeLabel.setText("Type: " + root.routeType.toString());
-                    statusLabel.setText("Status: Activate");
+                    if(root.isActive()) {
+                        statusLabel.setText("Status: Activate");
+                    }else {
+                        statusLabel.setText("Status: Deactivated!");
+                    }
                     notificationLabel.setVisible(true);
                     affectedOriginLabel.setVisible(true);
                     affectedDestinationLabel.setVisible(true);

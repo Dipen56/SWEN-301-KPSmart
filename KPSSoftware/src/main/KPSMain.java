@@ -34,6 +34,7 @@ public class KPSMain {
     private static ChangePasswordController changePasswordController;
     private static ManageUserController manageUserControllerl;
     private static AddNewUserController addNewUserController;
+    private static SendMailScreenController sendMailScreenController;
 
     // ================== view objects =============================
 
@@ -50,6 +51,7 @@ public class KPSMain {
         ChangePasswordController.setKPSMain(this);
         ManageUserController.setKPSMain(this);
         AddNewUserController.setKPSMain(this);
+        SendMailScreenController.setKPSMain(this);
     }
 
 
@@ -167,9 +169,25 @@ public class KPSMain {
             manageUserControllerl = (ManageUserController) controllers;
         } else if (controllers instanceof AddNewUserController) {
             addNewUserController = (AddNewUserController) controllers;
+        } else if (controllers instanceof SendMailScreenController) {
+            sendMailScreenController = (SendMailScreenController) controllers;
         }
 
     }
+
+    public Set<Location> getAvailableDestinations() {
+        return kpsModel.getAvailableDestinations();
+    }
+
+    public Set<NZLocation> getAvailableOrigins() {
+        return kpsModel.getAvailableOrigins();
+    }
+
+    // deliver mail
+    public boolean deliverMail(String origin, String destination, double weight, double volume, Priority priority) {
+        return kpsModel.deliverMail(origin, destination, weight, volume, priority);
+    }
+
 
     /**
      * =================================================================================================================
@@ -269,7 +287,7 @@ public class KPSMain {
         kpsModel.updateTransportCost(idToUpdate, newCostPerGram, newCostPerVolume);
     }
 
-    // deliver mail
+    //dilver mail
     public void demonstration_deliverMail() {
         String originString = "wellington";   // case insensitive
         String destinationString = "moscow";   // case insensitive
@@ -337,4 +355,5 @@ public class KPSMain {
 
         javafx.application.Application.launch(GUI.class);
     }
+
 }

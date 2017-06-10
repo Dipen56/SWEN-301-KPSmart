@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -13,6 +14,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import main.KPSMain;
+import model.location.Location;
+import model.mail.Priority;
+import model.staff.Staff;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,15 +27,34 @@ import java.util.ResourceBundle;
  * Created by Dipen on 25/04/2017.
  */
 public class SendMailScreenController implements Initializable {
-    public Label userLable;
-    public Button reviewLogs;
-    public ComboBox originCombobox;
-    public ComboBox destinationCombobox;
-    public TextField weightTextfield;
-    public TextField volumeTextfield;
-    public ComboBox priorityCombobox;
-    public Label priceLabel;
-    public ImageView avatar;
+    private static KPSMain kpsMain;
+    @FXML
+    private Label userLable;
+    @FXML
+    private Label priceLabel;
+    @FXML
+    private Label errorLabel;
+    @FXML
+    private ImageView avatar;
+    @FXML
+    private ComboBox originCombobox;
+    @FXML
+    private ComboBox destinationCombobox;
+    @FXML
+    private TextField weightTextfield;
+    @FXML
+    private TextField volumeTextfield;
+    @FXML
+    private ComboBox priorityCombobox;
+
+    @FXML
+    private Button reviewLogsButton;
+
+
+    public SendMailScreenController() {
+        KPSMain.setLoginScreenController(this);
+    }
+
 
     /**
      * this method is used by the buttons on the left side menu to change change the scene.
@@ -80,9 +104,6 @@ public class SendMailScreenController implements Initializable {
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(loginScene);
             tempStage.show();
-        } else if (event.toString().contains("setting")) {
-            //TODO
-            System.out.println("setting");
         }
     }
 
@@ -93,14 +114,25 @@ public class SendMailScreenController implements Initializable {
      */
     public void handleButtons(ActionEvent event) {
         if (event.toString().contains("accept")) {
-            //TODO: retive information from the field and pass to logic...
-            System.out.println("accpted");
+            System.out.println(weightTextfield.getText());
+            if ((originCombobox.getValue() == null) || (destinationCombobox.getValue() == null)
+                    || (!weightTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(weightTextfield.getText())<0)
+                    || (!volumeTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(volumeTextfield.getText())<0)
+                    || priorityCombobox.getValue() == null) {
+                errorLabel.setText("Please Fill in all the Information");
+            } else {
+                boolean isMailDelivered = kpsMain.deliverMail((String) originCombobox.getValue(), (String) destinationCombobox.getValue(),
+                        Double.parseDouble(weightTextfield.getText()), Double.parseDouble(volumeTextfield.getText()),
+                        Priority.createPriorityFrom((String) priorityCombobox.getValue()));
+                if (isMailDelivered) {
+                    clearContent(event);
+                }else{
+                    errorLabel.setText("error try again");
+                }
+            }
         } else if (event.toString().contains("reset")) {
             clearContent(event);
-
         } else if (event.toString().contains("discard")) {
-            returnHome(event);
-        } else if (event.toString().contains("exit")) {
             returnHome(event);
         }
     }
@@ -114,11 +146,27 @@ public class SendMailScreenController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //TODO: change this based on real information
-        userLable.setText("Manager Dipen");
-        avatar.setImage(new Image(SendMailScreenController.class.getResourceAsStream("/img/0.png")));
+        Staff staff = kpsMain.getCurrentStaff();
+        userLable.setText(staff.getFirstName());
+        avatar.setImage(new Image(SendMailScreenController.class.getResourceAsStream("/img/" + staff.id + ".png")));
         //TODO: if clerk disable reviewLogs button. reviewLogs.setVisible(false);
         //TODO: forall comboboxs originCombobox.getItems().addAll("Wellington","Auckland");
+        if (!staff.isManager()) {
+            reviewLogsButton.setVisible(false);
+            reviewLogsButton.setDisable(false);
+        }
+        for (Location loc : kpsMain.getAvailableOrigins()) {
+            originCombobox.getItems().add(loc.getLocationName());
+        }
+        for (Location loc : kpsMain.getAvailableDestinations()) {
+
+            destinationCombobox.getItems().add(loc.getLocationName());
+        }
+        priorityCombobox.getItems().add(Priority.Domestic_Standard.toString());
+        priorityCombobox.getItems().add(Priority.Domestic_Air.toString());
+        priorityCombobox.getItems().add(Priority.International_Standard.toString());
+        priorityCombobox.getItems().add(Priority.International_Air.toString());
+
 
     }
 
@@ -130,9 +178,9 @@ public class SendMailScreenController implements Initializable {
             e.printStackTrace();
         }
         Scene sendMailScene = new Scene(sendMailScreen);
-            Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            tempStage.setScene(sendMailScene);
-            tempStage.show();
+        Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        tempStage.setScene(sendMailScene);
+        tempStage.show();
     }
 
 
@@ -147,5 +195,14 @@ public class SendMailScreenController implements Initializable {
         Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         tempStage.setScene(homeSecne);
         tempStage.show();
+    }
+
+    /**
+     * to set the KPSMain class reference.
+     *
+     * @param kpsMain
+     */
+    public static void setKPSMain(KPSMain kpsMain) {
+        SendMailScreenController.kpsMain = kpsMain;
     }
 }

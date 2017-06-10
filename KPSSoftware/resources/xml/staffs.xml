@@ -28,7 +28,7 @@
         <phoneNumber>123 456 7890</phoneNumber>
         <isManager>false</isManager>
     </Staff>
-    <Staff id="4">
+    <Staff id="0">
         <userName>123</userName>
         <password>123</password>
         <firstName>John</firstName>

@@ -117,15 +117,14 @@ public class RouteDiscontinueScreenController implements Initializable {
                 String[] selectdText = ((String) routeCombobox.getValue()).split(" ");
 
                 int routeID = Integer.parseInt(selectdText[0]);
+
                 Route route = kpsMain.getRoute(routeID);
                 if (route != null) {
-                    String activeString = route.isActive() ? "Active" : "Deactivated";
-
                     affectedOriginLabel.setText("Affected Origin: " + route.getStartLocation().getLocationName());
                     affectedDestinationLabel.setText("Affected Destination: " + route.getEndLocation().getLocationName());
                     transportFirmLabel.setText("Tranport Firm: " + route.getTransportFirm());
                     typeLabel.setText("Type: " + route.routeType.toString());
-                    statusLabel.setText("Status: " + activeString);
+                    statusLabel.setText("Status: " + (route.isActive() ? "Active" : "Deactivated"));
                     notificationLabel.setVisible(true);
                     affectedOriginLabel.setVisible(true);
                     affectedDestinationLabel.setVisible(true);

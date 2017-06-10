@@ -136,8 +136,8 @@ public class KPSModel {
 
 
     /**
-     * Find out if we can support sending mail from the given origin to the given destination. If we can't send the mail,
-     * then -1 is returned. If we can, the id of the mail is returned.
+     * Find out if we can support sending mail from the given origin to the given destination. If we can't send the
+     * mail, then -1 is returned. If we can, the id of the mail is returned.
      *
      * @param originString
      * @param destinationString
@@ -406,6 +406,16 @@ public class KPSModel {
         return routes.get(id);
     }
 
+    /**
+     * @return all Route as a map, where the key is the id of the Route, and the value is the Route object
+     */
+    public Map<Integer, Route> getAllRoutes() {
+        return this.routes;
+    }
+
+    /**
+     * @return all critical routes
+     */
     public Set<Route> getCriticalRoutes() {
         Set<Route> criticalRoutes = new HashSet<>();
 

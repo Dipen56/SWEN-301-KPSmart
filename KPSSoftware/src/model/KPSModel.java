@@ -15,6 +15,7 @@ import model.staff.Staff;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /*
 TODO: consider another approach for implementing Database TRANSACTION:
@@ -136,8 +137,8 @@ public class KPSModel {
 
 
     /**
-     * Find out if we can support sending mail from the given origin to the given destination. If we can't send the mail,
-     * then -1 is returned. If we can, the id of the mail is returned.
+     * Find out if we can support sending mail from the given origin to the given destination. If we can't send the
+     * mail, then -1 is returned. If we can, the id of the mail is returned.
      *
      * @param originString
      * @param destinationString
@@ -146,7 +147,7 @@ public class KPSModel {
      * @param priority
      * @return -1 if we can't send this mail; or the id of the mail if we can.
      */
-    public int findRoutes(String originString, String destinationString, double weight, double volume, Priority priority) {
+    public int processMail(String originString, String destinationString, double weight, double volume, Priority priority) {
         NZLocation origin = findOrCreateNZLocationByString(originString);
         Location destination = findOrCreateLocationByString(destinationString);
 
@@ -174,6 +175,13 @@ public class KPSModel {
     }
 
     /**
+     * @return all mails as a map, where the key is the id of the Mail, and the value is the Mail object
+     */
+    public Map<Integer, Mail> getAllMails() {
+        return this.mails;
+    }
+
+    /**
      * @param id
      * @return the mail that matches the given id.
      */
@@ -198,35 +206,43 @@ public class KPSModel {
     }
 
     /**
-     * @return the total revenue of all mails
+     * Find all mails whose origin matches the given origin.
+     *
+     * @param originString wanted origin name
+     * @return wanted mails as a map, where the key is the id of the Mail, and the value is the Mail object
      */
-    public double calculateTotalRevenue() {
-        return mails.values().stream()
-                .mapToDouble(Mail::getRevenue)
-                .reduce(0, (result, revenue) -> result = result + revenue);
+    public Map<Integer, Mail> getMailsByOrigin(String originString) {
+        Map<Integer, Mail> wantedMails = new HashMap<>();
+
+        this.mails.forEach((id, mail) -> {
+            String mailOrigin = mail.getOrigin().getLocationName();
+
+            if (mailOrigin.equalsIgnoreCase(originString)) {
+                wantedMails.put(mail.id, mail);
+            }
+        });
+
+        return wantedMails;
     }
 
     /**
-     * @return the total cost(expenditure) of all mails
+     * Find all mails whose destination matches the given destination.
+     *
+     * @param destinationString wanted destination name
+     * @return wanted mails as a map, where the key is the id of the Mail, and the value is the Mail object
      */
-    public double calculateTotalExpenditure() {
-        return mails.values().stream()
-                .mapToDouble(Mail::getExpenditure)
-                .reduce(0, (result, cost) -> result = result + cost);
-    }
+    public Map<Integer, Mail> getMailsByDestination(String destinationString) {
+        Map<Integer, Mail> wantedMails = new HashMap<>();
 
-    /**
-     * @return the total profit of all mails
-     */
-    public double calculateTotalProfit() {
-        return calculateTotalRevenue() - calculateTotalExpenditure();
-    }
+        this.mails.forEach((id, mail) -> {
+            String mailDestination = mail.getDestination().getLocationName();
 
-    /**
-     * @return all mails as a map, where the key is the id of the Mail, and the value is the Mail object
-     */
-    public Map<Integer, Mail> getAllMails() {
-        return this.mails;
+            if (mailDestination.equalsIgnoreCase(destinationString)) {
+                wantedMails.put(mail.id, mail);
+            }
+        });
+
+        return wantedMails;
     }
 
     /**
@@ -249,6 +265,34 @@ public class KPSModel {
         });
 
         return wantedMails;
+    }
+
+    /**
+     * Calculate the average delivery time given origin, destination, and priority
+     *
+     * @param originString
+     * @param destinationString
+     * @param priority
+     * @return -1 if there are no mails matching the given origin, destination, and priority; or the average duration of
+     * all mails that matches the given condition.
+     */
+    public double calculateAverageDeliveryTime(String originString, String destinationString, Priority priority) {
+        List<Mail> wantedMails = getMailsByOriginAndDestination(originString, destinationString).values()
+                .stream()
+                .filter(mail -> mail.getPriority().equals(priority))
+                .collect(Collectors.toList());
+
+        int numWantedMails = wantedMails.size();
+
+        if (numWantedMails == 0) {
+            return -1;
+        }
+
+        double totalDuration = wantedMails.stream()
+                .mapToDouble(Mail::getDuration)
+                .reduce(0, (result, duration) -> result = result + duration);
+
+        return totalDuration / numWantedMails;
     }
 
     // ============================================================
@@ -406,15 +450,26 @@ public class KPSModel {
         return routes.get(id);
     }
 
-    public Set<Route> getCriticalRoutes() {
-        Set<Route> criticalRoutes = new HashSet<>();
+    /**
+     * @return all Route as a map, where the key is the id of the Route, and the value is the Route object
+     */
+    public Map<Integer, Route> getAllRoutes() {
+        return this.routes;
+    }
 
-        routes.values().forEach(route -> {
+    /**
+     * @return all critical mails
+     */
+    public Map<Integer, Mail> getCriticalMails() {
+        Map<Integer, Mail> criticalMails = new HashMap<>();
 
-
+        mails.values().forEach(mail -> {
+            if (mail.getRevenue() - mail.getExpenditure() < 0) {
+                criticalMails.put(mail.id, mail);
+            }
         });
 
-        return criticalRoutes;
+        return criticalMails;
     }
 
     // ============================================================
@@ -541,6 +596,36 @@ public class KPSModel {
         } else {
             return false;
         }
+    }
+
+
+    // =========================================================================
+    //                     STATIC (HELPER) METHODS
+    // =========================================================================
+
+    /**
+     * @return the total revenue of given mails
+     */
+    public static double calculateTotalRevenue(Map<Integer, Mail> mails) {
+        return mails.values().stream()
+                .mapToDouble(Mail::getRevenue)
+                .reduce(0, (result, revenue) -> result = result + revenue);
+    }
+
+    /**
+     * @return the total cost(expenditure) of given mails
+     */
+    public static double calculateTotalExpenditure(Map<Integer, Mail> mails) {
+        return mails.values().stream()
+                .mapToDouble(Mail::getExpenditure)
+                .reduce(0, (result, cost) -> result = result + cost);
+    }
+
+    /**
+     * @return the total profit of given mails
+     */
+    public static double calculateTotalProfit(Map<Integer, Mail> mails) {
+        return calculateTotalRevenue(mails) - calculateTotalExpenditure(mails);
     }
 
 

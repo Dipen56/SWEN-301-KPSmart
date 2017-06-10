@@ -46,7 +46,6 @@ public class SendMailScreenController implements Initializable {
     private TextField volumeTextfield;
     @FXML
     private ComboBox priorityCombobox;
-
     @FXML
     private Button reviewLogsButton;
 
@@ -113,7 +112,7 @@ public class SendMailScreenController implements Initializable {
      * @param event
      */
     public void handleButtons(ActionEvent event) {
-        if (event.toString().contains("accept")) {
+        if (event.toString().contains("Accept")) {
             System.out.println(weightTextfield.getText());
             if ((originCombobox.getValue() == null) || (destinationCombobox.getValue() == null)
                     || (!weightTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(weightTextfield.getText())<0)
@@ -125,9 +124,9 @@ public class SendMailScreenController implements Initializable {
                         Double.parseDouble(weightTextfield.getText()), Double.parseDouble(volumeTextfield.getText()),
                         Priority.createPriorityFrom((String) priorityCombobox.getValue()));
                 if (isMailDelivered) {
-                    clearContent(event);
+                    errorLabel.setText("Mail was successfully sent");
                 }else{
-                    errorLabel.setText("error try again");
+                    errorLabel.setText("Error not routes connecting try again");
                 }
             }
         } else if (event.toString().contains("reset")) {
@@ -149,8 +148,6 @@ public class SendMailScreenController implements Initializable {
         Staff staff = kpsMain.getCurrentStaff();
         userLable.setText(staff.getFirstName());
         avatar.setImage(new Image(SendMailScreenController.class.getResourceAsStream("/img/" + staff.id + ".png")));
-        //TODO: if clerk disable reviewLogs button. reviewLogs.setVisible(false);
-        //TODO: forall comboboxs originCombobox.getItems().addAll("Wellington","Auckland");
         if (!staff.isManager()) {
             reviewLogsButton.setVisible(false);
             reviewLogsButton.setDisable(false);

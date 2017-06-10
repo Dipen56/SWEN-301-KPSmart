@@ -35,6 +35,7 @@ public class KPSMain {
     private static ManageUserController manageUserControllerl;
     private static AddNewUserController addNewUserController;
     private static SendMailScreenController sendMailScreenController;
+    private static RouteDiscontinueScreenController routeDiscontinueScreenController;
 
     // ================== view objects =============================
 
@@ -52,6 +53,7 @@ public class KPSMain {
         ManageUserController.setKPSMain(this);
         AddNewUserController.setKPSMain(this);
         SendMailScreenController.setKPSMain(this);
+        RouteDiscontinueScreenController.setKPSMain(this);
     }
 
 
@@ -171,6 +173,8 @@ public class KPSMain {
             addNewUserController = (AddNewUserController) controllers;
         } else if (controllers instanceof SendMailScreenController) {
             sendMailScreenController = (SendMailScreenController) controllers;
+        } else if (controllers instanceof RouteDiscontinueScreenController) {
+            routeDiscontinueScreenController = (RouteDiscontinueScreenController) controllers;
         }
 
     }

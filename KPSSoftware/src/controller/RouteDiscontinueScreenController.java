@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -12,6 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import main.KPSMain;
+import model.staff.Staff;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,14 +23,26 @@ import java.util.ResourceBundle;
 /**
  * Created by Dipen on 25/04/2017.
  */
-public class RouteDiscontinueScreenController implements Initializable{
-    public Label userLable;
-    public Button reviewLogs;
-    public ComboBox originCombobox;
-    public ComboBox destinationCombobox;
-    public ComboBox companyCombobox;
-    public ComboBox transportCombobox;
-    public ImageView avatar;
+public class RouteDiscontinueScreenController implements Initializable {
+    private static KPSMain kpsMain;
+    @FXML
+    private Label userLable;
+    @FXML
+    private Button reviewLogsButton;
+    @FXML
+    private ComboBox originCombobox;
+    @FXML
+    private ComboBox destinationCombobox;
+    @FXML
+    private ComboBox companyCombobox;
+    @FXML
+    private ComboBox transportCombobox;
+    @FXML
+    private ImageView avatar;
+
+    public RouteDiscontinueScreenController() {
+        KPSMain.setLoginScreenController(this);
+    }
 
     /**
      * this method is used by the buttons on the left side menu to change change the scene.
@@ -43,7 +58,7 @@ public class RouteDiscontinueScreenController implements Initializable{
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(sendMailScene);
             tempStage.show();
-        }else if (event.toString().contains("customerPriceUpdate")) {
+        } else if (event.toString().contains("customerPriceUpdate")) {
             Parent priceUpdateScreen = FXMLLoader.load(RouteDiscontinueScreenController.class.getResource("/fxml/price update screen.fxml"));
             Scene priceUpdateScene = new Scene(priceUpdateScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -111,13 +126,17 @@ public class RouteDiscontinueScreenController implements Initializable{
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Staff staff = kpsMain.getCurrentStaff();
         //TODO: change this based on real information
-        userLable.setText("Manager Angelo");
-        // FIXME: "/img/cool-user.png" does not exist
-        avatar.setImage(new Image(controller.SendMailScreenController.class.getResourceAsStream("/img/cool-user.png")));
-        //TODO: if clerk disable reviewLogs button. reviewLogs.setVisible(false);
+        userLable.setText(staff.getFirstName());
+        avatar.setImage(new Image(RouteDiscontinueScreenController.class.getResourceAsStream("/img/"+staff.id+".png")));
+        if (!staff.isManager()) {
+            reviewLogsButton.setVisible(false);
+            reviewLogsButton.setDisable(false);
+        }
 
     }
+
     private void clearContent(ActionEvent event) {
         Parent routeDiscontinueScreen = null;
         try {
@@ -143,5 +162,14 @@ public class RouteDiscontinueScreenController implements Initializable{
         Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         tempStage.setScene(homeSecne);
         tempStage.show();
+    }
+
+    /**
+     * to set the KPSMain class reference.
+     *
+     * @param kpsMain
+     */
+    public static void setKPSMain(KPSMain kpsMain) {
+        RouteDiscontinueScreenController.kpsMain = kpsMain;
     }
 }

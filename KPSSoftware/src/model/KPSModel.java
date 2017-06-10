@@ -414,17 +414,18 @@ public class KPSModel {
     }
 
     /**
-     * @return all critical routes
+     * @return all critical mails
      */
-    public Set<Route> getCriticalRoutes() {
-        Set<Route> criticalRoutes = new HashSet<>();
+    public Set<Mail> getCriticalMails() {
+        Set<Mail> criticalMails = new HashSet<>();
 
-        routes.values().forEach(route -> {
-
-
+        mails.values().forEach(mail -> {
+            if (mail.getRevenue() - mail.getExpenditure() < 0) {
+                criticalMails.add(mail);
+            }
         });
 
-        return criticalRoutes;
+        return criticalMails;
     }
 
     // ============================================================

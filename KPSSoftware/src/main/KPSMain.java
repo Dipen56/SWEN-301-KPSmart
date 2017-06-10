@@ -189,7 +189,9 @@ public class KPSMain {
 
     // deliver mail
     public boolean deliverMail(String origin, String destination, double weight, double volume, Priority priority) {
-        return kpsModel.deliverMail(origin, destination, weight, volume, priority);
+        int mailId = kpsModel.findRoutes(origin, destination, weight, volume, priority);
+
+        return true;
     }
 
 
@@ -344,6 +346,32 @@ public class KPSMain {
         double totalCost = kpsModel.calculateTotalExpenditure();
 
         double totalProfit = kpsModel.calculateTotalProfit();
+    }
+
+    // get a list of [origin, destination, priority] triples, aka critical routes
+    public void demonstration_getCriticalRoutes() {
+        Set<Mail> criticalMails = kpsModel.getCriticalMails();
+
+        // for each mail:
+        criticalMails.forEach(mail -> {
+            String origin = mail.getOrigin().getLocationName();
+            String destination = mail.getDestination().getLocationName();
+            Priority priority = mail.getPriority();
+        });
+
+        double numMails = criticalMails.size();
+
+        double totalPrice = criticalMails.stream()
+                .mapToDouble(Mail::getRevenue)
+                .reduce(0, (result, revenue) -> result = result + revenue);
+
+        double averagePrice = totalPrice / numMails;
+
+        double totalCost = criticalMails.stream()
+                .mapToDouble(Mail::getExpenditure)
+                .reduce(0, (result, cost) -> result = result + cost);
+
+        double averageCost = totalCost / numMails;
     }
 
     /**

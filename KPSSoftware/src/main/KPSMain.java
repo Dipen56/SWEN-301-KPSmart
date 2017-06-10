@@ -198,8 +198,13 @@ public class KPSMain {
     public Map<Integer, Route> getAllRoutes() {
         return kpsModel.getAllRoutes();
     }
-    public Route getRoute(int id){
+
+    public Route getRoute(int id) {
         return kpsModel.getRouteById(id);
+    }
+
+    public boolean deactivateRoute(int routId) {
+        return kpsModel.deactivateRoute(routId);
     }
 
 

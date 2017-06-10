@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import main.KPSMain;
 import model.location.Location;
+import model.route.Route;
 import model.staff.Staff;
 
 import java.io.IOException;
@@ -34,6 +35,18 @@ public class RouteDiscontinueScreenController implements Initializable {
     private ComboBox routeCombobox;
     @FXML
     private ImageView avatar;
+    @FXML
+    private Label affectedOriginLabel;
+    @FXML
+    private Label affectedDestinationLabel;
+    @FXML
+    private Label transportFirmLabel;
+    @FXML
+    private Label typeLabel;
+    @FXML
+    private Label statusLabel;
+    @FXML
+    private Label notificationLabel;
 
     public RouteDiscontinueScreenController() {
         KPSMain.setLoginScreenController(this);
@@ -100,12 +113,53 @@ public class RouteDiscontinueScreenController implements Initializable {
      */
     public void handleButtons(ActionEvent event) {
         if (event.toString().contains("accept")) {
+            //this is view button in the gui
+            if(routeCombobox.getValue()!=null){
+                String[] selectdText = ((String) routeCombobox.getValue()).split(" ");
+
+                int routeID = Integer.parseInt(selectdText[0]);
+                Route root = kpsMain.getRoute(routeID);
+                if (root != null) {
+                    affectedOriginLabel.setText("Affected Origin: " + root.getStartLocation().getLocationName());
+                    affectedDestinationLabel.setText("Affected Destination: " + root.getEndLocation().getLocationName());
+                    transportFirmLabel.setText("Tranport Firm: " + root.getTransportFirm());
+                    typeLabel.setText("Type: " + root.routeType.toString());
+                    statusLabel.setText("Status: Activate");
+                    notificationLabel.setVisible(true);
+                    affectedOriginLabel.setVisible(true);
+                    affectedDestinationLabel.setVisible(true);
+                    transportFirmLabel.setVisible(true);
+                    typeLabel.setVisible(true);
+                    statusLabel.setVisible(true);
+
+                }
+            }
 
         } else if (event.toString().contains("reset")) {
             clearContent(event);
 
         } else if (event.toString().contains("discard")) {
             returnHome(event);
+        } else if (event.toString().contains("discontinueButton")) {
+            String[] selectdText = ((String) routeCombobox.getValue()).split(" ");
+
+            int routeID = Integer.parseInt(selectdText[0]);
+            Route root = kpsMain.getRoute(routeID);
+            if (root != null) {
+                root.setIsActive(false);
+                affectedOriginLabel.setText("Affected Origin: " + root.getStartLocation().getLocationName());
+                affectedDestinationLabel.setText("Affected Destination: " + root.getEndLocation().getLocationName());
+                transportFirmLabel.setText("Tranport Firm: " + root.getTransportFirm());
+                typeLabel.setText("Type: " + root.routeType.toString());
+                statusLabel.setText("Status: Deactivated!");
+                notificationLabel.setVisible(true);
+                affectedOriginLabel.setVisible(true);
+                affectedDestinationLabel.setVisible(true);
+                transportFirmLabel.setVisible(true);
+                typeLabel.setVisible(true);
+                statusLabel.setVisible(true);
+
+            }
         }
     }
 
@@ -119,13 +173,24 @@ public class RouteDiscontinueScreenController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpsMain.getCurrentStaff();
-        //TODO: change this based on real information
         userLable.setText(staff.getFirstName());
-        avatar.setImage(new Image(RouteDiscontinueScreenController.class.getResourceAsStream("/img/"+staff.id+".png")));
+        avatar.setImage(new Image(RouteDiscontinueScreenController.class.getResourceAsStream("/img/" + staff.id + ".png")));
         if (!staff.isManager()) {
             reviewLogsButton.setVisible(false);
             reviewLogsButton.setDisable(false);
         }
+        for (Integer i : kpsMain.getAllRoutes().keySet()) {
+            Route root = kpsMain.getAllRoutes().get(i);
+            if (root.isActive()) {
+                routeCombobox.getItems().add(root.id + " " + root.getStartLocation().getLocationName() + " ->" + root.getEndLocation().getLocationName() + " : " + root.routeType.toString());
+            }
+        }
+        notificationLabel.setVisible(false);
+        affectedOriginLabel.setVisible(false);
+        affectedDestinationLabel.setVisible(false);
+        transportFirmLabel.setVisible(false);
+        typeLabel.setVisible(false);
+        statusLabel.setVisible(false);
 
 
     }

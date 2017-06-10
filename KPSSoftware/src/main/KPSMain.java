@@ -8,6 +8,7 @@ import model.location.Location;
 import model.location.NZLocation;
 import model.mail.Mail;
 import model.mail.Priority;
+import model.route.Route;
 import model.route.RouteType;
 import model.staff.Staff;
 import view.GUI;
@@ -194,7 +195,12 @@ public class KPSMain {
         return true;
     }
 
-
+    public Map<Integer, Route> getAllRoutes() {
+        return kpsModel.getAllRoutes();
+    }
+    public Route getRoute(int id){
+        return kpsModel.getRouteById(id);
+    }
 
 
     /**

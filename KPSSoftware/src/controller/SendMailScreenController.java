@@ -37,17 +37,7 @@ public class SendMailScreenController implements Initializable {
     @FXML
     private Label errorLabel;
     @FXML
-    private Label weightLabel;
-    @FXML
-    private Label volumeLabel;
-    @FXML
-    private Label priorityLabel;
-    @FXML
     private Label totalCostLabel;
-    @FXML
-    private Label gramsLabel;
-    @FXML
-    private Label cmLabel;
     @FXML
     private Label costLabel;
     @FXML

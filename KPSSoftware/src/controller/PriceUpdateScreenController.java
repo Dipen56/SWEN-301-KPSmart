@@ -1,17 +1,24 @@
 package controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import main.KPSMain;
+import model.location.Location;
+import model.mail.Priority;
+import model.route.Route;
+import model.staff.Staff;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,15 +27,26 @@ import java.util.ResourceBundle;
 /**
  * Created by Dipen on 25/04/2017.
  */
-public class PriceUpdateScreenController implements Initializable{
-    public Label userLable;
+public class PriceUpdateScreenController implements Initializable {
+    private static KPSMain kpsMain;
+    @FXML
+    private Label userLable;
+    @FXML
+    private Label errorLabel;
+    @FXML
+    private ComboBox routeCombobox;
+    @FXML
+    private TextField weightTextfield;
+    @FXML
+    private TextField volumeTextfield;
+    @FXML
+    private ImageView avatar;
+    @FXML
+    private Button reviewLogsButton;
 
-    public ComboBox originCombobox;
-    public ComboBox destinationCombobox;
-    public TextField weightTextfield;
-    public TextField volumeTextfield;
-    public ComboBox priorityCombobox;
-    public ImageView avatar;
+    public PriceUpdateScreenController() {
+        KPSMain.setLoginScreenController(this);
+    }
 
     /**
      * this method is used by the buttons on the left side menu to change change the scene.
@@ -50,7 +68,7 @@ public class PriceUpdateScreenController implements Initializable{
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(routeDiscontinueScene);
             tempStage.show();
-        }  else if (event.toString().contains("transportCostUpdate")) {
+        } else if (event.toString().contains("transportCostUpdate")) {
             Parent transportCostUpdateScreen = FXMLLoader.load(PriceUpdateScreenController.class.getResource("/fxml/transport cost screen.fxml"));
             Scene transportCostUpdateScene = new Scene(transportCostUpdateScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -91,14 +109,23 @@ public class PriceUpdateScreenController implements Initializable{
      */
     public void handleButtons(ActionEvent event) {
         if (event.toString().contains("accept")) {
-            //TODO: retive information from the field and pass to logic...
-            System.out.println("accpted");
+            if(routeCombobox==null ||(!weightTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(weightTextfield.getText()) < 0 )
+                    || (!volumeTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(volumeTextfield.getText()) < 0)){
+                errorLabel.setText("Please Fill in all the Information");
+            }else{
+                String[] selectdText = ((String) routeCombobox.getValue()).split(" ");
+
+                int routeID = Integer.parseInt(selectdText[0]);
+                double weightCost = Double.parseDouble(weightTextfield.getText());
+                double volumeCost = Double.parseDouble(volumeTextfield.getText());
+                kpsMain.updateRouteCustomerPrice(routeID,weightCost,volumeCost);
+                errorLabel.setText("Customer price was successfully updated");
+            }
+
         } else if (event.toString().contains("reset")) {
             clearContent(event);
 
         } else if (event.toString().contains("discard")) {
-            returnHome(event);
-        } else if (event.toString().contains("exit")) {
             returnHome(event);
         }
     }
@@ -111,12 +138,22 @@ public class PriceUpdateScreenController implements Initializable{
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //TODO: change this based on real information
-        userLable.setText("Manager Hector");
-        avatar.setImage(new Image(controller.SendMailScreenController.class.getResourceAsStream("/img/funny-user.png")));
-        //TODO: if clerk disable reviewLogs button. reviewLogs.setVisible(false);
+        Staff staff = kpsMain.getCurrentStaff();
+        userLable.setText(staff.getFirstName());
+        avatar.setImage(new Image(PriceUpdateScreenController.class.getResourceAsStream("/img/"+staff.id+".png")));
+        if (!staff.isManager()) {
+            reviewLogsButton.setVisible(false);
+            reviewLogsButton.setDisable(false);
+        }
+        for (Integer i : kpsMain.getAllRoutes().keySet()) {
+            Route root = kpsMain.getAllRoutes().get(i);
+            if (root.isActive()) {
+                routeCombobox.getItems().add(root.id + " " + root.getStartLocation().getLocationName() + " ->" + root.getEndLocation().getLocationName() + " : " + root.routeType.toString());
+            }
+        }
 
     }
+
     private void clearContent(ActionEvent event) {
         Parent priceUpdateScreen = null;
         try {
@@ -134,7 +171,7 @@ public class PriceUpdateScreenController implements Initializable{
     private void returnHome(ActionEvent event) {
         Parent homescreen = null;
         try {
-            homescreen = FXMLLoader.load(controller.PriceUpdateScreenController.class.getResource("/fxml/home screen.fxml"));
+            homescreen = FXMLLoader.load(PriceUpdateScreenController.class.getResource("/fxml/home screen.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -142,5 +179,14 @@ public class PriceUpdateScreenController implements Initializable{
         Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         tempStage.setScene(homeSecne);
         tempStage.show();
+    }
+
+    /**
+     * to set the KPSMain class reference.
+     *
+     * @param kpsMain
+     */
+    public static void setKPSMain(KPSMain kpsMain) {
+        PriceUpdateScreenController.kpsMain = kpsMain;
     }
 }

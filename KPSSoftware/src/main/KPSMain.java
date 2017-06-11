@@ -37,6 +37,7 @@ public class KPSMain {
     private static AddNewUserController addNewUserController;
     private static SendMailScreenController sendMailScreenController;
     private static RouteDiscontinueScreenController routeDiscontinueScreenController;
+    private static PriceUpdateScreenController priceUpdateScreenController;
 
     // ================== view objects =============================
 
@@ -55,6 +56,7 @@ public class KPSMain {
         AddNewUserController.setKPSMain(this);
         SendMailScreenController.setKPSMain(this);
         RouteDiscontinueScreenController.setKPSMain(this);
+        PriceUpdateScreenController.setKPSMain(this);
     }
 
 
@@ -176,8 +178,9 @@ public class KPSMain {
             sendMailScreenController = (SendMailScreenController) controllers;
         } else if (controllers instanceof RouteDiscontinueScreenController) {
             routeDiscontinueScreenController = (RouteDiscontinueScreenController) controllers;
+        }else if(controllers instanceof PriceUpdateScreenController){
+            priceUpdateScreenController = (PriceUpdateScreenController) controllers;
         }
-
     }
 
     public Set<Location> getAvailableDestinations() {
@@ -210,6 +213,9 @@ public class KPSMain {
 
     public boolean deactivateRoute(int routId) {
         return kpsModel.deactivateRoute(routId);
+    }
+    public void updateRouteCustomerPrice(int idToUpdate,double newPricePerGram, double newPricePerVolume ){
+        kpsModel.updateCustomerPrice(idToUpdate, newPricePerGram, newPricePerVolume);
     }
 
 

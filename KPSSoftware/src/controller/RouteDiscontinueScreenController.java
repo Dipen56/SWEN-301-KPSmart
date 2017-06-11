@@ -120,18 +120,7 @@ public class RouteDiscontinueScreenController implements Initializable {
 
                 Route route = kpsMain.getRoute(routeID);
                 if (route != null) {
-                    affectedOriginLabel.setText("Affected Origin: " + route.getStartLocation().getLocationName());
-                    affectedDestinationLabel.setText("Affected Destination: " + route.getEndLocation().getLocationName());
-                    transportFirmLabel.setText("Tranport Firm: " + route.getTransportFirm());
-                    typeLabel.setText("Type: " + route.routeType.toString());
-                    statusLabel.setText("Status: " + (route.isActive() ? "Active" : "Deactivated"));
-                    notificationLabel.setVisible(true);
-                    affectedOriginLabel.setVisible(true);
-                    affectedDestinationLabel.setVisible(true);
-                    transportFirmLabel.setVisible(true);
-                    typeLabel.setVisible(true);
-                    statusLabel.setVisible(true);
-
+                    discontinueNotification(route);
                 }
             }
 
@@ -142,15 +131,12 @@ public class RouteDiscontinueScreenController implements Initializable {
             returnHome(event);
         } else if (event.toString().contains("discontinueButton")) {
             String[] selectdText = ((String) routeCombobox.getValue()).split(" ");
-
             int routeID = Integer.parseInt(selectdText[0]);
             kpsMain.deactivateRoute(routeID);
-
             Route route = kpsMain.getRoute(routeID);
 
             if (route != null) {
-                String activeString = route.isActive() ? "Active" : "Deactivated";
-                statusLabel.setText("Status: " + activeString);
+                discontinueNotification(route);
             }
         }
     }
@@ -173,7 +159,9 @@ public class RouteDiscontinueScreenController implements Initializable {
         }
         for (Integer i : kpsMain.getAllRoutes().keySet()) {
             Route root = kpsMain.getAllRoutes().get(i);
-            routeCombobox.getItems().add(root.id + " " + root.getStartLocation().getLocationName() + " ->" + root.getEndLocation().getLocationName() + " : " + root.routeType.toString());
+            if (root.isActive()) {
+                routeCombobox.getItems().add(root.id + " " + root.getStartLocation().getLocationName() + " ->" + root.getEndLocation().getLocationName() + " : " + root.routeType.toString());
+            }
         }
         notificationLabel.setVisible(false);
         affectedOriginLabel.setVisible(false);
@@ -208,6 +196,20 @@ public class RouteDiscontinueScreenController implements Initializable {
         Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         tempStage.setScene(homeSecne);
         tempStage.show();
+    }
+
+    private void discontinueNotification(Route route) {
+        affectedOriginLabel.setText("Affected Origin: " + route.getStartLocation().getLocationName());
+        affectedDestinationLabel.setText("Affected Destination: " + route.getEndLocation().getLocationName());
+        transportFirmLabel.setText("Tranport Firm: " + route.getTransportFirm());
+        typeLabel.setText("Type: " + route.routeType.toString());
+        statusLabel.setText("Status: " + (route.isActive() ? "Active" : "Deactivated"));
+        notificationLabel.setVisible(true);
+        affectedOriginLabel.setVisible(true);
+        affectedDestinationLabel.setVisible(true);
+        transportFirmLabel.setVisible(true);
+        typeLabel.setVisible(true);
+        statusLabel.setVisible(true);
     }
 
     /**

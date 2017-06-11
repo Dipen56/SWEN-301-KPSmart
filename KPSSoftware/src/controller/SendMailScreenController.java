@@ -148,7 +148,7 @@ public class SendMailScreenController implements Initializable {
                     totalCostLabel.setVisible(true);
                     costLabel.setVisible(true);
                     //need a way to stall here
-                    clearContent(event);
+                    //clearContent(event);
                 } else {
                     errorLabel.setText("The Selected Route is Unavailable");
                 }

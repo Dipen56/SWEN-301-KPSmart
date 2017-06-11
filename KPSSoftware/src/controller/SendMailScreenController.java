@@ -33,7 +33,23 @@ public class SendMailScreenController implements Initializable {
     @FXML
     private Label priceLabel;
     @FXML
+    private Label totalPriceLabel;
+    @FXML
     private Label errorLabel;
+    @FXML
+    private Label weightLabel;
+    @FXML
+    private Label volumeLabel;
+    @FXML
+    private Label priorityLabel;
+    @FXML
+    private Label totalCostLabel;
+    @FXML
+    private Label gramsLabel;
+    @FXML
+    private Label cmLabel;
+    @FXML
+    private Label costLabel;
     @FXML
     private ImageView avatar;
     @FXML
@@ -115,18 +131,26 @@ public class SendMailScreenController implements Initializable {
         if (event.toString().contains("Accept")) {
             System.out.println(weightTextfield.getText());
             if ((originCombobox.getValue() == null) || (destinationCombobox.getValue() == null)
-                    || (!weightTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(weightTextfield.getText())<0)
-                    || (!volumeTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(volumeTextfield.getText())<0)
+                    || (!weightTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(weightTextfield.getText()) < 0)
+                    || (!volumeTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(volumeTextfield.getText()) < 0)
                     || priorityCombobox.getValue() == null) {
                 errorLabel.setText("Please Fill in all the Information");
             } else {
-                boolean isMailDelivered = kpsMain.deliverMail((String) originCombobox.getValue(), (String) destinationCombobox.getValue(),
+                int mailId = kpsMain.deliverMail((String) originCombobox.getValue(), (String) destinationCombobox.getValue(),
                         Double.parseDouble(weightTextfield.getText()), Double.parseDouble(volumeTextfield.getText()),
                         Priority.createPriorityFrom((String) priorityCombobox.getValue()));
-                if (isMailDelivered) {
+                if (mailId > 0) {
                     errorLabel.setText("Mail was successfully sent");
-                }else{
-                    errorLabel.setText("Error not routes connecting try again");
+                    priceLabel.setText(String.format("%.2f", kpsMain.getMailRevenue(mailId)));
+                    costLabel.setText(String.format("%.2f", kpsMain.getMailExpenditure(mailId)));
+                    totalPriceLabel.setVisible(true);
+                    priceLabel.setVisible(true);
+                    totalCostLabel.setVisible(true);
+                    costLabel.setVisible(true);
+                    //need a way to stall here
+                    clearContent(event);
+                } else {
+                    errorLabel.setText("The Selected Route is Unavailable");
                 }
             }
         } else if (event.toString().contains("reset")) {
@@ -163,7 +187,10 @@ public class SendMailScreenController implements Initializable {
         priorityCombobox.getItems().add(Priority.Domestic_Air.toString());
         priorityCombobox.getItems().add(Priority.International_Standard.toString());
         priorityCombobox.getItems().add(Priority.International_Air.toString());
-
+        totalPriceLabel.setVisible(false);
+        priceLabel.setVisible(false);
+        totalCostLabel.setVisible(false);
+        costLabel.setVisible(false);
 
     }
 
@@ -193,6 +220,7 @@ public class SendMailScreenController implements Initializable {
         tempStage.setScene(homeSecne);
         tempStage.show();
     }
+
 
     /**
      * to set the KPSMain class reference.

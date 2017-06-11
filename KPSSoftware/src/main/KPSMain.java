@@ -189,10 +189,15 @@ public class KPSMain {
     }
 
     // deliver mail
-    public boolean deliverMail(String origin, String destination, double weight, double volume, Priority priority) {
-        int mailId = kpsModel.processMail(origin, destination, weight, volume, priority);
+    public int deliverMail(String origin, String destination, double weight, double volume, Priority priority) {
+        return kpsModel.processMail(origin, destination, weight, volume, priority);
 
-        return true;
+    }
+    public double getMailRevenue(int mailId){
+        return kpsModel.getMailRevenue(mailId);
+    }
+    public double getMailExpenditure(int mailId){
+        return kpsModel.getMailExpenditure(mailId);
     }
 
     public Map<Integer, Route> getAllRoutes() {

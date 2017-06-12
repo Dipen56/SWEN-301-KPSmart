@@ -40,6 +40,7 @@ public class KPSMain {
     private static PriceUpdateScreenController priceUpdateScreenController;
     private static TransportCostScreenController transportCostScreenController;
     private static NewRouteScreenController newRouteScreenController;
+    private static BusinessFiguresScreenController businessFiguresScreenController;
 
     // ================== view objects =============================
 
@@ -61,6 +62,7 @@ public class KPSMain {
         PriceUpdateScreenController.setKPSMain(this);
         TransportCostScreenController.setKPSMain(this);
         NewRouteScreenController.setKPSMain(this);
+        BusinessFiguresScreenController.setKPSMain(this);
     }
 
 
@@ -188,6 +190,8 @@ public class KPSMain {
             transportCostScreenController = (TransportCostScreenController) controllers;
         } else if (controllers instanceof NewRouteScreenController) {
             newRouteScreenController = (NewRouteScreenController) controllers;
+        }else if (controllers instanceof BusinessFiguresScreenController) {
+            businessFiguresScreenController = (BusinessFiguresScreenController) controllers;
         }
     }
 
@@ -235,6 +239,9 @@ public class KPSMain {
 
     public void addRoute(String startString, String endString, RouteType routeType, double duration, String transportFirm, double pricePerGram, double pricePerVolume, double costPerGram, double costPerVolume) {
         kpsModel.addRoute(startString, endString, routeType, duration, transportFirm, pricePerGram, pricePerVolume, costPerGram, costPerVolume);
+    }
+    public  Map<Integer, Mail>  getCriticalRoutes() {
+        return kpsModel.getCriticalMails();
     }
 
     /**

@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -12,24 +13,43 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import main.KPSMain;
+import model.KPSModel;
+import model.mail.Mail;
+import model.staff.Staff;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
  * Created by Dipen on 25/04/2017.
  */
 public class BusinessFiguresScreenController implements Initializable {
-    public Label userLable;
-    public Button reviewLogs;
-    public Label revenueLabel;
-    public Label expenditureLabel;
-    public Label numberEventLabel;
-    public Label totalMailLabel;
-    public Label averageDeliveryLabel;
-    public ListView criticalRoutesListView;
-    public ImageView avatar;
+    private static KPSMain kpsMain;
+    @FXML
+    private Label userLable;
+    @FXML
+    private Button reviewLogsButton;
+    @FXML
+    private Label revenueLabel;
+    @FXML
+    private Label expenditureLabel;
+    @FXML
+    private Label numberEventLabel;
+    @FXML
+    private Label totalMailLabel;
+    @FXML
+    private Label averageDeliveryLabel;
+    @FXML
+    private ListView criticalRoutesListView;
+    @FXML
+    private ImageView avatar;
+
+    public BusinessFiguresScreenController() {
+        KPSMain.setLoginScreenController(this);
+    }
 
     /**
      * this method is used by the buttons on the left side menu to change change the scene.
@@ -79,9 +99,6 @@ public class BusinessFiguresScreenController implements Initializable {
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(loginScene);
             tempStage.show();
-        } else if (event.toString().contains("setting")) {
-            //TODO
-            System.out.println("setting");
         }
     }
 
@@ -105,10 +122,18 @@ public class BusinessFiguresScreenController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //TODO: change this based on real information
-        userLable.setText("Clerk Buttercup");
-        avatar.setImage(new Image(controller.SendMailScreenController.class.getResourceAsStream("/img/buttercup.png")));
-        //TODO: if clerk disable reviewLogs button. reviewLogs.setVisible(false);
+        Staff staff = kpsMain.getCurrentStaff();
+        userLable.setText(staff.getFirstName());
+        avatar.setImage(new Image(BusinessFiguresScreenController.class.getResourceAsStream("/img/" + staff.id + ".png")));
+        if (!staff.isManager()) {
+            reviewLogsButton.setVisible(false);
+            reviewLogsButton.setDisable(false);
+        }
+        // FIXME: 12/06/2017 some error happens when retrieving any data.
+        //Map<Integer, Mail> criticalMails = kpsMain.getCriticalRoutes();
+        //revenueLabel.setText(String.format("%.2f",KPSModel.calculateTotalRevenue(criticalMails)));
+        //expenditureLabel.setText(String.format("%.2f",KPSModel.calculateTotalExpenditure(criticalMails));
+
 
     }
 
@@ -123,5 +148,14 @@ public class BusinessFiguresScreenController implements Initializable {
         Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         tempStage.setScene(homeSecne);
         tempStage.show();
+    }
+
+    /**
+     * to set the KPSMain class reference.
+     *
+     * @param kpsMain
+     */
+    public static void setKPSMain(KPSMain kpsMain) {
+        BusinessFiguresScreenController.kpsMain = kpsMain;
     }
 }

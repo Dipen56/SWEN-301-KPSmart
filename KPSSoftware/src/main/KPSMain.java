@@ -38,6 +38,8 @@ public class KPSMain {
     private static SendMailScreenController sendMailScreenController;
     private static RouteDiscontinueScreenController routeDiscontinueScreenController;
     private static PriceUpdateScreenController priceUpdateScreenController;
+    private static TransportCostScreenController transportCostScreenController;
+    private static NewRouteScreenController newRouteScreenController;
 
     // ================== view objects =============================
 
@@ -57,6 +59,8 @@ public class KPSMain {
         SendMailScreenController.setKPSMain(this);
         RouteDiscontinueScreenController.setKPSMain(this);
         PriceUpdateScreenController.setKPSMain(this);
+        TransportCostScreenController.setKPSMain(this);
+        NewRouteScreenController.setKPSMain(this);
     }
 
 
@@ -180,6 +184,10 @@ public class KPSMain {
             routeDiscontinueScreenController = (RouteDiscontinueScreenController) controllers;
         } else if (controllers instanceof PriceUpdateScreenController) {
             priceUpdateScreenController = (PriceUpdateScreenController) controllers;
+        } else if (controllers instanceof TransportCostScreenController) {
+            transportCostScreenController = (TransportCostScreenController) controllers;
+        } else if (controllers instanceof NewRouteScreenController) {
+            newRouteScreenController = (NewRouteScreenController) controllers;
         }
     }
 
@@ -221,6 +229,13 @@ public class KPSMain {
         kpsModel.updateCustomerPrice(idToUpdate, newPricePerGram, newPricePerVolume);
     }
 
+    public void updateRouteTransportCost(int idToUpdate, double newCostPerGram, double newCostPerVolume) {
+        kpsModel.updateTransportCost(idToUpdate, newCostPerGram, newCostPerVolume);
+    }
+
+    public void addRoute(String startString, String endString, RouteType routeType, double duration, String transportFirm, double pricePerGram, double pricePerVolume, double costPerGram, double costPerVolume) {
+        kpsModel.addRoute(startString, endString, routeType, duration, transportFirm, pricePerGram, pricePerVolume, costPerGram, costPerVolume);
+    }
 
     /**
      * =================================================================================================================

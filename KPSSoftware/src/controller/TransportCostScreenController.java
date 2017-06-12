@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -13,6 +14,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import main.KPSMain;
+import model.route.Route;
+import model.staff.Staff;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,16 +26,41 @@ import java.util.ResourceBundle;
  * Created by Dipen on 25/04/2017.
  */
 public class TransportCostScreenController implements Initializable {
-    public Label userLable;
-    public Button reviewLogs;
-    public ComboBox originCombobox;
-    public ComboBox destinationCombobox;
-    public ComboBox companyCombobox;
-    public ComboBox typeCombobox;
-    public TextField durationTextfield;
-    public TextField weightTextfield;
-    public TextField volumeTextfield;
-    public ImageView avatar;
+    private static KPSMain kpsMain;
+    @FXML
+    private Label userLable;
+    @FXML
+    private Button reviewLogsButton;
+    @FXML
+    private ComboBox routeCombobox;
+    @FXML
+    private Label errorLabel;
+    @FXML
+    private Label notificationLabel;
+    @FXML
+    private Label orginLabel;
+    @FXML
+    private Label destinationLabel;
+    @FXML
+    private Label transportFirmLabel;
+    @FXML
+    private Label typeLabel;
+    @FXML
+    private Label weightPriceLabel;
+    @FXML
+    private Label volumePriceLabel;
+    @FXML
+    private Label durationLabel;
+    @FXML
+    private TextField weightTextfield;
+    @FXML
+    private TextField volumeTextfield;
+    @FXML
+    private ImageView avatar;
+
+    public TransportCostScreenController() {
+        KPSMain.setLoginScreenController(this);
+    }
 
     /**
      * this method is used by the buttons on the left side menu to change change the scene.
@@ -94,14 +123,26 @@ public class TransportCostScreenController implements Initializable {
      */
     public void handleButtons(ActionEvent event) {
         if (event.toString().contains("accept")) {
-            //TODO: retive information from the field and pass to logic...
-            System.out.println("accpted");
+            if (routeCombobox == null || (!weightTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(weightTextfield.getText()) < 0)
+                    || (!volumeTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(volumeTextfield.getText()) < 0)) {
+                errorLabel.setText("Please Fill in all the Information");
+            } else {
+                String[] selectdText = ((String) routeCombobox.getValue()).split(" ");
+
+                int routeID = Integer.parseInt(selectdText[0]);
+                Route route = kpsMain.getRoute(routeID);
+                double oldWeightPrice = route.getPricePerGram();
+                double oldVolumePrice = route.getCostPerVolume();
+                double weightCost = Double.parseDouble(weightTextfield.getText());
+                double volumeCost = Double.parseDouble(volumeTextfield.getText());
+                kpsMain.updateRouteTransportCost(routeID, weightCost, volumeCost);
+                errorLabel.setText("Customer price was successfully updated");
+                transportPriceUpdateNotification(route, oldWeightPrice, oldVolumePrice);
+            }
         } else if (event.toString().contains("reset")) {
             clearContent(event);
 
         } else if (event.toString().contains("discard")) {
-            returnHome(event);
-        } else if (event.toString().contains("exit")) {
             returnHome(event);
         }
     }
@@ -115,10 +156,28 @@ public class TransportCostScreenController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //TODO: change this based on real information
-        userLable.setText("Manager Betty");
-        avatar.setImage(new Image(SendMailScreenController.class.getResourceAsStream("/img/0.png")));
-        //TODO: if clerk disable reviewLogs button. reviewLogs.setVisible(false);
+        Staff staff = kpsMain.getCurrentStaff();
+        userLable.setText(staff.getFirstName());
+        avatar.setImage(new Image(TransportCostScreenController.class.getResourceAsStream("/img/" + staff.id + ".png")));
+        if (!staff.isManager()) {
+            reviewLogsButton.setVisible(false);
+            reviewLogsButton.setDisable(false);
+        }
+        for (Integer i : kpsMain.getAllRoutes().keySet()) {
+            Route root = kpsMain.getAllRoutes().get(i);
+            if (root.isActive()) {
+                routeCombobox.getItems().add(root.id + " " + root.getStartLocation().getLocationName() + " ->" + root.getEndLocation().getLocationName() + " : " + root.routeType.toString());
+            }
+        }
+        notificationLabel.setVisible(false);
+        orginLabel.setVisible(false);
+        destinationLabel.setVisible(false);
+        transportFirmLabel.setVisible(false);
+        typeLabel.setVisible(false);
+        weightPriceLabel.setVisible(false);
+        volumePriceLabel.setVisible(false);
+        durationLabel.setVisible(false);
+
 
     }
 
@@ -147,5 +206,32 @@ public class TransportCostScreenController implements Initializable {
         Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         tempStage.setScene(homeSecne);
         tempStage.show();
+    }
+
+    private void transportPriceUpdateNotification(Route route, double oldWeightPrice, double oldVolumePrice) {
+        orginLabel.setText("Affected Origin: " + route.getStartLocation().getLocationName());
+        destinationLabel.setText("Affected Destination: " + route.getEndLocation().getLocationName());
+        typeLabel.setText("Type: " + route.routeType.toString());
+        weightPriceLabel.setText("Old Weight Price: $" + String.format("%.2f", oldWeightPrice) + " New Price: $" + String.format("%.2f", route.getPricePerGram()));
+        volumePriceLabel.setText("Old Volume Price: $" + String.format("%.2f", oldVolumePrice) + " New Price: $" + String.format("%.2f", route.getPricePerVolume()));
+        transportFirmLabel.setText("Transport Firm: " + route.getTransportFirm());
+        durationLabel.setText("Duration "+ route.getDuration()+" Hours");
+        notificationLabel.setVisible(true);
+        orginLabel.setVisible(true);
+        destinationLabel.setVisible(true);
+        typeLabel.setVisible(true);
+        transportFirmLabel.setVisible(true);
+        durationLabel.setVisible(true);
+        weightPriceLabel.setVisible(true);
+        volumePriceLabel.setVisible(true);
+    }
+
+    /**
+     * to set the KPSMain class reference.
+     *
+     * @param kpsMain
+     */
+    public static void setKPSMain(KPSMain kpsMain) {
+        TransportCostScreenController.kpsMain = kpsMain;
     }
 }

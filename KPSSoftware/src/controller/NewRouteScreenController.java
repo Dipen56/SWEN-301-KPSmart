@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -13,6 +14,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import main.KPSMain;
+import model.mail.Priority;
+import model.route.Route;
+import model.route.RouteType;
+import model.staff.Staff;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,19 +28,38 @@ import java.util.ResourceBundle;
  * Created by Dipen on 25/04/2017.
  */
 public class NewRouteScreenController implements Initializable {
-    public Label userLable;
-    public Button reviewLogs;
-    public ComboBox typeCombobox;
-    public TextField weightPriceTextfield;
-    public TextField volumePriceTextfield;
-    public TextField durationTextfield;
-    public TextField originTextfield;
-    public TextField destinationTextfield;
-    public TextField companyTextfield;
-    public TextField weightCostTextfield;
-    public TextField volumeCostTextfield;
-    public ImageView avatar;
+    private static KPSMain kpsMain;
+    @FXML
+    private Label userLable;
+    @FXML
+    private Label errorLabel;
+    @FXML
+    private Button reviewLogsButton;
+    @FXML
+    private ComboBox typeCombobox;
+    @FXML
+    private TextField weightPriceTextfield;
+    @FXML
+    private TextField volumePriceTextfield;
+    @FXML
+    private TextField durationTextfield;
+    @FXML
+    private TextField originTextfield;
+    @FXML
+    private TextField destinationTextfield;
+    @FXML
+    private TextField companyTextfield;
+    @FXML
+    private TextField weightCostTextfield;
+    @FXML
+    private TextField volumeCostTextfield;
+    @FXML
+    private ImageView avatar;
 
+
+    public NewRouteScreenController() {
+        KPSMain.setLoginScreenController(this);
+    }
 
     /**
      * this method is used by the buttons on the left side menu to change change the scene.
@@ -97,14 +122,36 @@ public class NewRouteScreenController implements Initializable {
      */
     public void handleButtons(ActionEvent event) {
         if (event.toString().contains("accept")) {
-            //TODO: retive information from the field and pass to logic...
-            System.out.println("accpted");
+            //TODO: test all these cases
+            if (!originTextfield.getText().matches("[a-zA-Z]+")
+                    || !destinationTextfield.getText().matches("[a-zA-Z]+")
+                    || companyTextfield.getText().equals("")
+                    || !durationTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?")
+                    || !weightPriceTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?")
+                    || !volumePriceTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?")
+                    || !weightCostTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?")
+                    || !volumeCostTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?")
+                    || typeCombobox.getValue()==null) {
+                errorLabel.setText("Please Fill in all the Information");
+            }else{
+                //TODO: i could add a way to check for 2dp but we need to...
+                String origin = originTextfield.getText();
+                String destination= destinationTextfield.getText();
+                RouteType type = RouteType.valueOf((String)typeCombobox.getValue());
+                double duration = Double.parseDouble(durationTextfield.getText());
+                String firm= companyTextfield.getText();
+                double pricePerGram = Double.parseDouble(weightPriceTextfield.getText());
+                double pricePerVolume = Double.parseDouble(volumePriceTextfield.getText());
+                double costPerGram = Double.parseDouble(weightCostTextfield.getText());
+                double costPerVolume = Double.parseDouble(volumeCostTextfield.getText());
+                kpsMain.addRoute(origin,destination,type,duration,firm,pricePerGram,pricePerVolume,costPerGram,costPerVolume);
+                errorLabel.setText("New Route Successfully Created");
+            }
+
         } else if (event.toString().contains("reset")) {
             clearContent(event);
 
         } else if (event.toString().contains("discard")) {
-            returnHome(event);
-        } else if (event.toString().contains("exit")) {
             returnHome(event);
         }
     }
@@ -118,10 +165,17 @@ public class NewRouteScreenController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //TODO: change this based on real information
-        userLable.setText("Manager Patrick");
-        avatar.setImage(new Image(controller.SendMailScreenController.class.getResourceAsStream("/img/0.png")));
-        //TODO: if clerk disable reviewLogs button. reviewLogs.setVisible(false);
+        Staff staff = kpsMain.getCurrentStaff();
+        userLable.setText(staff.getFirstName());
+        avatar.setImage(new Image(NewRouteScreenController.class.getResourceAsStream("/img/" + staff.id + ".png")));
+        if (!staff.isManager()) {
+            reviewLogsButton.setVisible(false);
+            reviewLogsButton.setDisable(false);
+        }
+        typeCombobox.getItems().add(RouteType.Air.toString());
+        typeCombobox.getItems().add(RouteType.Land.toString());
+        typeCombobox.getItems().add(RouteType.Sea.toString());
+
 
     }
 
@@ -150,5 +204,14 @@ public class NewRouteScreenController implements Initializable {
         Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         tempStage.setScene(homeSecne);
         tempStage.show();
+    }
+
+    /**
+     * to set the KPSMain class reference.
+     *
+     * @param kpsMain
+     */
+    public static void setKPSMain(KPSMain kpsMain) {
+        NewRouteScreenController.kpsMain = kpsMain;
     }
 }

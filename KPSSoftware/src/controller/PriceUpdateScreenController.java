@@ -134,7 +134,7 @@ public class PriceUpdateScreenController implements Initializable {
                 double volumeCost = Double.parseDouble(volumeTextfield.getText());
                 kpsMain.updateRouteCustomerPrice(routeID,weightCost,volumeCost);
                 errorLabel.setText("Customer price was successfully updated");
-                priceUpdateNotification(route,oldWeightPrice,oldVolumePrice);
+                customerPriceUpdateNotification(route,oldWeightPrice,oldVolumePrice);
 
             }
 
@@ -203,7 +203,7 @@ public class PriceUpdateScreenController implements Initializable {
         tempStage.setScene(homeSecne);
         tempStage.show();
     }
-    private void priceUpdateNotification(Route route,double oldWeightPrice,double oldVolumePrice){
+    private void customerPriceUpdateNotification(Route route,double oldWeightPrice,double oldVolumePrice){
         originLabel.setText("Affected Origin: "+route.getStartLocation().getLocationName());
         destinationLabel.setText("Affected Destination: "+route.getEndLocation().getLocationName());
         priorityLabel.setText("Type: " + route.routeType.toString());

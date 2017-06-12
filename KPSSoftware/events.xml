@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Events maxId="6"> 
+  <CustomerPriceUpdateEvent id="1"> 
+    <staffId>1</staffId>  
+    <timeStamp>2017-06-09T23:28:48.304</timeStamp>  
+    <routeId>1</routeId>  
+    <oldPricePerGram>1.0</oldPricePerGram>  
+    <oldPricePerVolume>0.5</oldPricePerVolume>  
+    <newPricePerGram>1.2</newPricePerGram>  
+    <newPricePerVolume>0.7</newPricePerVolume> 
+  </CustomerPriceUpdateEvent>  
+  <TransportCostUpdateEvent id="2"> 
+    <staffId>2</staffId>  
+    <timeStamp>2017-06-09T23:28:48.306</timeStamp>  
+    <routeId>2</routeId>  
+    <oldCostPerGram>1.2</oldCostPerGram>  
+    <oldCostPerVolume>0.8</oldCostPerVolume>  
+    <newCostPerGram>1.1</newCostPerGram>  
+    <newCostPerVolume>0.6</newCostPerVolume> 
+  </TransportCostUpdateEvent>  
+  <MailDeliveryEvent id="3"> 
+    <staffId>1</staffId>  
+    <timeStamp>2017-06-09T23:28:48.306</timeStamp>  
+    <mailId>1</mailId> 
+  </MailDeliveryEvent>  
+  <RouteAdditionEvent id="4"> 
+    <staffId>1</staffId>  
+    <timeStamp>2017-06-09T23:28:48.306</timeStamp>  
+    <routeId>14</routeId> 
+  </RouteAdditionEvent>  
+  <RouteDeactivationEvent id="5"> 
+    <staffId>1</staffId>  
+    <timeStamp>2017-06-09T23:28:48.307</timeStamp>  
+    <routeId>3</routeId> 
+  </RouteDeactivationEvent>  
+  <MailDeliveryEvent id="6">
+    <staffId>2</staffId>
+    <timeStamp>2017-06-13T11:29:03.308</timeStamp>
+    <mailId>7</mailId>
+  </MailDeliveryEvent>
+</Events>

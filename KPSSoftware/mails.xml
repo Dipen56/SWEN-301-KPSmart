@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Mails maxId="7"> 
+  <Mail id="1"> 
+    <originId>7</originId>  
+    <destinationId>1</destinationId>  
+    <weight>2500.0</weight>  
+    <volume>3000.0</volume>  
+    <priority>Domestic Standard</priority> 
+  </Mail>  
+  <Mail id="2"> 
+    <originId>7</originId>  
+    <destinationId>12</destinationId>  
+    <weight>6200.0</weight>  
+    <volume>30000.0</volume>  
+    <priority>International Standard</priority> 
+  </Mail>  
+  <Mail id="3"> 
+    <originId>7</originId>  
+    <destinationId>10</destinationId>  
+    <weight>99000.0</weight>  
+    <volume>10000.0</volume>  
+    <priority>International Air</priority> 
+  </Mail>  
+  <Mail id="4"> 
+    <originId>1</originId>  
+    <destinationId>8</destinationId>  
+    <weight>500.0</weight>  
+    <volume>100.0</volume>  
+    <priority>International Air</priority> 
+  </Mail>  
+  <Mail id="5"> 
+    <originId>6</originId>  
+    <destinationId>1</destinationId>  
+    <weight>8800.0</weight>  
+    <volume>8800.0</volume>  
+    <priority>Domestic Standard</priority> 
+  </Mail>  
+  <Mail id="7">
+    <originId>1</originId>
+    <destinationId>10</destinationId>
+    <weight>121.0</weight>
+    <volume>101.0</volume>
+    <priority>International Standard</priority>
+  </Mail>
+</Mails>

@@ -16,4 +16,10 @@
 Things to do:
 1. AddNewUserController, line 104. We should add a password field for adding new user. Doesn't make any sense to add a new user without password.
 2. There are many, many, places where the text cannot fit in the Label therefore end with "...".
-3.
+3. 
+
+Angelo's Finds:
+
+1) Customer price update, Duniden to christchurch, New weight cost:-sfsefesf New Volume Cost: -1312312.
+Says: "Please fill in all information", should be invalid information.
+

@@ -36,7 +36,7 @@
                 </Button>
                 <Button id="routeDiscontinue" mnemonicParsing="false" onAction="#changeScenes" prefHeight="60.0" prefWidth="110.0" styleClass="main-button" stylesheets="@../css/style.css" text="Route Discontinue" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                     <font>
-                        <Font name="System Bold" size="15.0" />
+                        <Font name="System Bold" size="14.0" />
                     </font>
                 </Button>
                 <Button id="customerPriceUpdate" mnemonicParsing="false" onAction="#changeScenes" prefHeight="60.0" prefWidth="110.0" styleClass="main-button" stylesheets="@../css/style.css" text="Price Update" textAlignment="CENTER" textFill="WHITE" wrapText="true">
@@ -46,7 +46,7 @@
                 </Button>
                 <Button id="transportCostUpdate" mnemonicParsing="false" onAction="#changeScenes" prefHeight="60.0" prefWidth="113.0" styleClass="main-button" stylesheets="@../css/style.css" text="Transport Cost Update" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                     <font>
-                        <Font name="System Bold" size="15.0" />
+                        <Font name="System Bold" size="14.0" />
                     </font>
                 </Button>
                 <Button id="newRoute" mnemonicParsing="false" onAction="#changeScenes" prefHeight="60.0" prefWidth="109.0" styleClass="main-button" stylesheets="@../css/style.css" text="New Route" textAlignment="CENTER" textFill="WHITE" wrapText="true">
@@ -59,7 +59,7 @@
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Button>
-                <Button fx:id="reviewLogsButton" mnemonicParsing="false" onAction="#changeScenes" prefHeight="60.0" prefWidth="110.0" styleClass="main-button" stylesheets="@../css/style.css" text="Review Logs" textFill="WHITE">
+                <Button fx:id="reviewLogsButton" mnemonicParsing="false" onAction="#changeScenes" prefHeight="60.0" prefWidth="110.0" styleClass="main-button" stylesheets="@../css/style.css" text="Review Logs" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>

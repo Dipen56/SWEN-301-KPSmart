@@ -74,40 +74,40 @@
         </VBox>
         <AnchorPane id="home-anchorpane" prefHeight="490.0" prefWidth="586.0" styleClass="home-anchorpane" stylesheets="@../css/style.css">
             <children>
-                <Label layoutX="107.0" layoutY="168.0" prefHeight="36.0" prefWidth="94.0" text="Routes:" textAlignment="CENTER">
+                <Label layoutX="107.0" layoutY="137.0" prefHeight="36.0" prefWidth="94.0" text="Routes:" textAlignment="CENTER">
                     <font>
                         <Font name="System Bold" size="21.0" />
                     </font>
                 </Label>
-                <Label layoutX="107.0" layoutY="249.0" prefHeight="36.0" prefWidth="149.0" text="New Weight Cost :  $">
+                <Label layoutX="107.0" layoutY="188.0" prefHeight="36.0" prefWidth="149.0" text="New Weight Cost :  $">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
-                <Label layoutX="107.0" layoutY="311.0" prefHeight="36.0" prefWidth="149.0" text="New Volume Cost:  $">
+                <Label layoutX="107.0" layoutY="241.0" prefHeight="36.0" prefWidth="149.0" text="New Volume Cost:  $">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
-                <ComboBox fx:id="routeCombobox" layoutX="202.0" layoutY="164.0" prefHeight="45.0" prefWidth="239.0" promptText="Select Route" />
-                <TextField fx:id="weightTextfield" layoutX="262.0" layoutY="249.0" prefHeight="36.0" prefWidth="149.0" promptText="Enter Cost" />
-                <Label layoutX="421.0" layoutY="249.0" prefHeight="36.0" prefWidth="87.0" text="per gram">
+                <ComboBox fx:id="routeCombobox" layoutX="202.0" layoutY="133.0" prefHeight="45.0" prefWidth="239.0" promptText="Select Route" />
+                <TextField fx:id="weightTextfield" layoutX="262.0" layoutY="188.0" prefHeight="36.0" prefWidth="149.0" promptText="Enter Cost" />
+                <Label layoutX="421.0" layoutY="188.0" prefHeight="36.0" prefWidth="87.0" text="per gram">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
-                <TextField fx:id="volumeTextfield" layoutX="262.0" layoutY="311.0" prefHeight="36.0" prefWidth="149.0" promptText="Enter Cost" />
-                <Label layoutX="423.0" layoutY="311.0" prefHeight="36.0" prefWidth="70.0" text="per cm^3">
+                <TextField fx:id="volumeTextfield" layoutX="262.0" layoutY="241.0" prefHeight="36.0" prefWidth="149.0" promptText="Enter Cost" />
+                <Label layoutX="423.0" layoutY="241.0" prefHeight="36.0" prefWidth="70.0" text="per cm^3">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
-                <Button id="reset" layoutX="237.0" layoutY="456.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="main-button" stylesheets="@../css/style.css" text="Reset" textFill="WHITE">
+                <Button id="reset" layoutX="237.0" layoutY="540.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="main-button" stylesheets="@../css/style.css" text="Reset" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Button>
-                <Button id="discard" layoutX="355.0" layoutY="456.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="discard-button" stylesheets="@../css/style.css" text="Discard" textFill="WHITE">
+                <Button id="discard" layoutX="355.0" layoutY="540.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="discard-button" stylesheets="@../css/style.css" text="Discard" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
@@ -122,16 +122,25 @@
                         <Image url="@../img/price-change.png" />
                     </image>
                 </ImageView>
-                <Button id="accept" layoutX="119.0" layoutY="456.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="logout-button" stylesheets="@../css/style.css" text="Accept" textFill="WHITE">
+                <Button id="accept" layoutX="119.0" layoutY="540.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="logout-button" stylesheets="@../css/style.css" text="Accept" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Button>
-            <Label fx:id="errorLabel" alignment="CENTER" layoutX="113.0" layoutY="101.0" prefHeight="45.0" prefWidth="325.0" text="Please Enter the Information" textFill="RED" wrapText="true">
+            <Label fx:id="errorLabel" alignment="CENTER" layoutX="119.0" layoutY="88.0" prefHeight="45.0" prefWidth="325.0" text="Please Enter the Information" textFill="RED" wrapText="true">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
+            <Label fx:id="notificationLabel" layoutX="228.0" layoutY="295.0" text="Notification" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font></Label>
+            <Label fx:id="originLabel" layoutX="157.0" layoutY="334.0" text="Origin" />
+            <Label fx:id="destinationLabel" layoutX="157.0" layoutY="374.0" text="Destination" />
+            <Label fx:id="priorityLabel" layoutX="157.0" layoutY="412.0" text="Priority" />
+            <Label fx:id="weightPriceLabel" layoutX="157.0" layoutY="449.0" prefHeight="31.0" prefWidth="309.0" text="Old Weight Price:" />
+            <Label fx:id="volumePriceLabel" layoutX="157.0" layoutY="487.0" prefHeight="31.0" prefWidth="295.0" text="Old Volue Price: " />
             </children>
         </AnchorPane>
     </children>

@@ -43,6 +43,17 @@ public class PriceUpdateScreenController implements Initializable {
     private ImageView avatar;
     @FXML
     private Button reviewLogsButton;
+    @FXML
+    private Label originLabel;
+    @FXML
+    private Label destinationLabel;
+    @FXML
+    private Label priorityLabel;
+    @FXML
+    private Label weightPriceLabel;
+    @FXML
+    private Label volumePriceLabel;
+    @FXML Label notificationLabel;
 
     public PriceUpdateScreenController() {
         KPSMain.setLoginScreenController(this);
@@ -116,10 +127,15 @@ public class PriceUpdateScreenController implements Initializable {
                 String[] selectdText = ((String) routeCombobox.getValue()).split(" ");
 
                 int routeID = Integer.parseInt(selectdText[0]);
+                Route route = kpsMain.getRoute(routeID);
+                double oldWeightPrice = route.getPricePerGram();
+                double oldVolumePrice = route.getCostPerVolume();
                 double weightCost = Double.parseDouble(weightTextfield.getText());
                 double volumeCost = Double.parseDouble(volumeTextfield.getText());
                 kpsMain.updateRouteCustomerPrice(routeID,weightCost,volumeCost);
                 errorLabel.setText("Customer price was successfully updated");
+                priceUpdateNotification(route,oldWeightPrice,oldVolumePrice);
+
             }
 
         } else if (event.toString().contains("reset")) {
@@ -151,6 +167,13 @@ public class PriceUpdateScreenController implements Initializable {
                 routeCombobox.getItems().add(root.id + " " + root.getStartLocation().getLocationName() + " ->" + root.getEndLocation().getLocationName() + " : " + root.routeType.toString());
             }
         }
+        notificationLabel.setVisible(false);
+        originLabel.setVisible(false);
+        destinationLabel.setVisible(false);
+        priorityLabel.setVisible(false);
+        weightPriceLabel.setVisible(false);
+        volumePriceLabel.setVisible(false);
+
 
     }
 
@@ -179,6 +202,19 @@ public class PriceUpdateScreenController implements Initializable {
         Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         tempStage.setScene(homeSecne);
         tempStage.show();
+    }
+    private void priceUpdateNotification(Route route,double oldWeightPrice,double oldVolumePrice){
+        originLabel.setText("Affected Origin: "+route.getStartLocation().getLocationName());
+        destinationLabel.setText("Affected Destination: "+route.getEndLocation().getLocationName());
+        priorityLabel.setText("Type: " + route.routeType.toString());
+        weightPriceLabel.setText("Old Weight Price: $"+String.format("%.2f",oldWeightPrice)+" New Price: $"+String.format("%.2f",route.getPricePerGram()));
+        volumePriceLabel.setText("Old Volume Price: $"+String.format("%.2f",oldVolumePrice)+" New Price: $"+String.format("%.2f",route.getPricePerVolume()));
+        notificationLabel.setVisible(true);
+        originLabel.setVisible(true);
+        destinationLabel.setVisible(true);
+        priorityLabel.setVisible(true);
+        weightPriceLabel.setVisible(true);
+        volumePriceLabel.setVisible(true);
     }
 
     /**

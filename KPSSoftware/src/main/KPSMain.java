@@ -178,7 +178,7 @@ public class KPSMain {
             sendMailScreenController = (SendMailScreenController) controllers;
         } else if (controllers instanceof RouteDiscontinueScreenController) {
             routeDiscontinueScreenController = (RouteDiscontinueScreenController) controllers;
-        }else if(controllers instanceof PriceUpdateScreenController){
+        } else if (controllers instanceof PriceUpdateScreenController) {
             priceUpdateScreenController = (PriceUpdateScreenController) controllers;
         }
     }
@@ -196,10 +196,12 @@ public class KPSMain {
         return kpsModel.processMail(origin, destination, weight, volume, priority);
 
     }
-    public double getMailRevenue(int mailId){
+
+    public double getMailRevenue(int mailId) {
         return kpsModel.getMailRevenue(mailId);
     }
-    public double getMailExpenditure(int mailId){
+
+    public double getMailExpenditure(int mailId) {
         return kpsModel.getMailExpenditure(mailId);
     }
 
@@ -214,7 +216,8 @@ public class KPSMain {
     public boolean deactivateRoute(int routId) {
         return kpsModel.deactivateRoute(routId);
     }
-    public void updateRouteCustomerPrice(int idToUpdate,double newPricePerGram, double newPricePerVolume ){
+
+    public void updateRouteCustomerPrice(int idToUpdate, double newPricePerGram, double newPricePerVolume) {
         kpsModel.updateCustomerPrice(idToUpdate, newPricePerGram, newPricePerVolume);
     }
 

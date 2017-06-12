@@ -135,19 +135,18 @@ public class KPSModel {
     //                   Methods for Mails
     // ============================================================
 
-
     /**
      * Find out if we can support sending mail from the given origin to the given destination. If we can't send the
-     * mail, then -1 is returned. If we can, the id of the mail is returned.
+     * mail, then null is returned. If we can, the mail object is returned.
      *
      * @param originString
      * @param destinationString
      * @param weight
      * @param volume
      * @param priority
-     * @return -1 if we can't send this mail; or the id of the mail if we can.
+     * @return null if we can't send this mail; or the mail object if we can.
      */
-    public int processMail(String originString, String destinationString, double weight, double volume, Priority priority) {
+    public Mail processMail(String originString, String destinationString, double weight, double volume, Priority priority) {
         NZLocation origin = findOrCreateNZLocationByString(originString);
         Location destination = findOrCreateLocationByString(destinationString);
 
@@ -160,19 +159,31 @@ public class KPSModel {
         // if cannot find available routes, return false
         if (!isValidRouteChain(routes)) {
             maxMailId--;
-            return -1;
+            return null;
         }
 
         mail.setRoutes(routes);
+        return mail;
+    }
 
+    /**
+     * Deliver the mail, and log the event.
+     *
+     * @param mail
+     * @return true if successful, or false if failed.
+     */
+    public boolean deliverMail(Mail mail) {
         this.mails.put(mail.id, mail);
+
+        // write the mail
+        maxMailId++;
+        XMLDriver.writeMail(mail);
 
         // log the event
         maxEventId++;
-        XMLDriver.writeMailDeliveryEvent(new MailDeliveryEvent(maxEventId, currentStaff.id, LocalDateTime.now(), mail.id));
-
-        return mail.id;
+        return XMLDriver.writeMailDeliveryEvent(new MailDeliveryEvent(maxEventId, currentStaff.id, LocalDateTime.now(), mail.id));
     }
+
 
     /**
      * @return all mails as a map, where the key is the id of the Mail, and the value is the Mail object
@@ -191,18 +202,46 @@ public class KPSModel {
 
     /**
      * @param id the id of mail that we want to get revenue from
-     * @return the revenue of the mail
+     * @return the revenue of the mail, or -1 if the given id is not in our system.
      */
     public double getMailRevenue(int id) {
-        return getMailById(id).getRevenue();
+        Mail mail = getMailById(id);
+
+        if (mail == null) {
+            return -1;
+        }
+
+        return mail.getRevenue();
     }
 
     /**
      * @param id the id of mail that we want to get expenditure from
-     * @return the expenditure of the mail
+     * @return the expenditure of the mail, or -1 if the given id is not in our system.
      */
     public double getMailExpenditure(int id) {
-        return getMailById(id).getExpenditure();
+        Mail mail = getMailById(id);
+
+        if (mail == null) {
+            return -1;
+        }
+
+        return mail.getExpenditure();
+    }
+
+    /**
+     * @param tempMail the the temporary mail (not recorded from the system) that we want to get revenue from
+     * @return the revenue of the mail
+     */
+    public double getTempMailRevenue(Mail tempMail) {
+        return tempMail.getRevenue();
+    }
+
+    /**
+     * @param tempMail the temporary mail (not recorded from the system) that we want to get expenditure from
+     * @return the expenditure of the mail, or -1 if the given id is not in our system.
+     */
+    public double getTempMailExpenditure(Mail tempMail) {
+        return tempMail.getExpenditure();
     }
 
     /**

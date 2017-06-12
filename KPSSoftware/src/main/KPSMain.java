@@ -198,10 +198,14 @@ public class KPSMain {
         return kpsModel.getAvailableOrigins();
     }
 
-    // deliver mail
-    public int deliverMail(String origin, String destination, double weight, double volume, Priority priority) {
+    // process mail
+    public Mail processMail(String origin, String destination, double weight, double volume, Priority priority) {
         return kpsModel.processMail(origin, destination, weight, volume, priority);
+    }
 
+    // deliver mail
+    public boolean deliverMail(Mail mail) {
+        return kpsModel.deliverMail(mail);
     }
 
     public double getMailRevenue(int mailId) {
@@ -210,6 +214,14 @@ public class KPSMain {
 
     public double getMailExpenditure(int mailId) {
         return kpsModel.getMailExpenditure(mailId);
+    }
+
+    public double getTempMailRevenue(Mail tempMail) {
+        return kpsModel.getTempMailRevenue(tempMail);
+    }
+
+    public double getTempMailExpenditure(Mail tempMail) {
+        return kpsModel.getTempMailExpenditure(tempMail);
     }
 
     public Map<Integer, Route> getAllRoutes() {
@@ -346,14 +358,18 @@ public class KPSMain {
         double volume = 1000f;
         Priority priority = Priority.International_Air;
 
-        int mailId = kpsModel.processMail(originString, destinationString, weight, volume, priority);
+        Mail tempMail = kpsModel.processMail(originString, destinationString, weight, volume, priority);
 
-        if (mailId < 0) {
+        if (tempMail == null) {
             // we don't support sending mails from the given origin to the given destination
         } else {
             // We can deliver the mail
-            double revenue = kpsModel.getMailRevenue(mailId);
-            double expenditure = kpsModel.getMailExpenditure(mailId);
+
+            boolean result = kpsModel.deliverMail(tempMail);
+
+            // note we must deliver the mail first, otherwise there is no such mail in database.
+            double revenue = kpsModel.getMailRevenue(tempMail.id);
+            double expenditure = kpsModel.getMailExpenditure(tempMail.id);
         }
     }
 

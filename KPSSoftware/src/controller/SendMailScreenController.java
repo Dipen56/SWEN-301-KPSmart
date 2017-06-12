@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import main.KPSMain;
 import model.location.Location;
+import model.mail.Mail;
 import model.mail.Priority;
 import model.staff.Staff;
 
@@ -43,18 +44,19 @@ public class SendMailScreenController implements Initializable {
     @FXML
     private ImageView avatar;
     @FXML
-    private ComboBox originCombobox;
+    private ComboBox<String> originCombobox;
     @FXML
-    private ComboBox destinationCombobox;
+    private ComboBox<String> destinationCombobox;
     @FXML
     private TextField weightTextfield;
     @FXML
     private TextField volumeTextfield;
     @FXML
-    private ComboBox priorityCombobox;
+    private ComboBox<String> priorityCombobox;
     @FXML
     private Button reviewLogsButton;
 
+    private Mail tempMail;
 
     public SendMailScreenController() {
         KPSMain.setLoginScreenController(this);
@@ -118,31 +120,73 @@ public class SendMailScreenController implements Initializable {
      * @param event
      */
     public void handleButtons(ActionEvent event) {
-        if (event.toString().contains("Accept")) {
-            System.out.println(weightTextfield.getText());
-            if ((originCombobox.getValue() == null) || (destinationCombobox.getValue() == null)
-                    || (!weightTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(weightTextfield.getText()) < 0)
-                    || (!volumeTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(volumeTextfield.getText()) < 0)
-                    || priorityCombobox.getValue() == null) {
-                errorLabel.setText("Please Fill in all the Information");
-            } else {
-                int mailId = kpsMain.deliverMail((String) originCombobox.getValue(), (String) destinationCombobox.getValue(),
-                        Double.parseDouble(weightTextfield.getText()), Double.parseDouble(volumeTextfield.getText()),
-                        Priority.createPriorityFrom((String) priorityCombobox.getValue()));
-                if (mailId > 0) {
-                    errorLabel.setText("Mail was successfully sent");
-                    priceLabel.setText(String.format("%.2f", kpsMain.getMailRevenue(mailId)));
-                    costLabel.setText(String.format("%.2f", kpsMain.getMailExpenditure(mailId)));
-                    totalPriceLabel.setVisible(true);
-                    priceLabel.setVisible(true);
-                    totalCostLabel.setVisible(true);
-                    costLabel.setVisible(true);
-                    //need a way to stall here
-                    //clearContent(event);
-                } else {
-                    errorLabel.setText("The Selected Route is Unavailable");
-                }
+        if (event.toString().contains("Check Price")) {
+
+            String origin = originCombobox.getValue();
+            String destination = destinationCombobox.getValue();
+            String weightString = weightTextfield.getText();
+            String volumeString = volumeTextfield.getText();
+            String priorityString = priorityCombobox.getValue();
+
+            if (origin == null || destination == null || weightString == null || volumeString == null || priorityString == null) {
+                errorLabel.setText("Please fill in all the Information");
+                return;
             }
+
+            if (!weightString.matches("[0-9]{1,13}(\\.[0-9]*)?") || !volumeString.matches("[0-9]{1,13}(\\.[0-9]*)?")) {
+                errorLabel.setText("Please fill in valid numbers in weight or volume");
+                return;
+            }
+
+            double weight = Double.parseDouble(weightString);
+            double volume = Double.parseDouble(volumeString);
+
+            if (weight <= 0 || volume <= 0) {
+                errorLabel.setText("Weight or volume cannot be negative");
+                return;
+            }
+
+            Priority priority = Priority.createPriorityFrom(priorityString);
+
+            tempMail = kpsMain.processMail(origin, destination, weight, volume, priority);
+
+            if (tempMail != null) {
+                errorLabel.setText("Please confirm to send this mail");
+
+                priceLabel.setText(String.format("%.2f", kpsMain.getTempMailRevenue(tempMail)));
+                costLabel.setText(String.format("%.2f", kpsMain.getTempMailExpenditure(tempMail)));
+                totalPriceLabel.setVisible(true);
+                priceLabel.setVisible(true);
+                totalCostLabel.setVisible(true);
+                costLabel.setVisible(true);
+
+                originCombobox.setDisable(true);
+                destinationCombobox.setDisable(true);
+                weightTextfield.setDisable(true);
+                volumeTextfield.setDisable(true);
+                priorityCombobox.setDisable(true);
+
+                ((Button) event.getSource()).setText("Deliver");
+            } else {
+                errorLabel.setText("We don't support sending mails from " + origin + " to " + destination + " with " + priorityString + " yet");
+            }
+
+        } else if (event.toString().contains("Deliver")) {
+            if (tempMail == null) {
+                clearContent(event);
+                return;
+            }
+
+            if (kpsMain.deliverMail(tempMail)) {
+                clearContent(event);
+                errorLabel.setText("Mail was successfully sent");
+                tempMail = null;
+            } else {
+                clearContent(event);
+                errorLabel.setText("Logging event failed, please try again");
+                tempMail = null;
+            }
+
         } else if (event.toString().contains("reset")) {
             clearContent(event);
         } else if (event.toString().contains("discard")) {

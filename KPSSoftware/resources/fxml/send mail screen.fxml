@@ -74,7 +74,7 @@
         </VBox>
         <AnchorPane fx:id="homAnchorpane" prefHeight="490.0" prefWidth="586.0" styleClass="home-anchorpane" stylesheets="@../css/style.css">
             <children>
-                <Label fx:id="errorLabel" alignment="CENTER" layoutX="98.0" layoutY="88.0" prefHeight="45.0" prefWidth="382.0" text="Please Enter the Information" textFill="RED" wrapText="true">
+                <Label fx:id="errorLabel" alignment="CENTER" layoutX="17.0" layoutY="75.0" prefHeight="58.0" prefWidth="544.0" text="Please Enter the Information" textFill="RED" wrapText="true">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>
@@ -107,24 +107,24 @@
                 <ComboBox fx:id="originCombobox" layoutX="258.0" layoutY="143.0" prefHeight="36.0" prefWidth="150.0" promptText="Select Origin" />
                 <ComboBox fx:id="destinationCombobox" layoutX="258.0" layoutY="192.0" prefHeight="36.0" prefWidth="150.0" promptText="Select Destination" />
                 <TextField fx:id="weightTextfield" layoutX="258.0" layoutY="247.0" prefHeight="36.0" prefWidth="149.0" promptText="Enter Weight " />
-                <Label fx:id="gramsLabel" layoutX="408.0" layoutY="255.0" prefHeight="36.0" prefWidth="71.0" text="gram(s)">
+                <Label fx:id="gramsLabel" layoutX="413.0" layoutY="247.0" prefHeight="36.0" prefWidth="71.0" text="gram(s)">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
                 <TextField fx:id="volumeTextfield" layoutX="258.0" layoutY="298.0" prefHeight="36.0" prefWidth="149.0" promptText="Enter Volume" />
-                <Label fx:id="cmLabel" layoutX="413.0" layoutY="306.0" prefHeight="36.0" prefWidth="60.0" text="cm^3">
+                <Label fx:id="cmLabel" layoutX="413.0" layoutY="298.0" prefHeight="36.0" prefWidth="60.0" text="cm^3">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
                 <ComboBox fx:id="priorityCombobox" layoutX="258.0" layoutY="349.0" prefHeight="36.0" prefWidth="150.0" promptText="Select Priority" />
-                <Button id="reset" layoutX="238.0" layoutY="540.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="main-button" stylesheets="@../css/style.css" text="Reset" textFill="WHITE">
+                <Button id="reset" layoutX="239.0" layoutY="540.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="118.0" styleClass="main-button" stylesheets="@../css/style.css" text="Reset" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Button>
-                <Button id="discard" layoutX="356.0" layoutY="540.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="discard-button" stylesheets="@../css/style.css" text="Discard" textFill="WHITE">
+                <Button id="discard" layoutX="371.0" layoutY="540.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="118.0" styleClass="discard-button" stylesheets="@../css/style.css" text="Discard" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
@@ -139,7 +139,7 @@
                         <Image url="@../img/mail-delivery.png" />
                     </image>
                 </ImageView>
-                <Label fx:id="totalPriceLabel" layoutX="150.0" layoutY="425.0" prefHeight="36.0" prefWidth="125.0" text="Total Price: $">
+                <Label fx:id="totalPriceLabel" alignment="CENTER_RIGHT" layoutX="138.0" layoutY="425.0" prefHeight="36.0" prefWidth="137.0" text="Total Price: $">
                     <font>
                         <Font name="System Bold" size="20.0" />
                     </font>
@@ -149,12 +149,12 @@
                         <Font name="System Bold" size="20.0" />
                     </font>
                 </Label>
-                <Button id="accept" layoutX="120.0" layoutY="540.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="logout-button" stylesheets="@../css/style.css" text="Accept" textFill="WHITE">
+                <Button id="accept" layoutX="103.0" layoutY="540.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="118.0" styleClass="logout-button" stylesheets="@../css/style.css" text="Check Price" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Button>
-            <Label fx:id="totalCostLabel" layoutX="152.0" layoutY="470.0" prefHeight="30.0" prefWidth="133.0" text="Total Cost:  $">
+            <Label fx:id="totalCostLabel" alignment="CENTER_RIGHT" layoutX="127.0" layoutY="468.0" prefHeight="30.0" prefWidth="149.0" text="Total Cost: $">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>

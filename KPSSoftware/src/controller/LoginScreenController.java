@@ -47,7 +47,6 @@ public class LoginScreenController {
         String username = usernameTextfield.getText();
         String password = passwordTextfield.getText();
         // checks given user name and password against database if correct will take you user the KPS Software.
-        System.out.println(kpsMain);
         if (kpsMain.authenticateLogin(username, password)) {
             // for testing us the  username: Bob password: test123
             Parent homescreen = FXMLLoader.load(LoginScreenController.class.getResource("/fxml/home screen.fxml"));

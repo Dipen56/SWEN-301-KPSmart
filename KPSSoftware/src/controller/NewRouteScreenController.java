@@ -167,7 +167,7 @@ public class NewRouteScreenController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpsMain.getCurrentStaff();
         userLable.setText(staff.getFirstName());
-        avatar.setImage(new Image(NewRouteScreenController.class.getResourceAsStream("/img/" + staff.id + ".png")));
+        avatar.setImage(new Image(NewRouteScreenController.class.getResourceAsStream("/img/" + (staff.id % 5) + ".png")));
         if (!staff.isManager()) {
             reviewLogsButton.setVisible(false);
             reviewLogsButton.setDisable(false);

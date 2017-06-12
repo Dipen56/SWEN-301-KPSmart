@@ -15,8 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import main.KPSMain;
-import model.location.Location;
-import model.mail.Priority;
 import model.route.Route;
 import model.staff.Staff;
 
@@ -156,7 +154,7 @@ public class PriceUpdateScreenController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpsMain.getCurrentStaff();
         userLable.setText(staff.getFirstName());
-        avatar.setImage(new Image(PriceUpdateScreenController.class.getResourceAsStream("/img/"+staff.id+".png")));
+        avatar.setImage(new Image(PriceUpdateScreenController.class.getResourceAsStream("/img/" + (staff.id % 5) + ".png")));
         if (!staff.isManager()) {
             reviewLogsButton.setVisible(false);
             reviewLogsButton.setDisable(false);

@@ -126,8 +126,8 @@ public class ManageUserController implements Initializable {
             String[] content = ((String) selectUser.getValue()).split(" ");
             Staff staff = kpsMain.getSelectedUser(content[0], content[1]);
 
-            userImage.setImage(new Image(ManageUserController.class.getResourceAsStream("/img/" + staff.id + ".png")));
             firstName.setText("First Name: " + staff.getFirstName());
+            userImage.setImage(new Image(ManageUserController.class.getResourceAsStream("/img/" + (staff.id % 5) + ".png")));
             lastName.setText("Last Name: " + staff.getLastName());
             emailAddress.setText("Email: " + staff.getEmail());
             phoneNumber.setText("Phone: " + staff.getPhoneNumber());
@@ -158,7 +158,7 @@ public class ManageUserController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpsMain.getCurrentStaff();
         userLable.setText(staff.getFirstName());
-        avatar.setImage(new Image(ManageUserController.class.getResourceAsStream("/img/" + staff.id + ".png")));
+        avatar.setImage(new Image(ManageUserController.class.getResourceAsStream("/img/" + (staff.id % 5) + ".png")));
         for (Staff s : kpsMain.getAllUsers().values()) {
             selectUser.getItems().add(s.getFirstName() + " " + s.getLastName());
         }

@@ -90,13 +90,34 @@ public class ChangePasswordController implements Initializable {
         } else if (event.toString().contains("discard")) {
             returnUserManagement(event);
         } else if (event.toString().contains("accept")) {
-            String vaildPassword = kpsMain.changeUserPassword(oldPassword.getText(), newPassword.getText(), retypePassword.getText());
-            errorLabel.setText(vaildPassword);
+            Staff currentStaff = kpsMain.getCurrentStaff();
+
+            String currentPass = currentStaff.getPassword();
+            String oldPassField = oldPassword.getText();
+            String newPassField = newPassword.getText();
+            String retypePassField = retypePassword.getText();
+
+            if (!oldPassField.equals(currentPass)) {
+                errorLabel.setText("Old Passwords not match");
+                return;
+            } else if (!newPassField.equals(retypePassField)) {
+                errorLabel.setText("New passwords and re typed password do not match");
+                return;
+            } else if (!newPassField.matches("^[a-zA-Z0-9]*$")) {
+                errorLabel.setText("New passwords must only contain alphanumeric");
+                return;
+            } else if (newPassField.length() < 5) {
+                errorLabel.setText("New passwords must be minimum 5 characters");
+                return;
+            }
+
+            errorLabel.setText("Password change successful");
             oldPassword.clear();
             newPassword.clear();
             retypePassword.clear();
-        }
 
+            kpsMain.changeCurrentStaffPassword(newPassField);
+        }
     }
 
     /**

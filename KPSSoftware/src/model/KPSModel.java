@@ -576,6 +576,11 @@ public class KPSModel {
         }
 
         Staff staff = new Staff(idToUpdate, newUserName, newPassword, newIsManager, newFirstName, newLastName, newEmail, newPhoneNumber);
+
+        if (idToUpdate == currentStaff.id) {
+            currentStaff = staff;
+        }
+
         this.registeredStaffs.put(idToUpdate, staff);
 
         return XMLDriver.updateStaff(idToUpdate, staff);

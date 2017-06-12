@@ -86,14 +86,6 @@ public class KPSMain {
     }
 
     public boolean deleteUser(String firstName, String lastName) {
-
-        /*
-        TODO:  We should delete the user by its id, instead of by its firstname and lastname, because we don't enforce the uniqueness of firstname and lastname.
-               The best way I see to fix this is: let the front end pass back the id of the selected user.
-               Or, if we really don't care, we don't need to fix it. For demonstration, it's not likely to have
-               two users with same firstname and lastname.  -- Hektar
-         */
-
         for (Staff s : kpsModel.getAllStaffs().values()) {
             if (s.getFirstName().equals(firstName) && s.getLastName().equals(lastName)) {
                 return kpsModel.deleteStaff(s.id);
@@ -149,6 +141,13 @@ public class KPSMain {
 
     }
 
+    public boolean changeCurrentStaffPassword(String newPassword) {
+        Staff currentStaff = getCurrentStaff();
+
+        return kpsModel.updateStaff(currentStaff.id, currentStaff.getUserName(), newPassword, currentStaff.isManager(),
+                currentStaff.getFirstName(), currentStaff.getLastName(), currentStaff.getEmail(), currentStaff.getPhoneNumber());
+    }
+
     public Staff getSelectedUser(String firstName, String lastName) {
         for (Staff s : kpsModel.getAllStaffs().values()) {
             if (s.getFirstName().equals(firstName) && s.getLastName().equals(lastName)) {
@@ -157,10 +156,6 @@ public class KPSMain {
         }
 
         return null;
-    }
-
-    public String changeUserPassword(String oldPassword, String newPassword, String retypePassword) {
-        return kpsModel.getCurrentStaff().editPassword(oldPassword, newPassword, retypePassword);
     }
 
     public boolean authenticateLogin(String username, String password) {
@@ -190,7 +185,7 @@ public class KPSMain {
             transportCostScreenController = (TransportCostScreenController) controllers;
         } else if (controllers instanceof NewRouteScreenController) {
             newRouteScreenController = (NewRouteScreenController) controllers;
-        }else if (controllers instanceof BusinessFiguresScreenController) {
+        } else if (controllers instanceof BusinessFiguresScreenController) {
             businessFiguresScreenController = (BusinessFiguresScreenController) controllers;
         }
     }
@@ -240,7 +235,8 @@ public class KPSMain {
     public void addRoute(String startString, String endString, RouteType routeType, double duration, String transportFirm, double pricePerGram, double pricePerVolume, double costPerGram, double costPerVolume) {
         kpsModel.addRoute(startString, endString, routeType, duration, transportFirm, pricePerGram, pricePerVolume, costPerGram, costPerVolume);
     }
-    public  Map<Integer, Mail>  getCriticalRoutes() {
+
+    public Map<Integer, Mail> getCriticalRoutes() {
         return kpsModel.getCriticalMails();
     }
 

@@ -65,24 +65,6 @@ public class Staff {
         return this.userName.equals(username) && this.password.equals(password);
     }
 
-    // USER ACCOUNT METHODS
-
-    public String editPassword(String oldPassword, String newPassword, String retypePassword) {
-
-        if (!oldPassword.equals(password)) {
-            return "Old Passwords not match";
-        } else if (!newPassword.equals(retypePassword)) {
-            return "New passwords and re typed password do not match";
-        } else if (newPassword.matches("^[a-zA-Z0-9]*$")) {
-            return "New passwords must only contain alphanumeric ";
-        } else if (newPassword.length() < 6) {
-            return "New passwords must be minimum 6 characters";
-        } else {
-            password = newPassword;
-            return "Password change successful";
-        }
-    }
-
     /*
      * Getter and Setter methods.
      */

@@ -122,7 +122,7 @@ public class NewRouteScreenController implements Initializable {
      */
     public void handleButtons(ActionEvent event) {
         if (event.toString().contains("accept")) {
-            //TODO: test all these cases
+            //TODO: Test all these cases
             if (!originTextfield.getText().matches("[a-zA-Z]+")
                     || !destinationTextfield.getText().matches("[a-zA-Z]+")
                     || companyTextfield.getText().equals("")

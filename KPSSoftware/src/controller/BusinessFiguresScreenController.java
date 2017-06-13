@@ -14,10 +14,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import main.KPSMain;
+import model.KPSModel;
+import model.mail.Mail;
 import model.staff.Staff;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
@@ -126,12 +129,12 @@ public class BusinessFiguresScreenController implements Initializable {
             reviewLogsButton.setVisible(false);
             reviewLogsButton.setDisable(false);
         }
+
         // FIXME: 12/06/2017 some error happens when retrieving any data.
-        //Map<Integer, Mail> criticalMails = kpsMain.getCriticalRoutes();
-        //revenueLabel.setText(String.format("%.2f",KPSModel.calculateTotalRevenue(criticalMails)));
-        //expenditureLabel.setText(String.format("%.2f",KPSModel.calculateTotalExpenditure(criticalMails));
-
-
+        // 13/06/2017 Fixed it. You can proceed now. -- Hectkar. PS: remember to delete MEEEEEEEE because this hilarious comment line make the code sooooooooooooooooooooooo mediocre!!!!!!!
+        Map<Integer, Mail> criticalMails = kpsMain.getCriticalRoutes();
+        revenueLabel.setText(String.format("%.2f", KPSModel.calculateTotalRevenue(criticalMails)));
+        expenditureLabel.setText(String.format("%.2f",KPSModel.calculateTotalExpenditure(criticalMails)));
     }
 
     private void returnHome(ActionEvent event) {

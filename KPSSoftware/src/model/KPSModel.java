@@ -89,6 +89,10 @@ public class KPSModel {
     public KPSModel() {
         loadDataFromXML();
         routingSystem = new RoutingSystem(routes);
+
+        // This isn't quite sound, but it's a workaround
+        findRoutesForMailsInSystem();
+
         prepareRoutingSystem();
         prepareOriginsAndDestinations();
     }
@@ -693,6 +697,25 @@ public class KPSModel {
         maxMailId = XMLDriver.getMaxMailId();
         maxRouteId = XMLDriver.getMaxRouteId();
         maxStaffId = XMLDriver.getMaxStaffId();
+    }
+
+    /**
+     * Prepare the mails, so they have the correct routes assigned for them.
+     *
+     * NOTE: doing this is not realistic, because an existing mail may have no valid routes any more if we delete routes.
+     * But it should be working properly if the fake data we populated in xmls are correct.
+     */
+    private void findRoutesForMailsInSystem() {
+        mails.values().forEach(mail -> {
+            List<Route> routes = routingSystem.findRoutes(mail);
+
+            if (isValidRouteChain(routes)) {
+                mail.setRoutes(routes);
+            }
+
+            System.out.println("Found routes for mail (id: " + mail.id + ", routes: ");
+            routes.forEach(System.out::println);
+        });
     }
 
     /**

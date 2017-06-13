@@ -6,9 +6,7 @@
 2.the number are not changing right 
 3. need to check xml too
 //create new Route Screen
-1. need check that the regex is working 
-//Bussiness figure screen
-1. some error is preventing the retreaval of data. the reason for this that the route is empty.
+1. need check that the regex is working
 
 
 

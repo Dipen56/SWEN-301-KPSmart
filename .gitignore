@@ -20,3 +20,9 @@ hs_err_pid*
 bin/
 out/
 *.class
+
+/events.xml
+/locations.xml
+/mails.xml
+/routes.xml
+/staffs.xml

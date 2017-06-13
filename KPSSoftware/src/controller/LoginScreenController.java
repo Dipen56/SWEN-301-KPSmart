@@ -49,7 +49,7 @@ public class LoginScreenController {
         // checks given user name and password against database if correct will take you user the KPS Software.
         if (kpsMain.authenticateLogin(username, password)) {
             // for testing us the  username: Bob password: test123
-            Parent homescreen = FXMLLoader.load(LoginScreenController.class.getResource("/fxml/home screen.fxml"));
+            Parent homescreen = FXMLLoader.load(LoginScreenController.class.getResource("/fxml/HomeScreen.fxml"));
             Scene homeSecne = new Scene(homescreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(homeSecne);

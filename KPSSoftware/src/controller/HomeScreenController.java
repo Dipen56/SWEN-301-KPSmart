@@ -50,37 +50,37 @@ public class HomeScreenController implements Initializable {
     public void changeScenes(ActionEvent event) throws IOException {
 
         if (event.toString().contains("sendMail")) {
-            Parent sendMailScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/send mail screen.fxml"));
+            Parent sendMailScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/SendMailScreen.fxml"));
             Scene sendMailScene = new Scene(sendMailScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(sendMailScene);
             tempStage.show();
         } else if (event.toString().contains("routeDiscontinue")) {
-            Parent routeDiscontinueScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/route discontinue screen.fxml"));
+            Parent routeDiscontinueScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/RouteDiscontinueScreen.fxml"));
             Scene routeDiscontinueScene = new Scene(routeDiscontinueScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(routeDiscontinueScene);
             tempStage.show();
         } else if (event.toString().contains("customerPriceUpdate")) {
-            Parent priceUpdateScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/price update screen.fxml"));
+            Parent priceUpdateScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/PriceUpdateScreen.fxml"));
             Scene priceUpdateScene = new Scene(priceUpdateScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(priceUpdateScene);
             tempStage.show();
         } else if (event.toString().contains("transportCostUpdate")) {
-            Parent transportCostUpdateScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/transport cost screen.fxml"));
+            Parent transportCostUpdateScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/TransportCostScreen.fxml"));
             Scene transportCostUpdateScene = new Scene(transportCostUpdateScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(transportCostUpdateScene);
             tempStage.show();
         } else if (event.toString().contains("newRoute")) {
-            Parent newRouteScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/new route screen.fxml"));
+            Parent newRouteScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/NewRouteScreen.fxml"));
             Scene newRouteScene = new Scene(newRouteScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(newRouteScene);
             tempStage.show();
         } else if (event.toString().contains("businessFigures")) {
-            Parent businessFiguresScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/business figures screen.fxml"));
+            Parent businessFiguresScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/BusinessFiguresScreen.fxml"));
             Scene businessFiguresScene = new Scene(businessFiguresScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(businessFiguresScene);
@@ -90,13 +90,13 @@ public class HomeScreenController implements Initializable {
         } else if (event.toString().contains("logout")) {
             //TODO; POP up dialog box to ask the user if they are sure want to logout
             DialogBox.LogoutyMsg("Logout", "Are you sure to logout?");
-            Parent loginScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/login screen.fxml"));
+            Parent loginScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/LoginScreen.fxml"));
             Scene loginScene = new Scene(loginScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(loginScene);
             tempStage.show();
         } else if (event.toString().contains("setting")) {
-            Parent usermanagementScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/user settings.fxml"));
+            Parent usermanagementScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/UserSettingScreen.fxml"));
             Scene usermanagementScene = new Scene(usermanagementScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(usermanagementScene);

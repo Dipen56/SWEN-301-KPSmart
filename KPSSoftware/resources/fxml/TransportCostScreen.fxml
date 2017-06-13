@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-
-<HBox id="home-hbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" spacing="5.0" styleClass="home-hbox" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewRouteScreenController">
+<?import javafx.scene.text.*?>
+<HBox id="home-hbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" spacing="5.0" styleClass="home-hbox" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TransportCostScreenController">
     <children>
         <VBox id="home-vbox" prefHeight="490.0" prefWidth="105.0" spacing="3.0" styleClass="home-vbox" stylesheets="@../css/style.css">
             <children>
@@ -74,114 +70,74 @@
         </VBox>
         <AnchorPane id="home-anchorpane" prefHeight="490.0" prefWidth="586.0" styleClass="home-anchorpane" stylesheets="@../css/style.css">
             <children>
-                <Label layoutX="77.0" layoutY="119.0" prefHeight="36.0" prefWidth="94.0" text="Origin:" textAlignment="CENTER">
+                <Label layoutX="113.0" layoutY="121.0" prefHeight="36.0" prefWidth="94.0" text="Route:" textAlignment="CENTER">
                     <font>
-                        <Font name="System Bold" size="15.0" />
+                        <Font name="System Bold" size="20.0" />
                     </font>
                 </Label>
-                <Label layoutX="77.0" layoutY="162.0" prefHeight="36.0" prefWidth="94.0" text="Destination:">
-                    <font>
-                        <Font name="System Bold" size="15.0" />
-                    </font>
-                </Label>
-                <Label layoutX="77.0" layoutY="206.0" prefHeight="36.0" prefWidth="150.0" text="Transport Company:">
-                    <font>
-                        <Font name="System Bold" size="15.0" />
-                    </font>
-                </Label>
-                <Button id="reset" layoutX="235.0" layoutY="534.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="main-button" stylesheets="@../css/style.css" text="Reset" textFill="WHITE">
+                <ComboBox fx:id="routeCombobox" layoutX="216.0" layoutY="121.0" prefHeight="45.0" prefWidth="264.0" promptText="Select Route" />
+                <Button id="reset" layoutX="237.0" layoutY="540.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="main-button" stylesheets="@../css/style.css" text="Reset" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Button>
-                <Button id="discard" layoutX="353.0" layoutY="534.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="discard-button" stylesheets="@../css/style.css" text="Discard" textFill="WHITE">
+                <Button id="discard" layoutX="355.0" layoutY="540.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="discard-button" stylesheets="@../css/style.css" text="Discard" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Button>
-                <Label layoutX="59.0" layoutY="25.0" prefHeight="58.0" prefWidth="358.0" text="Create New Route">
+                <Label layoutX="32.0" layoutY="24.0" prefHeight="58.0" prefWidth="411.0" text="Tansport Cost Update">
                     <font>
                         <Font name="System Bold" size="40.0" />
                     </font>
                 </Label>
-                <ImageView fitHeight="87.0" fitWidth="150.0" layoutX="446.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="87.0" fitWidth="150.0" layoutX="462.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../img/new-route.png" />
+                        <Image url="@../img/transport-cost.png" />
                     </image>
                 </ImageView>
-                <Button id="accept" layoutX="117.0" layoutY="534.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="logout-button" stylesheets="@../css/style.css" text="Accept" textFill="WHITE">
+                <Button id="accept" layoutX="119.0" layoutY="540.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="logout-button" stylesheets="@../css/style.css" text="Accept" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Button>
-                <Label layoutX="77.0" layoutY="292.0" prefHeight="36.0" prefWidth="158.0" text="Type of Tansport:">
+                <Label layoutX="113.0" layoutY="179.0" prefHeight="36.0" prefWidth="158.0" text="New Weight Cost:     $">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
-                <ComboBox fx:id="typeCombobox" layoutX="287.0" layoutY="292.0" prefHeight="36.0" prefWidth="150.0" promptText="Select Type" />
-                <Label layoutX="77.0" layoutY="342.0" prefHeight="36.0" prefWidth="208.0" text="Customer Weight Pricet:      $">
+                <TextField fx:id="weightTextfield" layoutX="277.0" layoutY="179.0" prefHeight="36.0" prefWidth="150.0" promptText="Enter Cost " />
+                <Label layoutX="432.0" layoutY="180.0" prefHeight="36.0" prefWidth="74.0" text="per gram">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
-                <TextField fx:id="weightPriceTextfield" layoutX="287.0" layoutY="342.0" prefHeight="36.0" prefWidth="150.0" promptText="Enter Price" />
-                <Label layoutX="442.0" layoutY="343.0" prefHeight="36.0" prefWidth="74.0" text="per gram">
+                <Label layoutX="113.0" layoutY="231.0" prefHeight="36.0" prefWidth="158.0" text="New Volume Cost:    $">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
-                <Label layoutX="77.0" layoutY="385.0" prefHeight="36.0" prefWidth="208.0" text="Customer Volume Price:       $">
+                <TextField fx:id="volumeTextfield" layoutX="277.0" layoutY="231.0" prefHeight="36.0" prefWidth="150.0" promptText="Enter Cost" />
+                <Label layoutX="432.0" layoutY="231.0" prefHeight="36.0" prefWidth="60.0" text="cm^3">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
-                <TextField fx:id="volumePriceTextfield" layoutX="287.0" layoutY="385.0" prefHeight="36.0" prefWidth="150.0" promptText="Enter Price" />
-                <Label layoutX="442.0" layoutY="385.0" prefHeight="36.0" prefWidth="60.0" text="cm^3">
-                    <font>
-                        <Font name="System Bold" size="15.0" />
-                    </font>
-                </Label>
-                <Label layoutX="77.0" layoutY="249.0" prefHeight="36.0" prefWidth="74.0" text="Duration: ">
-                    <font>
-                        <Font name="System Bold" size="15.0" />
-                    </font>
-                </Label>
-                <TextField fx:id="durationTextfield" layoutX="287.0" layoutY="249.0" prefHeight="36.0" prefWidth="150.0" promptText="Enter Duration" />
-                <Label layoutX="442.0" layoutY="249.0" prefHeight="36.0" prefWidth="60.0" text="hours">
-                    <font>
-                        <Font name="System Bold" size="15.0" />
-                    </font>
-                </Label>
-                <TextField fx:id="originTextfield" layoutX="287.0" layoutY="119.0" prefHeight="36.0" prefWidth="150.0" promptText="Enter Origin" />
-                <TextField fx:id="destinationTextfield" layoutX="287.0" layoutY="162.0" prefHeight="36.0" prefWidth="150.0" promptText="Enter Destination" />
-                <TextField fx:id="companyTextfield" layoutX="287.0" layoutY="206.0" prefHeight="36.0" prefWidth="150.0" promptText="Enter Company" />
-                <Label layoutX="77.0" layoutY="429.0" prefHeight="36.0" prefWidth="208.0" text="Transport Weight Cost:        $">
-                    <font>
-                        <Font name="System Bold" size="15.0" />
-                    </font>
-                </Label>
-                <Label layoutX="77.0" layoutY="472.0" prefHeight="36.0" prefWidth="208.0" text="Transport Volume Cost:       $">
-                    <font>
-                        <Font name="System Bold" size="15.0" />
-                    </font>
-                </Label>
-                <TextField fx:id="weightCostTextfield" layoutX="287.0" layoutY="429.0" prefHeight="36.0" prefWidth="150.0" promptText="Enter Cost" />
-                <TextField fx:id="volumeCostTextfield" layoutX="287.0" layoutY="472.0" prefHeight="36.0" prefWidth="150.0" promptText="Enter Cost" />
-                <Label layoutX="442.0" layoutY="429.0" prefHeight="36.0" prefWidth="74.0" text="per gram">
-                    <font>
-                        <Font name="System Bold" size="15.0" />
-                    </font>
-                </Label>
-                <Label layoutX="442.0" layoutY="472.0" prefHeight="36.0" prefWidth="60.0" text="cm^3">
-                    <font>
-                        <Font name="System Bold" size="15.0" />
-                    </font>
-                </Label>
-            <Label fx:id="errorLabel" alignment="CENTER" layoutX="78.0" layoutY="82.0" prefHeight="36.0" prefWidth="358.0" text="Please Enter the Information" textFill="RED" wrapText="true">
+            <Label fx:id="errorLabel" alignment="CENTER" layoutX="110.0" layoutY="82.0" prefHeight="31.0" prefWidth="355.0" text="Please Enter the Information" textFill="RED">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font></Label>
+            <Label fx:id="notificationLabel" layoutX="228.0" layoutY="280.0" text="Notification" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font></Label>
+            <Label fx:id="orginLabel" layoutX="134.0" layoutY="314.0" prefHeight="31.0" prefWidth="280.0" text="Origin:" />
+            <Label fx:id="destinationLabel" layoutX="134.0" layoutY="345.0" prefHeight="31.0" prefWidth="280.0" text="Destination:" />
+            <Label fx:id="transportFirmLabel" layoutX="134.0" layoutY="376.0" prefHeight="31.0" prefWidth="296.0" text="Transport Firm:" />
+            <Label fx:id="typeLabel" layoutX="134.0" layoutY="407.0" prefHeight="31.0" prefWidth="296.0" text="Priority:" />
+            <Label fx:id="weightPriceLabel" layoutX="134.0" layoutY="438.0" prefHeight="31.0" prefWidth="296.0" text="Old Weight Price:" />
+            <Label fx:id="volumePriceLabel" layoutX="134.0" layoutY="469.0" prefHeight="31.0" prefWidth="296.0" text="Old Volume Price:" />
+            <Label fx:id="durationLabel" layoutX="134.0" layoutY="500.0" prefHeight="31.0" prefWidth="290.0" text="Duration:" />
             </children>
         </AnchorPane>
     </children>

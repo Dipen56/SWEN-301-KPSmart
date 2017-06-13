@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-
-<HBox id="home-hbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" spacing="5.0" styleClass="home-hbox" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SendMailScreenController">
+<?import javafx.scene.text.*?>
+<HBox id="home-hbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" spacing="5.0" styleClass="home-hbox" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BusinessFiguresScreenController">
     <children>
-        <VBox id="home-vbox" prefHeight="490.0" prefWidth="105.0" spacing="3.0" styleClass="home-vbox" stylesheets="@../css/style.css">
+        <VBox id="home-vbox" prefHeight="490.0" prefWidth="105.0" spacing="3.0" styleClass="home-vbox" stylesheets="../css/style.css">
             <children>
                 <AnchorPane prefHeight="76.0" prefWidth="106.0">
                     <children>
@@ -72,96 +68,83 @@
                 </Button>
             </children>
         </VBox>
-        <AnchorPane fx:id="homAnchorpane" prefHeight="490.0" prefWidth="586.0" styleClass="home-anchorpane" stylesheets="@../css/style.css">
+        <AnchorPane id="home-anchorpane" prefHeight="490.0" prefWidth="586.0" styleClass="home-anchorpane" stylesheets="@../css/style.css">
             <children>
-                <Label fx:id="errorLabel" alignment="CENTER" layoutX="17.0" layoutY="75.0" prefHeight="58.0" prefWidth="544.0" text="Please Enter the Information" textFill="RED" wrapText="true">
-                    <font>
-                        <Font name="System Bold" size="16.0" />
-                    </font>
-                </Label>
-                <Label layoutX="150.0" layoutY="143.0" prefHeight="36.0" prefWidth="94.0" text="Origin:" textAlignment="CENTER">
+                <Label layoutX="119.0" layoutY="103.0" prefHeight="36.0" prefWidth="195.0" text="Total Revenue:                   $" textAlignment="CENTER">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
-                <Label layoutX="150.0" layoutY="192.0" prefHeight="36.0" prefWidth="94.0" text="Destination:">
+                <Label layoutX="119.0" layoutY="153.0" prefHeight="36.0" prefWidth="195.0" text="Total Expenditure:             $">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
-                <Label fx:id="weightLabel" layoutX="150.0" layoutY="247.0" prefHeight="36.0" prefWidth="94.0" text="Weight:">
+                <Label layoutX="119.0" layoutY="200.0" prefHeight="36.0" prefWidth="195.0" text="Total Number of Events:   ">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
-                <Label fx:id="volumeLabel" layoutX="150.0" layoutY="298.0" prefHeight="36.0" prefWidth="94.0" text="Volume:">
+                <Label layoutX="119.0" layoutY="251.0" prefHeight="36.0" prefWidth="195.0" text="Total Mail:                          ">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
-                <Label fx:id="priorityLabel" layoutX="150.0" layoutY="349.0" prefHeight="36.0" prefWidth="94.0" text="Priority:">
+                <Label layoutX="119.0" layoutY="302.0" prefHeight="36.0" prefWidth="195.0" text="Average Delivery Times:   ">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
-                <ComboBox fx:id="originCombobox" layoutX="258.0" layoutY="143.0" prefHeight="36.0" prefWidth="150.0" promptText="Select Origin" />
-                <ComboBox fx:id="destinationCombobox" layoutX="258.0" layoutY="192.0" prefHeight="36.0" prefWidth="150.0" promptText="Select Destination" />
-                <TextField fx:id="weightTextfield" layoutX="258.0" layoutY="247.0" prefHeight="36.0" prefWidth="149.0" promptText="Enter Weight " />
-                <Label fx:id="gramsLabel" layoutX="413.0" layoutY="247.0" prefHeight="36.0" prefWidth="71.0" text="gram(s)">
-                    <font>
-                        <Font name="System Bold" size="15.0" />
-                    </font>
-                </Label>
-                <TextField fx:id="volumeTextfield" layoutX="258.0" layoutY="298.0" prefHeight="36.0" prefWidth="149.0" promptText="Enter Volume" />
-                <Label fx:id="cmLabel" layoutX="413.0" layoutY="298.0" prefHeight="36.0" prefWidth="60.0" text="cm^3">
-                    <font>
-                        <Font name="System Bold" size="15.0" />
-                    </font>
-                </Label>
-                <ComboBox fx:id="priorityCombobox" layoutX="258.0" layoutY="349.0" prefHeight="36.0" prefWidth="150.0" promptText="Select Priority" />
-                <Button id="reset" layoutX="239.0" layoutY="540.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="118.0" styleClass="main-button" stylesheets="@../css/style.css" text="Reset" textFill="WHITE">
+                <Button id="exit" layoutX="226.0" layoutY="529.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="discard-button" stylesheets="@../css/style.css" text="Exit" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Button>
-                <Button id="discard" layoutX="371.0" layoutY="540.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="118.0" styleClass="discard-button" stylesheets="@../css/style.css" text="Discard" textFill="WHITE">
-                    <font>
-                        <Font name="System Bold" size="15.0" />
-                    </font>
-                </Button>
-                <Label layoutX="141.0" layoutY="15.0" prefHeight="58.0" prefWidth="204.0" text="Send Mail">
+                <Label layoutX="82.0" layoutY="17.0" prefHeight="58.0" prefWidth="325.0" text="Business Figures">
                     <font>
                         <Font name="System Bold" size="40.0" />
                     </font>
                 </Label>
-                <ImageView fitHeight="87.0" fitWidth="150.0" layoutX="345.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="87.0" fitWidth="150.0" layoutX="405.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../img/mail-delivery.png" />
+                        <Image url="@../img/business-figures.jpg" />
                     </image>
                 </ImageView>
-                <Label fx:id="totalPriceLabel" alignment="CENTER_RIGHT" layoutX="138.0" layoutY="425.0" prefHeight="36.0" prefWidth="137.0" text="Total Price: $">
-                    <font>
-                        <Font name="System Bold" size="20.0" />
-                    </font>
-                </Label>
-                <Label fx:id="priceLabel" layoutX="283.0" layoutY="425.0" prefHeight="36.0" prefWidth="125.0" text="0.00">
-                    <font>
-                        <Font name="System Bold" size="20.0" />
-                    </font>
-                </Label>
-                <Button id="accept" layoutX="103.0" layoutY="540.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="118.0" styleClass="logout-button" stylesheets="@../css/style.css" text="Check Price" textFill="WHITE">
+                <Label layoutX="119.0" layoutY="352.0" prefHeight="36.0" prefWidth="132.0" text="Critical Routes:">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
-                </Button>
-            <Label fx:id="totalCostLabel" alignment="CENTER_RIGHT" layoutX="127.0" layoutY="468.0" prefHeight="30.0" prefWidth="149.0" text="Total Cost: $">
+                </Label>
+                <Label fx:id="revenueLabel" layoutX="319.0" layoutY="103.0" prefHeight="36.0" prefWidth="149.0" text="0.00">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </Label>
+                <Label fx:id="expenditureLabel" layoutX="319.0" layoutY="153.0" prefHeight="36.0" prefWidth="149.0" text="0.00">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </Label>
+                <Label fx:id="numberEventLabel" layoutX="319.0" layoutY="200.0" prefHeight="36.0" prefWidth="149.0" text="0.00">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </Label>
+                <Label fx:id="totalMailLabel" layoutX="319.0" layoutY="251.0" prefHeight="36.0" prefWidth="149.0" text="0.00">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </Label>
+                <Label fx:id="averageDeliveryLabel" layoutX="319.0" layoutY="302.0" prefHeight="36.0" prefWidth="149.0" text="0.00">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </Label>
+                <ListView fx:id="criticalRoutesListView" layoutX="119.0" layoutY="395.0" prefHeight="109.0" prefWidth="314.0" />
+                <ScrollBar layoutX="419.0" layoutY="400.0" orientation="VERTICAL" />
+            <Label layoutX="364.0" layoutY="310.0" text="Hours">
                <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="costLabel" layoutX="283.0" layoutY="470.0" prefHeight="26.0" prefWidth="125.0" text="0.00">
-               <font>
-                  <Font name="System Bold" size="20.0" />
+                  <Font name="System Bold" size="15.0" />
                </font>
             </Label>
             </children>

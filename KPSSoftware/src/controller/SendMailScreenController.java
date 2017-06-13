@@ -72,31 +72,31 @@ public class SendMailScreenController implements Initializable {
     public void changeScenes(ActionEvent event) throws IOException {
 
         if (event.toString().contains("routeDiscontinue")) {
-            Parent routeDiscontinueScreen = FXMLLoader.load(SendMailScreenController.class.getResource("/fxml/route discontinue screen.fxml"));
+            Parent routeDiscontinueScreen = FXMLLoader.load(SendMailScreenController.class.getResource("/fxml/RouteDiscontinueScreen.fxml"));
             Scene routeDiscontinueScene = new Scene(routeDiscontinueScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(routeDiscontinueScene);
             tempStage.show();
         } else if (event.toString().contains("customerPriceUpdate")) {
-            Parent priceUpdateScreen = FXMLLoader.load(SendMailScreenController.class.getResource("/fxml/price update screen.fxml"));
+            Parent priceUpdateScreen = FXMLLoader.load(SendMailScreenController.class.getResource("/fxml/PriceUpdateScreen.fxml"));
             Scene priceUpdateScene = new Scene(priceUpdateScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(priceUpdateScene);
             tempStage.show();
         } else if (event.toString().contains("transportCostUpdate")) {
-            Parent transportCostUpdateScreen = FXMLLoader.load(SendMailScreenController.class.getResource("/fxml/transport cost screen.fxml"));
+            Parent transportCostUpdateScreen = FXMLLoader.load(SendMailScreenController.class.getResource("/fxml/TransportCostScreen.fxml"));
             Scene transportCostUpdateScene = new Scene(transportCostUpdateScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(transportCostUpdateScene);
             tempStage.show();
         } else if (event.toString().contains("newRoute")) {
-            Parent newRouteScreen = FXMLLoader.load(SendMailScreenController.class.getResource("/fxml/new route screen.fxml"));
+            Parent newRouteScreen = FXMLLoader.load(SendMailScreenController.class.getResource("/fxml/NewRouteScreen.fxml"));
             Scene newRouteScene = new Scene(newRouteScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(newRouteScene);
             tempStage.show();
         } else if (event.toString().contains("businessFigures")) {
-            Parent businessFiguresScreen = FXMLLoader.load(SendMailScreenController.class.getResource("/fxml/business figures screen.fxml"));
+            Parent businessFiguresScreen = FXMLLoader.load(SendMailScreenController.class.getResource("/fxml/BusinessFiguresScreen.fxml"));
             Scene businessFiguresScene = new Scene(businessFiguresScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(businessFiguresScene);
@@ -106,7 +106,7 @@ public class SendMailScreenController implements Initializable {
         } else if (event.toString().contains("logout")) {
             //TODO; POP up dialog box to ask the user if they are sure want to logout
             //DialogBox.LogoutyMsg("Logout", "Are you sure you want to logout.");
-            Parent loginScreen = FXMLLoader.load(SendMailScreenController.class.getResource("/fxml/login screen.fxml"));
+            Parent loginScreen = FXMLLoader.load(SendMailScreenController.class.getResource("/fxml/LoginScreen.fxml"));
             Scene loginScene = new Scene(loginScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(loginScene);
@@ -231,7 +231,7 @@ public class SendMailScreenController implements Initializable {
     private void clearContent(ActionEvent event) {
         Parent sendMailScreen = null;
         try {
-            sendMailScreen = FXMLLoader.load(SendMailScreenController.class.getResource("/fxml/send mail screen.fxml"));
+            sendMailScreen = FXMLLoader.load(SendMailScreenController.class.getResource("/fxml/SendMailScreen.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -245,7 +245,7 @@ public class SendMailScreenController implements Initializable {
     private void returnHome(ActionEvent event) {
         Parent homescreen = null;
         try {
-            homescreen = FXMLLoader.load(SendMailScreenController.class.getResource("/fxml/home screen.fxml"));
+            homescreen = FXMLLoader.load(SendMailScreenController.class.getResource("/fxml/HomeScreen.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }

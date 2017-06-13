@@ -20,6 +20,18 @@ Things to do:
 
 Angelo's Finds:
 
-1) Customer price update, Duniden to christchurch, New weight cost:-sfsefesf New Volume Cost: -1312312.
+1) Customer price update, Duniden to christchurch, 
+New weight cost:-sfsefesf New Volume Cost: -1312312.
+New weight cost:-654 New Volume Cost:-5616
 Says: "Please fill in all information", should be invalid information.
+
+2) Transport cost price update, Duniden to christchurch, 
+New weight cost:-sfsefesf New Volume Cost: -1312312.
+New weight cost:-654 New Volume Cost:-5616
+Says: "Please fill in all information", should be invalid information.
+
+2) Create new rote,
+Same issue as above two, if garbage values are added in.
+Says: "Please fill in all information", should be invalid information.
+
 

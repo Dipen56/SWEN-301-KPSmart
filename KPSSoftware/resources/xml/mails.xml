@@ -7,6 +7,7 @@
         <weight>2500.0</weight>
         <volume>3000.0</volume>
         <priority>Domestic Standard</priority>
+        <routes>5</routes>
     </Mail>
     <Mail id="2">
         <originId>7</originId>
@@ -14,6 +15,7 @@
         <weight>6200.0</weight>
         <volume>30000.0</volume>
         <priority>International Standard</priority>
+        <routes>5,9,11,13</routes>
     </Mail>
     <Mail id="3">
         <originId>7</originId>
@@ -21,6 +23,7 @@
         <weight>99000.0</weight>
         <volume>10000.0</volume>
         <priority>International Air</priority>
+        <routes>5,7,10</routes>
     </Mail>
     <Mail id="4">
         <originId>1</originId>
@@ -28,6 +31,7 @@
         <weight>500.0</weight>
         <volume>100.0</volume>
         <priority>International Air</priority>
+        <routes>7</routes>
     </Mail>
     <Mail id="5">
         <originId>6</originId>
@@ -35,5 +39,6 @@
         <weight>8800.0</weight>
         <volume>8800.0</volume>
         <priority>Domestic Standard</priority>
+        <routes>6</routes>
     </Mail>
 </Mails>

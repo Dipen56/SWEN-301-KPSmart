@@ -22,9 +22,11 @@ import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * This class represent a XML writer/reader.
@@ -595,7 +597,7 @@ public class XMLDriver {
         String weight = String.valueOf(mail.getWeight());
         String volume = String.valueOf(mail.getVolume());
         String priority = mail.getPriority().toString();
-
+        String routes = mail.getRoutes().stream().map(route -> String.valueOf(route.id)).collect(Collectors.joining(","));
 
         // Update the maxID
         document.getRootElement().addAttribute("maxId", id);
@@ -611,6 +613,7 @@ public class XMLDriver {
         attachChildNode(newMail, "weight", weight);
         attachChildNode(newMail, "volume", volume);
         attachChildNode(newMail, "priority", priority);
+        attachChildNode(newMail, "routes", routes);
 
         mails.add(newMail);
 
@@ -624,6 +627,7 @@ public class XMLDriver {
      * @return a Map of mails where the key is mail id, and the value is the Mail object
      */
     public static Map<Integer, Mail> readMails() {
+        Map<Integer, Route> routesMap = readRoutes();
         Map<Integer, Mail> mails = new HashMap<>();
 
         // read from XML file to get the existing mails
@@ -646,6 +650,13 @@ public class XMLDriver {
             Priority priority = Priority.createPriorityFrom(node.valueOf("./priority"));
 
             Mail mail = new Mail(id, origin, destination, weight, volume, priority);
+
+            List<Route> routes = Arrays.stream(node.valueOf("./routes").split(","))
+                    .map(idString -> routesMap.get(Integer.parseInt(idString)))
+                    .collect(Collectors.toList());
+
+            mail.setRoutes(routes);
+
             mails.put(id, mail);
         });
 

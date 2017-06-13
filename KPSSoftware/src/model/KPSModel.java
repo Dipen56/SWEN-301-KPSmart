@@ -17,17 +17,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/*
-TODO: consider another approach for implementing Database TRANSACTION:
-      1. record all of results in each step, e.g. bool_1, bool_2, bool_3, ...
-      2. if (!(bool_1 && bool_2 && bool_3 ... )) {
-             reloadEverythingFromXML();
-             return false;
-         } else {
-             return true;
-         }
- */
-
 /**
  * This class is a wrapper class that contains all model objects
  *
@@ -40,7 +29,6 @@ public class KPSModel {
 
     private RoutingSystem routingSystem;
 
-
     // ================ fields for maintaining programme status =====================
 
     private Staff currentStaff;
@@ -50,7 +38,6 @@ public class KPSModel {
     private int maxMailId;
     private int maxRouteId;
     private int maxStaffId;
-
 
     // ================= cached data (data from XML files) ======================
 
@@ -89,12 +76,11 @@ public class KPSModel {
     public KPSModel() {
         loadDataFromXML();
         routingSystem = new RoutingSystem(routes);
-
-        // This isn't quite sound, but it's a workaround
-        findRoutesForMailsInSystem();
-
         prepareRoutingSystem();
         prepareOriginsAndDestinations();
+
+        // Just a diagnosis
+        checkValidityForRoutesOfAllMails();
     }
 
     // ============================================================
@@ -700,18 +686,14 @@ public class KPSModel {
     }
 
     /**
-     * Prepare the mails, so they have the correct routes assigned for them.
-     *
-     * NOTE: doing this is not realistic, because an existing mail may have no valid routes any more if we delete routes.
-     * But it should be working properly if the fake data we populated in xmls are correct.
+     * Check the validity of all mails, so they won't contain malformed route chain.
+     * <p>
+     * NOTE: doing this cannot prevent all errors in reality. It's merely just a diagnosis process. But the system
+     * should be working properly if the fake data we prepared in XMLs has no errors in them.
      */
-    private void findRoutesForMailsInSystem() {
+    private void checkValidityForRoutesOfAllMails() {
         mails.values().forEach(mail -> {
-            List<Route> routes = routingSystem.findRoutes(mail);
-
-            if (isValidRouteChain(routes)) {
-                mail.setRoutes(routes);
-            } else {
+            if (!isValidRouteChain(mail.getRoutes())) {
                 System.err.println("[ERROR]There is a mail (id: " + mail.id + ") in the database (mails.xml file) that the system cannot find valid routes for it.");
             }
         });

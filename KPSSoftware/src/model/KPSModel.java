@@ -13,6 +13,7 @@ import model.route.RouteType;
 import model.route.RoutingSystem;
 import model.staff.Staff;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -172,7 +173,7 @@ public class KPSModel {
         Location destination = findOrCreateLocationByString(destinationString);
 
         maxMailId++;
-        Mail mail = new Mail(maxMailId, origin, destination, weight, volume, priority);
+        Mail mail = new Mail(maxMailId, origin, destination, weight, volume, priority, LocalDate.now());
 
         // let the routing system try to find a valid chain of routes
         List<Route> routes = routingSystem.findRoutes(mail);
@@ -219,50 +220,6 @@ public class KPSModel {
      */
     public Mail getMailById(int id) {
         return this.mails.get(id);
-    }
-
-    /**
-     * @param id the id of mail that we want to get revenue from
-     * @return the revenue of the mail, or -1 if the given id is not in our system.
-     */
-    public double getMailRevenue(int id) {
-        Mail mail = getMailById(id);
-
-        if (mail == null) {
-            return -1;
-        }
-
-        return mail.getRevenue();
-    }
-
-    /**
-     * @param id the id of mail that we want to get expenditure from
-     * @return the expenditure of the mail, or -1 if the given id is not in our system.
-     */
-    public double getMailExpenditure(int id) {
-        Mail mail = getMailById(id);
-
-        if (mail == null) {
-            return -1;
-        }
-
-        return mail.getExpenditure();
-    }
-
-    /**
-     * @param tempMail the the temporary mail (not recorded from the system) that we want to get revenue from
-     * @return the revenue of the mail
-     */
-    public double getTempMailRevenue(Mail tempMail) {
-        return tempMail.getRevenue();
-    }
-
-    /**
-     * @param tempMail the temporary mail (not recorded from the system) that we want to get expenditure from
-     * @return the expenditure of the mail, or -1 if the given id is not in our system.
-     */
-    public double getTempMailExpenditure(Mail tempMail) {
-        return tempMail.getExpenditure();
     }
 
     /**
@@ -325,6 +282,76 @@ public class KPSModel {
         });
 
         return wantedMails;
+    }
+
+    /**
+     * Find all mails within the given date range.
+     *
+     * @param startDate wanted start date
+     * @param endDate   wanted end date
+     * @return wanted mails as a map, where the key is the id of the Mail, and the value is the Mail object
+     */
+    public Map<Integer, Mail> getMailsByStartAndEndTime(LocalDate startDate, LocalDate endDate) {
+        // end date cannot be before start data
+        if (endDate.isBefore(startDate)) {
+            return null;
+        }
+
+        Map<Integer, Mail> wantedMails = new HashMap<>();
+
+        this.mails.forEach((id, mail) -> {
+            LocalDate deliveryDate = mail.getDeliveryDate();
+
+            if (!startDate.isAfter(deliveryDate) && !endDate.isBefore(deliveryDate)) {
+                wantedMails.put(mail.id, mail);
+            }
+        });
+
+        return wantedMails;
+    }
+
+    /**
+     * @param id the id of mail that we want to get revenue from
+     * @return the revenue of the mail, or -1 if the given id is not in our system.
+     */
+    public double getMailRevenue(int id) {
+        Mail mail = getMailById(id);
+
+        if (mail == null) {
+            return -1;
+        }
+
+        return mail.getRevenue();
+    }
+
+    /**
+     * @param id the id of mail that we want to get expenditure from
+     * @return the expenditure of the mail, or -1 if the given id is not in our system.
+     */
+    public double getMailExpenditure(int id) {
+        Mail mail = getMailById(id);
+
+        if (mail == null) {
+            return -1;
+        }
+
+        return mail.getExpenditure();
+    }
+
+    /**
+     * @param tempMail the the temporary mail (not recorded from the system) that we want to get revenue from
+     * @return the revenue of the mail
+     */
+    public double getTempMailRevenue(Mail tempMail) {
+        return tempMail.getRevenue();
+    }
+
+    /**
+     * @param tempMail the temporary mail (not recorded from the system) that we want to get expenditure from
+     * @return the expenditure of the mail, or -1 if the given id is not in our system.
+     */
+    public double getTempMailExpenditure(Mail tempMail) {
+        return tempMail.getExpenditure();
     }
 
     /**

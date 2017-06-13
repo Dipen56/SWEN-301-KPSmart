@@ -7,6 +7,7 @@
         <weight>2500.0</weight>
         <volume>3000.0</volume>
         <priority>Domestic Standard</priority>
+        <deliveryDate>2016-04-03</deliveryDate>
         <routes>5</routes>
     </Mail>
     <Mail id="2">
@@ -15,6 +16,7 @@
         <weight>6200.0</weight>
         <volume>3000.0</volume>
         <priority>International Standard</priority>
+        <deliveryDate>2016-04-17</deliveryDate>
         <routes>5,9,11,13</routes>
     </Mail>
     <Mail id="3">
@@ -23,6 +25,7 @@
         <weight>500.0</weight>
         <volume>100.0</volume>
         <priority>International Air</priority>
+        <deliveryDate>2017-01-01</deliveryDate>
         <routes>5,7,10</routes>
     </Mail>
     <Mail id="4">
@@ -31,6 +34,7 @@
         <weight>500.0</weight>
         <volume>300.0</volume>
         <priority>International Air</priority>
+        <deliveryDate>2017-02-02</deliveryDate>
         <routes>7</routes>
     </Mail>
     <Mail id="5">
@@ -39,6 +43,7 @@
         <weight>2800.0</weight>
         <volume>2800.0</volume>
         <priority>Domestic Standard</priority>
+        <deliveryDate>2017-03-03</deliveryDate>
         <routes>6</routes>
     </Mail>
 </Mails>

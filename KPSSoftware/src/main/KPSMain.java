@@ -429,6 +429,7 @@ public class KPSMain {
 
         double averageRevenue = totalRevenue / numMails;
         double averageCost = totalCost / numMails;
+
     }
 
     /**

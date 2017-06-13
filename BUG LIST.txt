@@ -1,14 +1,7 @@
 //update price screen
-2. correct decimal place thing from the input
-3.somethign is wronge with the way the prices are updated
+2. correct decimal place thing from the input   # What's this??? -- hecktar
 //update transport screen
 1. do we need frequce of the transport ???? currently i think we only have the duration
-2.the number are not changing right 
-3. need to check xml too
-//create new Route Screen
-1. need check that the regex is working
-
-
 
 ==============================
 Things to do:

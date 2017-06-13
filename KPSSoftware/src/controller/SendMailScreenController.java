@@ -124,11 +124,11 @@ public class SendMailScreenController implements Initializable {
 
             String origin = originCombobox.getValue();
             String destination = destinationCombobox.getValue();
-            String weightString = weightTextfield.getText();
-            String volumeString = volumeTextfield.getText();
+            String weightString = weightTextfield.getText().trim();
+            String volumeString = volumeTextfield.getText().trim();
             String priorityString = priorityCombobox.getValue();
 
-            if (origin == null || destination == null || weightString == null || volumeString == null || priorityString == null) {
+            if (origin == null || destination == null || weightString.equals("") || volumeString.equals("") || priorityString == null) {
                 errorLabel.setText("Please fill in all the Information");
                 return;
             }
@@ -140,15 +140,9 @@ public class SendMailScreenController implements Initializable {
 
             double weight = Double.parseDouble(weightString);
             double volume = Double.parseDouble(volumeString);
-
-            if (weight <= 0 || volume <= 0) {
-                errorLabel.setText("Weight or volume cannot be negative");
-                return;
-            }
-
             Priority priority = Priority.createPriorityFrom(priorityString);
 
-            tempMail = kpsMain.processMail(origin, destination, weight, volume, priority);
+            tempMail = kpsMain.processMail(origin.trim(), destination.trim(), weight, volume, priority);
 
             if (tempMail != null) {
                 errorLabel.setText("Please confirm to send this mail");

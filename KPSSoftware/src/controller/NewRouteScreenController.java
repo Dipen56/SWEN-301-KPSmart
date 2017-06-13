@@ -34,7 +34,7 @@ public class NewRouteScreenController implements Initializable {
     @FXML
     private Button reviewLogsButton;
     @FXML
-    private ComboBox typeCombobox;
+    private ComboBox<String> typeCombobox;
     @FXML
     private TextField weightPriceTextfield;
     @FXML
@@ -120,31 +120,42 @@ public class NewRouteScreenController implements Initializable {
      */
     public void handleButtons(ActionEvent event) {
         if (event.toString().contains("accept")) {
-            //TODO: Test all these cases
-            if (!originTextfield.getText().matches("[a-zA-Z]+")
-                    || !destinationTextfield.getText().matches("[a-zA-Z]+")
-                    || companyTextfield.getText().equals("")
-                    || !durationTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?")
-                    || !weightPriceTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?")
-                    || !volumePriceTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?")
-                    || !weightCostTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?")
-                    || !volumeCostTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?")
-                    || typeCombobox.getValue()==null) {
-                errorLabel.setText("Please Fill in all the Information");
-            }else{
-                //TODO: i could add a way to check for 2dp but we need to...
-                String origin = originTextfield.getText();
-                String destination= destinationTextfield.getText();
-                RouteType type = RouteType.valueOf((String)typeCombobox.getValue());
-                double duration = Double.parseDouble(durationTextfield.getText());
-                String firm= companyTextfield.getText();
-                double pricePerGram = Double.parseDouble(weightPriceTextfield.getText());
-                double pricePerVolume = Double.parseDouble(volumePriceTextfield.getText());
-                double costPerGram = Double.parseDouble(weightCostTextfield.getText());
-                double costPerVolume = Double.parseDouble(volumeCostTextfield.getText());
-                kpsMain.addRoute(origin,destination,type,duration,firm,pricePerGram,pricePerVolume,costPerGram,costPerVolume);
-                errorLabel.setText("New Route Successfully Created");
+
+            String origin = originTextfield.getText().trim();
+            String destination = destinationTextfield.getText().trim();
+            String transportCompany = companyTextfield.getText().trim();
+            String durationString = durationTextfield.getText().trim();
+            String typeString = typeCombobox.getValue();
+            String WeightPriceString = weightPriceTextfield.getText().trim();
+            String VolumePriceString = volumePriceTextfield.getText().trim();
+            String WeightCostString = weightCostTextfield.getText().trim();
+            String VolumeCostString = volumeCostTextfield.getText().trim();
+
+            if (origin.equals("") || destination.equals("") || transportCompany.equals("") || durationString.equals("")
+                    || typeString == null || WeightPriceString.equals("") || VolumePriceString.equals("")
+                    || WeightCostString.equals("") || VolumeCostString.equals("")) {
+                errorLabel.setText("Please fill in all the fields");
+                return;
             }
+
+            if (!WeightPriceString.matches("[0-9]{1,13}(\\.[0-9]*)?")
+                    || !VolumePriceString.matches("[0-9]{1,13}(\\.[0-9]*)?")
+                    || !WeightCostString.matches("[0-9]{1,13}(\\.[0-9]*)?")
+                    || !VolumeCostString.matches("[0-9]{1,13}(\\.[0-9]*)?")
+                    || !durationString.matches("[0-9]{1,13}(\\.[0-9]*)?")) {
+                errorLabel.setText("Please fill in valid numbers for price, cost or duration");
+                return;
+            }
+
+            double WeightPrice = Double.parseDouble(WeightPriceString);
+            double VolumePrice = Double.parseDouble(VolumePriceString);
+            double WeightCost = Double.parseDouble(WeightCostString);
+            double VolumeCost = Double.parseDouble(VolumeCostString);
+            double duration = Double.parseDouble(durationString);
+            RouteType type = RouteType.createFromString(typeString);
+
+            kpsMain.addRoute(origin, destination, type, duration, transportCompany, WeightPrice, VolumePrice, WeightCost, VolumeCost);
+            errorLabel.setText("New Route Successfully Created");
 
         } else if (event.toString().contains("reset")) {
             clearContent(event);

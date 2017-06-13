@@ -31,7 +31,7 @@ public class RouteDiscontinueScreenController implements Initializable {
     @FXML
     private Button reviewLogsButton;
     @FXML
-    private ComboBox routeCombobox;
+    private ComboBox<String> routeCombobox;
     @FXML
     private ImageView avatar;
     @FXML
@@ -158,10 +158,8 @@ public class RouteDiscontinueScreenController implements Initializable {
             reviewLogsButton.setDisable(false);
         }
         for (Integer i : kpsMain.getAllRoutes().keySet()) {
-            Route root = kpsMain.getAllRoutes().get(i);
-            if (root.isActive()) {
-                routeCombobox.getItems().add(root.id + " " + root.getStartLocation().getLocationName() + " ->" + root.getEndLocation().getLocationName() + " : " + root.routeType.toString());
-            }
+            Route route = kpsMain.getAllRoutes().get(i);
+            routeCombobox.getItems().add(route.id + " " + route.getStartLocation().getLocationName() + " ->" + route.getEndLocation().getLocationName() + " : " + route.routeType.toString());
         }
         notificationLabel.setVisible(false);
         affectedOriginLabel.setVisible(false);

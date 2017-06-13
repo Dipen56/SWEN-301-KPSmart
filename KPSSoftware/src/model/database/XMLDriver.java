@@ -843,7 +843,7 @@ public class XMLDriver {
         String duration = String.valueOf(route.getDuration());
         String transportFirm = route.getTransportFirm();
         String pricePerGram = String.valueOf(route.getPricePerGram());
-        String pricePerVolume = String.valueOf(route.getCostPerVolume());
+        String pricePerVolume = String.valueOf(route.getPricePerVolume());
         String costPerGram = String.valueOf(route.getCostPerGram());
         String costPerVolume = String.valueOf(route.getCostPerVolume());
         String isActive = String.valueOf(route.isActive());

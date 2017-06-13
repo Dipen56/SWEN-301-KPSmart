@@ -32,7 +32,7 @@ public class TransportCostScreenController implements Initializable {
     @FXML
     private Button reviewLogsButton;
     @FXML
-    private ComboBox routeCombobox;
+    private ComboBox<String> routeCombobox;
     @FXML
     private Label errorLabel;
     @FXML
@@ -46,9 +46,9 @@ public class TransportCostScreenController implements Initializable {
     @FXML
     private Label typeLabel;
     @FXML
-    private Label weightPriceLabel;
+    private Label weightCostLabel;
     @FXML
-    private Label volumePriceLabel;
+    private Label volumeCostLabel;
     @FXML
     private Label durationLabel;
     @FXML
@@ -127,17 +127,17 @@ public class TransportCostScreenController implements Initializable {
                     || (!volumeTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(volumeTextfield.getText()) < 0)) {
                 errorLabel.setText("Please Fill in all the Information");
             } else {
-                String[] selectdText = ((String) routeCombobox.getValue()).split(" ");
+                String[] selectdText = (routeCombobox.getValue()).split(" ");
 
                 int routeID = Integer.parseInt(selectdText[0]);
                 Route route = kpsMain.getRoute(routeID);
-                double oldWeightPrice = route.getPricePerGram();
-                double oldVolumePrice = route.getCostPerVolume();
+                double oldWeightCost = route.getCostPerGram();
+                double oldVolumeCost = route.getCostPerVolume();
                 double weightCost = Double.parseDouble(weightTextfield.getText());
                 double volumeCost = Double.parseDouble(volumeTextfield.getText());
                 kpsMain.updateRouteTransportCost(routeID, weightCost, volumeCost);
-                errorLabel.setText("Customer price was successfully updated");
-                transportPriceUpdateNotification(route, oldWeightPrice, oldVolumePrice);
+                errorLabel.setText("Transport cost was successfully updated");
+                transportCostUpdateNotification(route, oldWeightCost, oldVolumeCost);
             }
         } else if (event.toString().contains("reset")) {
             clearContent(event);
@@ -164,18 +164,16 @@ public class TransportCostScreenController implements Initializable {
             reviewLogsButton.setDisable(false);
         }
         for (Integer i : kpsMain.getAllRoutes().keySet()) {
-            Route root = kpsMain.getAllRoutes().get(i);
-            if (root.isActive()) {
-                routeCombobox.getItems().add(root.id + " " + root.getStartLocation().getLocationName() + " ->" + root.getEndLocation().getLocationName() + " : " + root.routeType.toString());
-            }
+            Route route = kpsMain.getAllRoutes().get(i);
+            routeCombobox.getItems().add(route.id + " " + route.getStartLocation().getLocationName() + " ->" + route.getEndLocation().getLocationName() + " : " + route.routeType.toString());
         }
         notificationLabel.setVisible(false);
         orginLabel.setVisible(false);
         destinationLabel.setVisible(false);
         transportFirmLabel.setVisible(false);
         typeLabel.setVisible(false);
-        weightPriceLabel.setVisible(false);
-        volumePriceLabel.setVisible(false);
+        weightCostLabel.setVisible(false);
+        volumeCostLabel.setVisible(false);
         durationLabel.setVisible(false);
 
 
@@ -208,12 +206,12 @@ public class TransportCostScreenController implements Initializable {
         tempStage.show();
     }
 
-    private void transportPriceUpdateNotification(Route route, double oldWeightPrice, double oldVolumePrice) {
+    private void transportCostUpdateNotification(Route route, double oldWeightCost, double oldVolumeCost) {
         orginLabel.setText("Affected Origin: " + route.getStartLocation().getLocationName());
         destinationLabel.setText("Affected Destination: " + route.getEndLocation().getLocationName());
         typeLabel.setText("Type: " + route.routeType.toString());
-        weightPriceLabel.setText("Old Weight Price: $" + String.format("%.2f", oldWeightPrice) + " New Price: $" + String.format("%.2f", route.getPricePerGram()));
-        volumePriceLabel.setText("Old Volume Price: $" + String.format("%.2f", oldVolumePrice) + " New Price: $" + String.format("%.2f", route.getPricePerVolume()));
+        weightCostLabel.setText("Old Weight Cost: $" + String.format("%.2f", oldWeightCost) + " New Cost: $" + String.format("%.2f", route.getCostPerGram()));
+        volumeCostLabel.setText("Old Volume Cost: $" + String.format("%.2f", oldVolumeCost) + " New Cost: $" + String.format("%.2f", route.getCostPerVolume()));
         transportFirmLabel.setText("Transport Firm: " + route.getTransportFirm());
         durationLabel.setText("Duration "+ route.getDuration()+" Hours");
         notificationLabel.setVisible(true);
@@ -222,8 +220,8 @@ public class TransportCostScreenController implements Initializable {
         typeLabel.setVisible(true);
         transportFirmLabel.setVisible(true);
         durationLabel.setVisible(true);
-        weightPriceLabel.setVisible(true);
-        volumePriceLabel.setVisible(true);
+        weightCostLabel.setVisible(true);
+        volumeCostLabel.setVisible(true);
     }
 
     /**

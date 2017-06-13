@@ -711,10 +711,9 @@ public class KPSModel {
 
             if (isValidRouteChain(routes)) {
                 mail.setRoutes(routes);
+            } else {
+                System.err.println("[ERROR]There is a mail (id: " + mail.id + ") in the database (mails.xml file) that the system cannot find valid routes for it.");
             }
-
-            System.out.println("Found routes for mail (id: " + mail.id + ", routes: ");
-            routes.forEach(System.out::println);
         });
     }
 

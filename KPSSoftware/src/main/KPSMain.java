@@ -252,6 +252,27 @@ public class KPSMain {
         return kpsModel.getCriticalMails();
     }
 
+    public double getTotalRevenue() {
+        return kpsModel.calculateTotalRevenue(kpsModel.getAllMails());
+    }
+
+    public double getTotalExpenditure() {
+        return kpsModel.calculateTotalExpenditure(kpsModel.getAllMails());
+    }
+
+    public Map<Integer, Event> getAllEvens() {
+        return kpsModel.getAllEvens();
+    }
+
+    public Map<Integer, Mail> getAllMails() {
+        return kpsModel.getAllMails();
+    }
+
+    public double getAverageDeliveryTime(String origin, String destination, Priority priority) {
+        return kpsModel.calculateAverageDeliveryTime(origin, destination, priority);
+    }
+
+
     /**
      * =================================================================================================================
      * END

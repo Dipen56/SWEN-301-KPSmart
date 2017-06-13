@@ -113,15 +113,18 @@ public class RouteDiscontinueScreenController implements Initializable {
     public void handleButtons(ActionEvent event) {
         if (event.toString().contains("accept")) {
             //this is view button in the gui
-            if (routeCombobox.getValue() != null) {
-                String[] selectdText = ((String) routeCombobox.getValue()).split(" ");
+            String selectedItem = routeCombobox.getValue();
 
-                int routeID = Integer.parseInt(selectdText[0]);
+            if (selectedItem == null) {
+                return;
+            }
 
-                Route route = kpsMain.getRoute(routeID);
-                if (route != null) {
-                    discontinueNotification(route);
-                }
+            String[] selectedText = selectedItem.split(" ");
+            int routeID = Integer.parseInt(selectedText[0]);
+
+            Route route = kpsMain.getRoute(routeID);
+            if (route != null) {
+                discontinueNotification(route);
             }
 
         } else if (event.toString().contains("reset")) {
@@ -130,8 +133,14 @@ public class RouteDiscontinueScreenController implements Initializable {
         } else if (event.toString().contains("discard")) {
             returnHome(event);
         } else if (event.toString().contains("discontinueButton")) {
-            String[] selectdText = ((String) routeCombobox.getValue()).split(" ");
-            int routeID = Integer.parseInt(selectdText[0]);
+            String selectedItem = routeCombobox.getValue();
+
+            if (selectedItem == null) {
+                return;
+            }
+
+            String[] selectedText = selectedItem.split(" ");
+            int routeID = Integer.parseInt(selectedText[0]);
             kpsMain.deactivateRoute(routeID);
             Route route = kpsMain.getRoute(routeID);
 

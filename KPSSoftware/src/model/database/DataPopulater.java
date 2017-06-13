@@ -21,12 +21,24 @@ import java.time.LocalDateTime;
  */
 public class DataPopulater {
 
+    /**
+     * Constructor
+     */
     public DataPopulater() {
+    }
+
+    /**
+     * Populate something for me so I can play with it will ya?
+     */
+    public void populateSomethingForMeWillYa() {
         populateStaffs();
         populateLocationsAndRoutesAndMails();
         populateEvents();
     }
 
+    /**
+     * Writes some fake data into staffs.xml
+     */
     private void populateStaffs() {
         Staff staff_1 = new Staff(1, "John", "test123", false, "John",
                 "Smith", "jsmith@email.com", "123 456 7890");
@@ -43,6 +55,9 @@ public class DataPopulater {
         XMLDriver.writeStaff(staff_4);
     }
 
+    /**
+     * Writes some fake data into locations.xml, routes.xml, and mails.xml
+     */
     private void populateLocationsAndRoutesAndMails() {
 
         // ================= populate locations ============================
@@ -121,6 +136,9 @@ public class DataPopulater {
         XMLDriver.writeMail(mail_5);
     }
 
+    /**
+     * Writes some fake data into events.xml
+     */
     private void populateEvents() {
         CustomerPriceUpdateEvent cpuEvent = new CustomerPriceUpdateEvent(1, 1, LocalDateTime.now(), 1, 1.0f, 0.5f, 1.2f, 0.7f);
         TransportCostUpdateEvent tcuEvent = new TransportCostUpdateEvent(2, 2, LocalDateTime.now(), 2, 1.2f, 0.8f, 1.1f, 0.6f);

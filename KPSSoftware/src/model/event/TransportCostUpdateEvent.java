@@ -94,11 +94,11 @@ public class TransportCostUpdateEvent extends Event {
     @Override
     public String toString() {
         return "TransportCostUpdateEvent{" +
-                super.toString() +
+                "id=" + id +
                 ", routeId=" + routeId +
                 ", oldCostPerGram=" + oldCostPerGram +
-                ", newCostPerGram=" + newCostPerGram +
                 ", oldCostPerVolume=" + oldCostPerVolume +
+                ", newCostPerGram=" + newCostPerGram +
                 ", newCostPerVolume=" + newCostPerVolume +
                 "}";
     }

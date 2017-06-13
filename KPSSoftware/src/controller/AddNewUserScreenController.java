@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Dipen on 25/05/2017.
  */
-public class AddNewUserController implements Initializable {
+public class AddNewUserScreenController implements Initializable {
     private static KPSMain kpsMain;
     @FXML
     private Label userLable;
@@ -47,7 +47,7 @@ public class AddNewUserController implements Initializable {
     @FXML
     private CheckBox clerkCheckBox;
 
-    public AddNewUserController() {
+    public AddNewUserScreenController() {
         KPSMain.setLoginScreenController(this);
     }
 
@@ -59,13 +59,13 @@ public class AddNewUserController implements Initializable {
      */
     public void changeScenes(ActionEvent event) throws IOException {
         if (event.toString().contains("ChangePassword")) {
-            Parent changePasswordScreen = FXMLLoader.load(AddNewUserController.class.getResource("/fxml/ChangePassword.fxml"));
+            Parent changePasswordScreen = FXMLLoader.load(AddNewUserScreenController.class.getResource("/fxml/ChangePasswordScreen.fxml"));
             Scene changePasswordScene = new Scene(changePasswordScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(changePasswordScene);
             tempStage.show();
         } else if (event.toString().contains("ManageUser")) {
-            Parent manageUserScreen = FXMLLoader.load(AddNewUserController.class.getResource("/fxml/manage user.fxml"));
+            Parent manageUserScreen = FXMLLoader.load(AddNewUserScreenController.class.getResource("/fxml/ManageUserScreen.fxml"));
             Scene manageUserScene = new Scene(manageUserScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(manageUserScene);
@@ -74,7 +74,7 @@ public class AddNewUserController implements Initializable {
         } else if (event.toString().contains("logout")) {
             //TODO; POP up dialog box to ask the user if they are sure want to logout
             DialogBox.LogoutyMsg("Logout", "Are you sure to logout?");
-            Parent loginScreen = FXMLLoader.load(AddNewUserController.class.getResource("/fxml/login screen.fxml"));
+            Parent loginScreen = FXMLLoader.load(AddNewUserScreenController.class.getResource("/fxml/LoginScreen.fxml"));
             Scene loginScene = new Scene(loginScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(loginScene);
@@ -129,14 +129,14 @@ public class AddNewUserController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpsMain.getCurrentStaff();
         userLable.setText(staff.getFirstName());
-        avatar.setImage(new Image(AddNewUserController.class.getResourceAsStream("/img/" + (staff.id % 5) + ".png")));
+        avatar.setImage(new Image(AddNewUserScreenController.class.getResourceAsStream("/img/" + (staff.id % 5) + ".png")));
 
     }
 
     private void clearContent(ActionEvent event) {
         Parent changePasswordScreen = null;
         try {
-            changePasswordScreen = FXMLLoader.load(AddNewUserController.class.getResource("/fxml/AddNewUser.fxml"));
+            changePasswordScreen = FXMLLoader.load(AddNewUserScreenController.class.getResource("/fxml/AddNewUserScreen.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -150,7 +150,7 @@ public class AddNewUserController implements Initializable {
     private void returnUserManagement(ActionEvent event) {
         Parent userManagementscreen = null;
         try {
-            userManagementscreen = FXMLLoader.load(AddNewUserController.class.getResource("/fxml/user settings.fxml"));
+            userManagementscreen = FXMLLoader.load(AddNewUserScreenController.class.getResource("/fxml/UserSettingScreen.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -166,7 +166,7 @@ public class AddNewUserController implements Initializable {
      * @param kpsMain
      */
     public static void setKPSMain(KPSMain kpsMain) {
-        AddNewUserController.kpsMain = kpsMain;
+        AddNewUserScreenController.kpsMain = kpsMain;
     }
 }
 

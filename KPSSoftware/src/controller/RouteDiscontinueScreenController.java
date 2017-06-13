@@ -31,7 +31,7 @@ public class RouteDiscontinueScreenController implements Initializable {
     @FXML
     private Button reviewLogsButton;
     @FXML
-    private ComboBox routeCombobox;
+    private ComboBox<String> routeCombobox;
     @FXML
     private ImageView avatar;
     @FXML
@@ -60,31 +60,31 @@ public class RouteDiscontinueScreenController implements Initializable {
     public void changeScenes(ActionEvent event) throws IOException {
 
         if (event.toString().contains("sendMail")) {
-            Parent sendMailScreen = FXMLLoader.load(RouteDiscontinueScreenController.class.getResource("/fxml/send mail screen.fxml"));
+            Parent sendMailScreen = FXMLLoader.load(RouteDiscontinueScreenController.class.getResource("/fxml/SendMailScreen.fxml"));
             Scene sendMailScene = new Scene(sendMailScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(sendMailScene);
             tempStage.show();
         } else if (event.toString().contains("customerPriceUpdate")) {
-            Parent priceUpdateScreen = FXMLLoader.load(RouteDiscontinueScreenController.class.getResource("/fxml/price update screen.fxml"));
+            Parent priceUpdateScreen = FXMLLoader.load(RouteDiscontinueScreenController.class.getResource("/fxml/PriceUpdateScreen.fxml"));
             Scene priceUpdateScene = new Scene(priceUpdateScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(priceUpdateScene);
             tempStage.show();
         } else if (event.toString().contains("transportCostUpdate")) {
-            Parent transportCostUpdateScreen = FXMLLoader.load(RouteDiscontinueScreenController.class.getResource("/fxml/transport cost screen.fxml"));
+            Parent transportCostUpdateScreen = FXMLLoader.load(RouteDiscontinueScreenController.class.getResource("/fxml/TransportCostScreen.fxml"));
             Scene transportCostUpdateScene = new Scene(transportCostUpdateScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(transportCostUpdateScene);
             tempStage.show();
         } else if (event.toString().contains("newRoute")) {
-            Parent newRouteScreen = FXMLLoader.load(RouteDiscontinueScreenController.class.getResource("/fxml/new route screen.fxml"));
+            Parent newRouteScreen = FXMLLoader.load(RouteDiscontinueScreenController.class.getResource("/fxml/NewRouteScreen.fxml"));
             Scene newRouteScene = new Scene(newRouteScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(newRouteScene);
             tempStage.show();
         } else if (event.toString().contains("businessFigures")) {
-            Parent businessFiguresScreen = FXMLLoader.load(RouteDiscontinueScreenController.class.getResource("/fxml/business figures screen.fxml"));
+            Parent businessFiguresScreen = FXMLLoader.load(RouteDiscontinueScreenController.class.getResource("/fxml/BusinessFiguresScreen.fxml"));
             Scene businessFiguresScene = new Scene(businessFiguresScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(businessFiguresScene);
@@ -94,7 +94,7 @@ public class RouteDiscontinueScreenController implements Initializable {
         } else if (event.toString().contains("logout")) {
             //TODO; POP up dialog box to ask the user if they are sure want to logout
             //DialogBox.LogoutyMsg("Logout", "Are you sure you want to logout.");
-            Parent loginScreen = FXMLLoader.load(RouteDiscontinueScreenController.class.getResource("/fxml/login screen.fxml"));
+            Parent loginScreen = FXMLLoader.load(RouteDiscontinueScreenController.class.getResource("/fxml/LoginScreen.fxml"));
             Scene loginScene = new Scene(loginScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(loginScene);
@@ -113,15 +113,18 @@ public class RouteDiscontinueScreenController implements Initializable {
     public void handleButtons(ActionEvent event) {
         if (event.toString().contains("accept")) {
             //this is view button in the gui
-            if (routeCombobox.getValue() != null) {
-                String[] selectdText = ((String) routeCombobox.getValue()).split(" ");
+            String selectedItem = routeCombobox.getValue();
 
-                int routeID = Integer.parseInt(selectdText[0]);
+            if (selectedItem == null) {
+                return;
+            }
 
-                Route route = kpsMain.getRoute(routeID);
-                if (route != null) {
-                    discontinueNotification(route);
-                }
+            String[] selectedText = selectedItem.split(" ");
+            int routeID = Integer.parseInt(selectedText[0]);
+
+            Route route = kpsMain.getRoute(routeID);
+            if (route != null) {
+                discontinueNotification(route);
             }
 
         } else if (event.toString().contains("reset")) {
@@ -130,8 +133,14 @@ public class RouteDiscontinueScreenController implements Initializable {
         } else if (event.toString().contains("discard")) {
             returnHome(event);
         } else if (event.toString().contains("discontinueButton")) {
-            String[] selectdText = ((String) routeCombobox.getValue()).split(" ");
-            int routeID = Integer.parseInt(selectdText[0]);
+            String selectedItem = routeCombobox.getValue();
+
+            if (selectedItem == null) {
+                return;
+            }
+
+            String[] selectedText = selectedItem.split(" ");
+            int routeID = Integer.parseInt(selectedText[0]);
             kpsMain.deactivateRoute(routeID);
             Route route = kpsMain.getRoute(routeID);
 
@@ -158,10 +167,8 @@ public class RouteDiscontinueScreenController implements Initializable {
             reviewLogsButton.setDisable(false);
         }
         for (Integer i : kpsMain.getAllRoutes().keySet()) {
-            Route root = kpsMain.getAllRoutes().get(i);
-            if (root.isActive()) {
-                routeCombobox.getItems().add(root.id + " " + root.getStartLocation().getLocationName() + " ->" + root.getEndLocation().getLocationName() + " : " + root.routeType.toString());
-            }
+            Route route = kpsMain.getAllRoutes().get(i);
+            routeCombobox.getItems().add(route.id + " " + route.getStartLocation().getLocationName() + " ->" + route.getEndLocation().getLocationName() + " : " + route.routeType.toString());
         }
         notificationLabel.setVisible(false);
         affectedOriginLabel.setVisible(false);
@@ -174,7 +181,7 @@ public class RouteDiscontinueScreenController implements Initializable {
     private void clearContent(ActionEvent event) {
         Parent routeDiscontinueScreen = null;
         try {
-            routeDiscontinueScreen = FXMLLoader.load(RouteDiscontinueScreenController.class.getResource("/fxml/route discontinue screen.fxml"));
+            routeDiscontinueScreen = FXMLLoader.load(RouteDiscontinueScreenController.class.getResource("/fxml/RouteDiscontinueScreen.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -188,7 +195,7 @@ public class RouteDiscontinueScreenController implements Initializable {
     private void returnHome(ActionEvent event) {
         Parent homescreen = null;
         try {
-            homescreen = FXMLLoader.load(controller.SendMailScreenController.class.getResource("/fxml/home screen.fxml"));
+            homescreen = FXMLLoader.load(controller.SendMailScreenController.class.getResource("/fxml/HomeScreen.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }

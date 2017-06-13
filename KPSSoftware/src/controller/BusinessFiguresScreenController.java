@@ -60,31 +60,31 @@ public class BusinessFiguresScreenController implements Initializable {
     public void changeScenes(ActionEvent event) throws IOException {
 
         if (event.toString().contains("sendMail")) {
-            Parent sendMailScreen = FXMLLoader.load(BusinessFiguresScreenController.class.getResource("/fxml/send mail screen.fxml"));
+            Parent sendMailScreen = FXMLLoader.load(BusinessFiguresScreenController.class.getResource("/fxml/SendMailScreen.fxml"));
             Scene sendMailScene = new Scene(sendMailScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(sendMailScene);
             tempStage.show();
         } else if (event.toString().contains("routeDiscontinue")) {
-            Parent routeDiscontinueScreen = FXMLLoader.load(BusinessFiguresScreenController.class.getResource("/fxml/route discontinue screen.fxml"));
+            Parent routeDiscontinueScreen = FXMLLoader.load(BusinessFiguresScreenController.class.getResource("/fxml/RouteDiscontinueScreen.fxml"));
             Scene routeDiscontinueScene = new Scene(routeDiscontinueScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(routeDiscontinueScene);
             tempStage.show();
         } else if (event.toString().contains("customerPriceUpdate")) {
-            Parent priceUpdateScreen = FXMLLoader.load(BusinessFiguresScreenController.class.getResource("/fxml/price update screen.fxml"));
+            Parent priceUpdateScreen = FXMLLoader.load(BusinessFiguresScreenController.class.getResource("/fxml/PriceUpdateScreen.fxml"));
             Scene priceUpdateScene = new Scene(priceUpdateScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(priceUpdateScene);
             tempStage.show();
         } else if (event.toString().contains("transportCostUpdate")) {
-            Parent transportCostUpdateScreen = FXMLLoader.load(BusinessFiguresScreenController.class.getResource("/fxml/transport cost screen.fxml"));
+            Parent transportCostUpdateScreen = FXMLLoader.load(BusinessFiguresScreenController.class.getResource("/fxml/TransportCostScreen.fxml"));
             Scene transportCostUpdateScene = new Scene(transportCostUpdateScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(transportCostUpdateScene);
             tempStage.show();
         } else if (event.toString().contains("newRoute")) {
-            Parent newRouteScreen = FXMLLoader.load(BusinessFiguresScreenController.class.getResource("/fxml/new route screen.fxml"));
+            Parent newRouteScreen = FXMLLoader.load(BusinessFiguresScreenController.class.getResource("/fxml/NewRouteScreen.fxml"));
             Scene newRouteScene = new Scene(newRouteScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(newRouteScene);
@@ -94,7 +94,7 @@ public class BusinessFiguresScreenController implements Initializable {
         } else if (event.toString().contains("logout")) {
             //TODO; POP up dialog box to ask the user if they are sure want to logout
             //DialogBox.LogoutyMsg("Logout", "Are you sure you want to logout.");
-            Parent loginScreen = FXMLLoader.load(BusinessFiguresScreenController.class.getResource("/fxml/login screen.fxml"));
+            Parent loginScreen = FXMLLoader.load(BusinessFiguresScreenController.class.getResource("/fxml/LoginScreen.fxml"));
             Scene loginScene = new Scene(loginScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(loginScene);
@@ -129,18 +129,18 @@ public class BusinessFiguresScreenController implements Initializable {
             reviewLogsButton.setVisible(false);
             reviewLogsButton.setDisable(false);
         }
+
         // FIXME: 12/06/2017 some error happens when retrieving any data.
-        //Map<Integer, Mail> criticalMails = kpsMain.getCriticalRoutes();
-        //revenueLabel.setText(String.format("%.2f",KPSModel.calculateTotalRevenue(criticalMails)));
-        //expenditureLabel.setText(String.format("%.2f",KPSModel.calculateTotalExpenditure(criticalMails));
-
-
+        // 13/06/2017 Fixed it. You can proceed now. -- Hectkar. PS: remember to delete MEEEEEEEE because this hilarious comment line make the code sooooooooooooooooooooooo mediocre!!!!!!!
+        Map<Integer, Mail> criticalMails = kpsMain.getCriticalRoutes();
+        revenueLabel.setText(String.format("%.2f", KPSModel.calculateTotalRevenue(criticalMails)));
+        expenditureLabel.setText(String.format("%.2f",KPSModel.calculateTotalExpenditure(criticalMails)));
     }
 
     private void returnHome(ActionEvent event) {
         Parent homescreen = null;
         try {
-            homescreen = FXMLLoader.load(BusinessFiguresScreenController.class.getResource("/fxml/home screen.fxml"));
+            homescreen = FXMLLoader.load(BusinessFiguresScreenController.class.getResource("/fxml/HomeScreen.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }

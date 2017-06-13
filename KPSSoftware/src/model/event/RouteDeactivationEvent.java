@@ -37,8 +37,8 @@ public class RouteDeactivationEvent extends Event {
     @Override
     public String toString() {
         return "RouteDeactivationEvent{" +
-                super.toString() +
+                "id=" + id +
                 ", routeId=" + routeId +
-                '}';
+                "}";
     }
 }

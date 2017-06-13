@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Dipen on 25/04/2017. this class represents the user setting controller.
  */
-public class UserSettingController implements Initializable {
+public class UserSettingScreenController implements Initializable {
     private static KPSMain kpsMain;
     @FXML
     private Label userLable;
@@ -37,7 +37,7 @@ public class UserSettingController implements Initializable {
     /**
      * this constructor is used to set the reference for the model.
      */
-    public UserSettingController() {
+    public UserSettingScreenController() {
         KPSMain.setLoginScreenController(this);
     }
 
@@ -50,26 +50,26 @@ public class UserSettingController implements Initializable {
     public void changeScenes(ActionEvent event) throws IOException {
 
         if (event.toString().contains("ChangePassword")) {
-            Parent changePasswordScreen = FXMLLoader.load(UserSettingController.class.getResource("/fxml/ChangePassword.fxml"));
+            Parent changePasswordScreen = FXMLLoader.load(UserSettingScreenController.class.getResource("/fxml/ChangePasswordScreen.fxml"));
             Scene changePasswordScene = new Scene(changePasswordScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(changePasswordScene);
             tempStage.show();
         } else if (event.toString().contains("manageUser")) {
-            Parent manageUserScreen = FXMLLoader.load(UserSettingController.class.getResource("/fxml/manage user.fxml"));
+            Parent manageUserScreen = FXMLLoader.load(UserSettingScreenController.class.getResource("/fxml/ManageUserScreen.fxml"));
             Scene manageUserScene = new Scene(manageUserScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(manageUserScene);
             tempStage.show();
 
         } else if (event.toString().contains("addNewUser")) {
-            Parent addNewUserScreen = FXMLLoader.load(UserSettingController.class.getResource("/fxml/AddNewUser.fxml"));
+            Parent addNewUserScreen = FXMLLoader.load(UserSettingScreenController.class.getResource("/fxml/AddNewUserScreen.fxml"));
             Scene addNewUserScene = new Scene(addNewUserScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(addNewUserScene);
             tempStage.show();
         } else if (event.toString().contains("Exit")) {
-            Parent returnHomeScreen = FXMLLoader.load(UserSettingController.class.getResource("/fxml/home screen.fxml"));
+            Parent returnHomeScreen = FXMLLoader.load(UserSettingScreenController.class.getResource("/fxml/HomeScreen.fxml"));
             Scene returnHomeScene = new Scene(returnHomeScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(returnHomeScene);
@@ -77,7 +77,7 @@ public class UserSettingController implements Initializable {
         } else if (event.toString().contains("logout")) {
             //TODO; POP up dialog box to ask the user if they are sure want to logout
             DialogBox.LogoutyMsg("Logout", "Are you sure to logout?");
-            Parent loginScreen = FXMLLoader.load(UserSettingController.class.getResource("/fxml/login screen.fxml"));
+            Parent loginScreen = FXMLLoader.load(UserSettingScreenController.class.getResource("/fxml/LoginScreen.fxml"));
             Scene loginScene = new Scene(loginScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(loginScene);
@@ -123,7 +123,7 @@ public class UserSettingController implements Initializable {
     private void returnHome(ActionEvent event) {
         Parent homeScreen = null;
         try {
-            homeScreen = FXMLLoader.load(UserSettingController.class.getResource("/fxml/user settings.fxml"));
+            homeScreen = FXMLLoader.load(UserSettingScreenController.class.getResource("/fxml/UserSettingScreen.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -139,6 +139,6 @@ public class UserSettingController implements Initializable {
      * @param kpsMain
      */
     public static void setKPSMain(KPSMain kpsMain) {
-        UserSettingController.kpsMain = kpsMain;
+        UserSettingScreenController.kpsMain = kpsMain;
     }
 }

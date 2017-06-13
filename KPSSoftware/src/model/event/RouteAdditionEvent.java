@@ -37,8 +37,8 @@ public class RouteAdditionEvent extends Event {
     @Override
     public String toString() {
         return "RouteAdditionEvent{" +
-                super.toString() +
-                ", routeId=" + routeId +
-                '}';
+                "routeId=" + routeId +
+                ", id=" + id +
+                "}";
     }
 }

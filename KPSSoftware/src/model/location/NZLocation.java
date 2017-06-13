@@ -30,26 +30,10 @@ public class NZLocation extends Location {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof NZLocation))
-            return false;
-
-        NZLocation that = (NZLocation) o;
-
-        return cityName == that.cityName;
-    }
-
-    @Override
-    public int hashCode() {
-        return cityName.hashCode();
-    }
-
-    @Override
     public String toString() {
         return "NZLocation{" +
-                "location=" + cityName +
-                '}';
+                "cityName=" + cityName +
+                ", id=" + id +
+                "}";
     }
 }

@@ -10,6 +10,7 @@ import model.route.Route;
 import model.route.RouteType;
 import model.staff.Staff;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
@@ -125,11 +126,11 @@ public class DataPopulater {
 
         // ================= populate mails ============================
 
-        Mail mail_1 = new Mail(1, dunedin, auckland, 2500, 3000, Priority.Domestic_Standard);
-        Mail mail_2 = new Mail(2, dunedin, moscow, 6200, 3000, Priority.International_Standard);
-        Mail mail_3 = new Mail(3, dunedin, hongkong, 500, 100, Priority.International_Air);
-        Mail mail_4 = new Mail(4, auckland, sydney, 500, 300, Priority.International_Air);
-        Mail mail_5 = new Mail(5, christchurch, auckland, 2800, 2800, Priority.Domestic_Standard);
+        Mail mail_1 = new Mail(1, dunedin, auckland, 2500, 3000, Priority.Domestic_Standard, LocalDate.of(2016, 4, 3));
+        Mail mail_2 = new Mail(2, dunedin, moscow, 6200, 3000, Priority.International_Standard, LocalDate.of(2016, 4, 17));
+        Mail mail_3 = new Mail(3, dunedin, hongkong, 500, 100, Priority.International_Air, LocalDate.of(2017, 1, 1));
+        Mail mail_4 = new Mail(4, auckland, sydney, 500, 300, Priority.International_Air, LocalDate.of(2017, 2, 2));
+        Mail mail_5 = new Mail(5, christchurch, auckland, 2800, 2800, Priority.Domestic_Standard, LocalDate.of(2017, 3, 3));
 
         mail_1.setRoutes(Collections.singletonList(route_5));
         mail_2.setRoutes(Arrays.asList(route_5, route_9, route_11, route_13));

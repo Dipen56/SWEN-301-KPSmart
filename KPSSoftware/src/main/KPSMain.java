@@ -13,6 +13,7 @@ import model.route.RouteType;
 import model.staff.Staff;
 import view.GUI;
 
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.Set;
 
@@ -451,6 +452,20 @@ public class KPSMain {
         double averageRevenue = totalRevenue / numMails;
         double averageCost = totalCost / numMails;
 
+    }
+
+    public void demonstration_getBusinessFiguresBetweenTimeRange() {
+        String startDateString = "2017-01-01";
+        String endDateString = "2017-12-31";
+
+        LocalDate startDate = LocalDate.parse(startDateString);
+        LocalDate endDate = LocalDate.parse(endDateString);
+
+        Map<Integer, Mail> mails = kpsModel.getMailsByStartAndEndTime(startDate, endDate);
+
+        double revenue = KPSModel.calculateTotalRevenue(mails);
+        double expenditure = KPSModel.calculateTotalExpenditure(mails);
+        int numMails = mails.size();
     }
 
     /**

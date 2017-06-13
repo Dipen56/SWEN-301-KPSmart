@@ -882,33 +882,6 @@ public class XMLDriver {
         return writeDocumentTo(document, ROUTE_XML_WRITE_PATH);
     }
 
-//    /**
-//     * Delete the route
-//     *
-//     * @param routeId the id of the route that needs to be updated
-//     * @return true if the route is no longer there, or false if the action failed.
-//     */
-//    public static boolean deactivateRoute(int routeId) {
-//        // read from XML file to get the existing locations
-//        Document document = readDocumentFrom(ROUTE_XML_FILE_NAME);
-//        if (document == null) {
-//            return false;
-//        }
-//
-//        Node existingNode = document.selectSingleNode("/Routes/*[@id='" + routeId + "']");
-//
-//        // if we can't find this id in XML file, then return true. This is the idempotentness of Delete.
-//        if (existingNode == null) {
-//            return true;
-//        }
-//
-//        // remove the existing route with the given id
-//        existingNode.detach();
-//
-//        // write the DOM tree back into XML
-//        return writeDocumentTo(document, ROUTE_XML_WRITE_PATH);
-//    }
-
     // ===============================================================
     //                STAFFS
     // ===============================================================

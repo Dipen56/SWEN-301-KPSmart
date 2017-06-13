@@ -18,46 +18,78 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * This class is a wrapper class that contains all model objects
+ * This class is the top-level class that contains all model-side objects
  *
  * @author Hector
  * @version 2017/5/20
  */
 public class KPSModel {
 
-    // ================================= Key modules ================================
-
+    /**
+     * The routing system manages all routes in this programme. It is a graph where each locations is represented as a
+     * node, and each route is represented as an edge. In addition, it uses Dijkstra algorithm internally to perform
+     * path-finding tasks.
+     */
     private RoutingSystem routingSystem;
 
-    // ================ fields for maintaining programme status =====================
-
+    /**
+     * The staff currently logged in.
+     */
     private Staff currentStaff;
 
+    /**
+     * The max id of events. This is used to help remember what id we should use when a new event is logged.
+     */
     private int maxEventId;
+
+    /**
+     * The max id of locations. This is used to help remember what id we should use when a new location is created.
+     */
     private int maxLocationId;
+
+    /**
+     * The max id of mails. This is used to help remember what id we should use when a new mail is created.
+     */
     private int maxMailId;
+
+    /**
+     * The max id of routes. This is used to help remember what id we should use when a new route is created.
+     */
     private int maxRouteId;
+
+    /**
+     * The max id of staffs. This is used to help remember what id we should use when a new staff is created.
+     */
     private int maxStaffId;
 
-    // ================= cached data (data from XML files) ======================
-
+    /**
+     * A cached collection of all events in the system as a map, where the key is the id, and the value is the Event
+     * object.
+     */
     private Map<Integer, Event> events;
 
     /**
-     * All locations in the system. They are maintained as a HashMap, where the key is the id of location, and the value
-     * is the location itself.
+     * A cached collection of all locations in the system as a map, where the key is the id, and the value is the
+     * Location object.
      */
     private Map<Integer, Location> locations;
 
+    /**
+     * A cached collection of all mails in the system as a map, where the key is the id, and the value is the Mail
+     * object.
+     */
     private Map<Integer, Mail> mails;
 
-
     /**
-     * All routes in the system. They are maintained as a HashMap, where the key is the id of route, and the value is
-     * the route itself.
+     * A cached collection of all routes in the system as a map, where the key is the id, and the value is the Route
+     * object.
      */
     private Map<Integer, Route> routes;
 
+    /**
+     * A cached collection of all staffs in the system as a map, where the key is the id, and the value is the Staff
+     * object.
+     */
     private Map<Integer, Staff> registeredStaffs;
 
     /**
@@ -119,7 +151,6 @@ public class KPSModel {
     public Set<Location> getAvailableDestinations() {
         return this.destinations;
     }
-
 
     // ============================================================
     //                   Methods for Mails
@@ -412,7 +443,6 @@ public class KPSModel {
      */
     public boolean addRoute(String startString, String endString, RouteType routeType, double duration, String transportFirm,
                             double pricePerGram, double pricePerVolume, double costPerGram, double costPerVolume) {
-
         // do not add same route again
         for (Route route : this.routes.values()) {
             if (route.getStartLocation().getLocationName().equalsIgnoreCase(startString)
@@ -538,7 +568,6 @@ public class KPSModel {
      */
     public boolean createNewStaff(String userName, String password, boolean isManager, String firstName,
                                   String lastName, String email, String phoneNumber) {
-
         // do not add same staff again
         for (Staff staff : this.registeredStaffs.values()) {
             if ((staff.getFirstName().equals(firstName) && staff.getLastName().equals(lastName))
@@ -598,7 +627,6 @@ public class KPSModel {
      */
     public boolean updateStaff(int idToUpdate, String newUserName, String newPassword, boolean newIsManager, String newFirstName,
                                String newLastName, String newEmail, String newPhoneNumber) {
-
         // if there is no match for the given id, return false;do not add same staff again
         if (registeredStaffs.values().stream().noneMatch(staff -> staff.id == idToUpdate)) {
             return false;
@@ -632,7 +660,6 @@ public class KPSModel {
         }
     }
 
-
     // =========================================================================
     //                     STATIC (HELPER) METHODS
     // =========================================================================
@@ -662,11 +689,9 @@ public class KPSModel {
         return calculateTotalRevenue(mails) - calculateTotalExpenditure(mails);
     }
 
-
     // =========================================================================
     //                         PRIVATE METHODS
     // =========================================================================
-
 
     /**
      * Load data from XML files.

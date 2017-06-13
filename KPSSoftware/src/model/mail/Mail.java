@@ -177,13 +177,32 @@ public class Mail {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof Mail))
+            return false;
+
+        Mail mail = (Mail) o;
+
+        return id == mail.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
     public String toString() {
         return "Mail{" +
-                "origin=" + origin +
+                "id=" + id +
+                ", origin=" + origin +
                 ", destination=" + destination +
                 ", weight=" + weight +
                 ", volume=" + volume +
                 ", priority=" + priority +
+                ", routes=" + routes +
                 '}';
     }
 }

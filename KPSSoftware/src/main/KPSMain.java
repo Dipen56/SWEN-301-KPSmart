@@ -439,8 +439,8 @@ public class KPSMain {
     public static void main(String[] args) {
         KPSMain app = new KPSMain();
 
-        // for testing the data populater, and the writing functions of XMLDriver
-        new DataPopulater();
+        // prepare some data so we can have something to play with
+        new DataPopulater().populateSomethingForMeWillYa();
 
         javafx.application.Application.launch(GUI.class);
     }

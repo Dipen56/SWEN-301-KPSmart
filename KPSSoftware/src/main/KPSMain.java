@@ -249,7 +249,7 @@ public class KPSMain {
         kpsModel.addRoute(startString, endString, routeType, duration, transportFirm, pricePerGram, pricePerVolume, costPerGram, costPerVolume);
     }
 
-    public Map<Integer, Mail> getCriticalRoutes() {
+    public Map<Integer, Mail> getCriticalMails() {
         return kpsModel.getCriticalMails();
     }
 

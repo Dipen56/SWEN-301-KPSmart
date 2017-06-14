@@ -131,29 +131,38 @@ public class DataPopulater {
         Mail mail_3 = new Mail(3, dunedin, hongkong, 500, 100, Priority.International_Air, LocalDate.of(2017, 1, 1));
         Mail mail_4 = new Mail(4, auckland, sydney, 500, 300, Priority.International_Air, LocalDate.of(2017, 2, 2));
         Mail mail_5 = new Mail(5, christchurch, auckland, 2800, 2800, Priority.Domestic_Standard, LocalDate.of(2017, 3, 3));
+        Mail mail_6 = new Mail(6, dunedin, christchurch, 100, 200, Priority.Domestic_Standard, LocalDate.of(2017, 6, 6));
 
         mail_1.setRoutes(Collections.singletonList(route_5));
         mail_2.setRoutes(Arrays.asList(route_5, route_9, route_11, route_13));
         mail_3.setRoutes(Arrays.asList(route_5, route_7, route_10));
         mail_4.setRoutes(Collections.singletonList(route_7));
         mail_5.setRoutes(Collections.singletonList(route_6));
+        mail_6.setRoutes(Collections.singletonList(route_2));
 
         XMLDriver.writeMail(mail_1);
         XMLDriver.writeMail(mail_2);
         XMLDriver.writeMail(mail_3);
         XMLDriver.writeMail(mail_4);
         XMLDriver.writeMail(mail_5);
+        XMLDriver.writeMail(mail_6);
     }
 
     /**
      * Writes some fake data into events.xml
      */
     private void populateEvents() {
-        CustomerPriceUpdateEvent cpuEvent = new CustomerPriceUpdateEvent(1, 1, LocalDateTime.now(), 1, 1.0f, 0.5f, 1.2f, 0.7f);
-        TransportCostUpdateEvent tcuEvent = new TransportCostUpdateEvent(2, 2, LocalDateTime.now(), 2, 1.2f, 0.8f, 1.1f, 0.6f);
-        MailDeliveryEvent mdEvent = new MailDeliveryEvent(3, 1, LocalDateTime.now(), 1);
-        RouteAdditionEvent raEvent = new RouteAdditionEvent(4, 1, LocalDateTime.now(), 14);
-        RouteDeactivationEvent rdEvent = new RouteDeactivationEvent(5, 1, LocalDateTime.now(), 3);
+        LocalDateTime time_1 = LocalDateTime.of(2016, 4, 03, 10, 14, 9);
+        LocalDateTime time_2 = LocalDateTime.of(2016, 4, 17, 10, 14, 9);
+        LocalDateTime time_3 = LocalDateTime.of(2017, 1, 1, 10, 14, 9);
+        LocalDateTime time_4 = LocalDateTime.of(2017, 2, 2, 10, 14, 9);
+        LocalDateTime time_5 = LocalDateTime.of(2017, 3, 3, 10, 14, 9);
+
+        CustomerPriceUpdateEvent cpuEvent = new CustomerPriceUpdateEvent(1, 1, time_1, 1, 1.0f, 0.5f, 1.2f, 0.7f);
+        TransportCostUpdateEvent tcuEvent = new TransportCostUpdateEvent(2, 2, time_2, 2, 1.2f, 0.8f, 1.1f, 0.6f);
+        MailDeliveryEvent mdEvent = new MailDeliveryEvent(3, 1, time_3, 1);
+        RouteAdditionEvent raEvent = new RouteAdditionEvent(4, 1, time_4, 14);
+        RouteDeactivationEvent rdEvent = new RouteDeactivationEvent(5, 1, time_5, 3);
 
         XMLDriver.writeCustomerPriceUpdateEvent(cpuEvent);
         XMLDriver.writeTransportCostUpdateEvent(tcuEvent);

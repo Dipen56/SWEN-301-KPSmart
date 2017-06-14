@@ -46,4 +46,13 @@
         <deliveryDate>2017-03-03</deliveryDate>
         <routes>6</routes>
     </Mail>
+    <Mail id="6">
+        <originId>7</originId>
+        <destinationId>6</destinationId>
+        <weight>100.0</weight>
+        <volume>200.0</volume>
+        <priority>Domestic Standard</priority>
+        <deliveryDate>2017-06-06</deliveryDate>
+        <routes>2</routes>
+    </Mail>
 </Mails>

@@ -12,7 +12,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import main.KPSMain;
-import model.KPSModel;
 import model.location.Location;
 import model.mail.Mail;
 import model.mail.Priority;
@@ -21,8 +20,10 @@ import model.staff.Staff;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 /**
  * Created by Dipen on 25/04/2017.
@@ -42,27 +43,19 @@ public class BusinessFiguresScreenController implements Initializable {
     @FXML
     private Label totalMailLabel;
     @FXML
-    private ComboBox avgOriginComboBox;
+    private ComboBox<String> avgOriginComboBox;
     @FXML
-    private ComboBox avgDestinationComboBox;
+    private ComboBox<String> avgDestinationComboBox;
     @FXML
-    private ComboBox avgPriorityComboBox;
+    private ComboBox<String> avgPriorityComboBox;
     @FXML
     private Label averageDeliveryLabel;
     @FXML
-    private ListView criticalRoutesListView;
+    private ListView<String> criticalRoutesListView;
     @FXML
     private ImageView avatar;
     @FXML
     private Label errorLabel;
-    @FXML
-    private ComboBox criticalRouteOriginComboBox;
-    @FXML
-    private ComboBox criticalRouteDestinationComboBox;
-    @FXML
-    private ComboBox criticalRoutePriorityComboBox;
-    @FXML
-    private Label criticalRouteErrorLabel;
     @FXML
     private DatePicker startDatePicker;
     @FXML
@@ -150,16 +143,19 @@ public class BusinessFiguresScreenController implements Initializable {
                 }
             }
         } else if (event.toString().contains("criticalRouteViewButton")) {
+            criticalRoutesListView.getItems().clear();
 
-            if (criticalRouteOriginComboBox.getValue() == null) {
-                criticalRouteErrorLabel.setText("Please Select a Origin");
-            } else if (criticalRouteDestinationComboBox.getValue() == null) {
-                criticalRouteErrorLabel.setText("Please Select a Destination");
-            } else if (criticalRoutePriorityComboBox.getValue() == null) {
-                criticalRouteErrorLabel.setText("Please Select a Priority");
-            } else {
-                //TODO: critical Routes
+            Map<Integer, Mail> criticalMails = kpsMain.getCriticalMails();
+
+            if (criticalMails.isEmpty()) {
+                criticalRoutesListView.getItems().add("None");
+                return;
             }
+
+            List<String> mailList = criticalMails.values().stream().map(Mail::toStringForCriticalView).collect(Collectors.toList());
+
+            criticalRoutesListView.getItems().addAll(mailList);
+
         } else if (event.toString().contains("statsViewButton")) {
             if (startDatePicker.getValue() == null) {
                 dateErrorLabel.setText("Please Select a Start Date");
@@ -169,11 +165,11 @@ public class BusinessFiguresScreenController implements Initializable {
                 LocalDate startDate = (LocalDate) startDatePicker.getValue();
                 LocalDate endDate = (LocalDate) endDatePicker.getValue();
 
-           Map<Integer, Mail> mails = kpsMain.getAllMails(startDate,endDate);
-           revenueLabel.setText(String.format("%.2f", kpsMain.getTotalRevenue(mails)));
-          expenditureLabel.setText(String.format("%.2f", kpsMain.getTotalExpenditure(mails)));
+                Map<Integer, Mail> mails = kpsMain.getAllMails(startDate, endDate);
+                revenueLabel.setText(String.format("%.2f", kpsMain.getTotalRevenue(mails)));
+                expenditureLabel.setText(String.format("%.2f", kpsMain.getTotalExpenditure(mails)));
 //            numberEventLabel.setText("" + kpsMain.getAllEvens().size());
-           totalMailLabel.setText("" + mails.size());
+                totalMailLabel.setText("" + mails.size());
             }
         }
     }
@@ -196,24 +192,14 @@ public class BusinessFiguresScreenController implements Initializable {
         }
         for (Location loc : kpsMain.getAvailableOrigins()) {
             avgOriginComboBox.getItems().add(loc.getLocationName());
-            criticalRouteOriginComboBox.getItems().add(loc.getLocationName());
         }
         for (Location loc : kpsMain.getAvailableDestinations()) {
-
             avgDestinationComboBox.getItems().add(loc.getLocationName());
-            criticalRouteDestinationComboBox.getItems().add(loc.getLocationName());
         }
         avgPriorityComboBox.getItems().add(Priority.Domestic_Standard.toString());
         avgPriorityComboBox.getItems().add(Priority.Domestic_Air.toString());
         avgPriorityComboBox.getItems().add(Priority.International_Standard.toString());
         avgPriorityComboBox.getItems().add(Priority.International_Air.toString());
-
-        criticalRoutePriorityComboBox.getItems().add(Priority.Domestic_Standard.toString());
-        criticalRoutePriorityComboBox.getItems().add(Priority.Domestic_Air.toString());
-        criticalRoutePriorityComboBox.getItems().add(Priority.International_Standard.toString());
-        criticalRoutePriorityComboBox.getItems().add(Priority.International_Air.toString());
-
-
     }
 
     private void returnHome(ActionEvent event) {

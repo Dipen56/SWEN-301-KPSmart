@@ -190,6 +190,18 @@ public class Mail {
                 .reduce(0, (sum, duration) -> sum += duration);
     }
 
+    /**
+     * @return a string representation used for critical view.
+     */
+    public String toStringForCriticalView() {
+        double loss = getExpenditure() - getRevenue();
+        return "[Origin: " + origin.getLocationName()
+                + ", Destination: " + destination.getLocationName()
+                + ", Priority: " + priority
+                + "]: Mail ID: " + id
+                + ", we lost: " + String.format("%.2f", loss) + " dollars.";
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -216,6 +228,7 @@ public class Mail {
                 ", weight=" + weight +
                 ", volume=" + volume +
                 ", priority=" + priority +
+                ", deliveryDate=" + deliveryDate +
                 ", routes=" + routes +
                 '}';
     }

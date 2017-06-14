@@ -32,8 +32,8 @@ public class NZLocation extends Location {
     @Override
     public String toString() {
         return "NZLocation{" +
-                "cityName=" + cityName +
-                ", id=" + id +
+                "id=" + id +
+                ", cityName=" + cityName +
                 "}";
     }
 }

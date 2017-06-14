@@ -258,11 +258,11 @@ public class KPSMain {
     }
 
     public double getTotalExpenditure(Map<Integer, Mail> mails) {
-        return  KPSModel.calculateTotalExpenditure(mails);
+        return KPSModel.calculateTotalExpenditure(mails);
     }
 
-    public Map<Integer, Event> getAllEvens() {
-        return kpsModel.getAllEvens();
+    public Map<Integer, Event> getAllEvens(LocalDate startDate, LocalDate endDate) {
+        return kpsModel.getEventsByStartAndEndTime(startDate, endDate);
     }
 
     public Map<Integer, Mail> getAllMails(LocalDate startDate, LocalDate endDate) {
@@ -271,6 +271,7 @@ public class KPSMain {
 
     public double getAverageDeliveryTime(String origin, String destination, Priority priority) {
         return kpsModel.calculateAverageDeliveryTime(origin, destination, priority);
+
     }
 
 

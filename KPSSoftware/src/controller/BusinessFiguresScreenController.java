@@ -168,7 +168,7 @@ public class BusinessFiguresScreenController implements Initializable {
                 Map<Integer, Mail> mails = kpsMain.getAllMails(startDate, endDate);
                 revenueLabel.setText(String.format("%.2f", kpsMain.getTotalRevenue(mails)));
                 expenditureLabel.setText(String.format("%.2f", kpsMain.getTotalExpenditure(mails)));
-//            numberEventLabel.setText("" + kpsMain.getAllEvens().size());
+                numberEventLabel.setText("" + kpsMain.getAllEvens(startDate, endDate).size());
                 totalMailLabel.setText("" + mails.size());
             }
         }

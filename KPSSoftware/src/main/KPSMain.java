@@ -253,20 +253,20 @@ public class KPSMain {
         return kpsModel.getCriticalMails();
     }
 
-    public double getTotalRevenue() {
-        return kpsModel.calculateTotalRevenue(kpsModel.getAllMails());
+    public double getTotalRevenue(Map<Integer, Mail> mails) {
+        return KPSModel.calculateTotalRevenue(mails);
     }
 
-    public double getTotalExpenditure() {
-        return kpsModel.calculateTotalExpenditure(kpsModel.getAllMails());
+    public double getTotalExpenditure(Map<Integer, Mail> mails) {
+        return  KPSModel.calculateTotalExpenditure(mails);
     }
 
     public Map<Integer, Event> getAllEvens() {
         return kpsModel.getAllEvens();
     }
 
-    public Map<Integer, Mail> getAllMails() {
-        return kpsModel.getAllMails();
+    public Map<Integer, Mail> getAllMails(LocalDate startDate, LocalDate endDate) {
+        return kpsModel.getMailsByStartAndEndTime(startDate, endDate);
     }
 
     public double getAverageDeliveryTime(String origin, String destination, Priority priority) {

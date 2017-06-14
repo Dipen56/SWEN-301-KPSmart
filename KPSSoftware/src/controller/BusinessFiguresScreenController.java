@@ -166,15 +166,14 @@ public class BusinessFiguresScreenController implements Initializable {
             } else if (endDatePicker.getValue() == null) {
                 dateErrorLabel.setText("Please Select a End Date");
             } else {
-                //System.out.println((LocalDate) startDatePicker.getValue());
-                //TODO: use the start and end data to change these values
-                //@ to use the date picker use the method .getValue() this will then cast it to LocalDate
-                // it will be in the format 2017-06-14 then uncomment the code below to update the labels
-//            Map<Integer, Mail> criticalMails = kpsMain.getCriticalRoutes();
-//            revenueLabel.setText(String.format("%.2f", kpsMain.getTotalRevenue()));
-//            expenditureLabel.setText(String.format("%.2f", kpsMain.getTotalExpenditure()));
+                LocalDate startDate = (LocalDate) startDatePicker.getValue();
+                LocalDate endDate = (LocalDate) endDatePicker.getValue();
+
+           Map<Integer, Mail> mails = kpsMain.getAllMails(startDate,endDate);
+           revenueLabel.setText(String.format("%.2f", kpsMain.getTotalRevenue(mails)));
+          expenditureLabel.setText(String.format("%.2f", kpsMain.getTotalExpenditure(mails)));
 //            numberEventLabel.setText("" + kpsMain.getAllEvens().size());
-//            totalMailLabel.setText("" + kpsMain.getAllMails().size());
+           totalMailLabel.setText("" + mails.size());
             }
         }
     }

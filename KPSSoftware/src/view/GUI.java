@@ -22,7 +22,7 @@ public class GUI extends Application {
         primaryStage.setResizable(false);
         //primaryStage.setAlwaysOnTop(true);
         //loads the FXML file for the login scene
-        Parent root = FXMLLoader.load(GUI.class.getResource("/fxml/login screen.fxml"));
+        Parent root = FXMLLoader.load(GUI.class.getResource("/fxml/LoginScreen.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();

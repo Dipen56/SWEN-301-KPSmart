@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Dipen on 25/05/2017.
  */
-public class ManageUserController implements Initializable {
+public class ManageUserScreenController implements Initializable {
     private static KPSMain kpsMain;
     @FXML
     private ImageView avatar;
@@ -58,7 +58,7 @@ public class ManageUserController implements Initializable {
     private Button deleteButton;
 
 
-    public ManageUserController() {
+    public ManageUserScreenController() {
         KPSMain.setLoginScreenController(this);
     }
 
@@ -71,13 +71,13 @@ public class ManageUserController implements Initializable {
     public void changeScenes(ActionEvent event) throws IOException {
 
         if (event.toString().contains("ChangePassword")) {
-            Parent changePasswordScreen = FXMLLoader.load(ManageUserController.class.getResource("/fxml/ChangePassword.fxml"));
+            Parent changePasswordScreen = FXMLLoader.load(ManageUserScreenController.class.getResource("/fxml/ChangePasswordScreen.fxml"));
             Scene changePasswordScene = new Scene(changePasswordScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(changePasswordScene);
             tempStage.show();
         } else if (event.toString().contains("addNewUser")) {
-            Parent addNewUserScreen = FXMLLoader.load(ManageUserController.class.getResource("/fxml/AddNewUser.fxml"));
+            Parent addNewUserScreen = FXMLLoader.load(ManageUserScreenController.class.getResource("/fxml/AddNewUserScreen.fxml"));
             Scene addNewUserScene = new Scene(addNewUserScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(addNewUserScene);
@@ -85,7 +85,7 @@ public class ManageUserController implements Initializable {
         } else if (event.toString().contains("logout")) {
             //TODO; POP up dialog box to ask the user if they are sure want to logout
             DialogBox.LogoutyMsg("Logout", "Are you sure to logout?");
-            Parent loginScreen = FXMLLoader.load(ManageUserController.class.getResource("/fxml/login screen.fxml"));
+            Parent loginScreen = FXMLLoader.load(ManageUserScreenController.class.getResource("/fxml/LoginScreen.fxml"));
             Scene loginScene = new Scene(loginScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(loginScene);
@@ -127,7 +127,7 @@ public class ManageUserController implements Initializable {
             Staff staff = kpsMain.getSelectedUser(content[0], content[1]);
 
             firstName.setText("First Name: " + staff.getFirstName());
-            userImage.setImage(new Image(ManageUserController.class.getResourceAsStream("/img/" + (staff.id % 5) + ".png")));
+            userImage.setImage(new Image(ManageUserScreenController.class.getResourceAsStream("/img/" + (staff.id % 5) + ".png")));
             lastName.setText("Last Name: " + staff.getLastName());
             emailAddress.setText("Email: " + staff.getEmail());
             phoneNumber.setText("Phone: " + staff.getPhoneNumber());
@@ -158,7 +158,7 @@ public class ManageUserController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpsMain.getCurrentStaff();
         userLable.setText(staff.getFirstName());
-        avatar.setImage(new Image(ManageUserController.class.getResourceAsStream("/img/" + (staff.id % 5) + ".png")));
+        avatar.setImage(new Image(ManageUserScreenController.class.getResourceAsStream("/img/" + (staff.id % 5) + ".png")));
         for (Staff s : kpsMain.getAllUsers().values()) {
             selectUser.getItems().add(s.getFirstName() + " " + s.getLastName());
         }
@@ -169,7 +169,7 @@ public class ManageUserController implements Initializable {
     private void clearContent(ActionEvent event) {
         Parent changePasswordScreen = null;
         try {
-            changePasswordScreen = FXMLLoader.load(ManageUserController.class.getResource("/fxml/manage user.fxml"));
+            changePasswordScreen = FXMLLoader.load(ManageUserScreenController.class.getResource("/fxml/ManageUserScreen.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -182,7 +182,7 @@ public class ManageUserController implements Initializable {
     private void returnUserManagement(ActionEvent event) {
         Parent userManagementscreen = null;
         try {
-            userManagementscreen = FXMLLoader.load(ManageUserController.class.getResource("/fxml/user settings.fxml"));
+            userManagementscreen = FXMLLoader.load(ManageUserScreenController.class.getResource("/fxml/UserSettingScreen.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -198,6 +198,6 @@ public class ManageUserController implements Initializable {
      * @param kpsMain
      */
     public static void setKPSMain(KPSMain kpsMain) {
-        ManageUserController.kpsMain = kpsMain;
+        ManageUserScreenController.kpsMain = kpsMain;
     }
 }

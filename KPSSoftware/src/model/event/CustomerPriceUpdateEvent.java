@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
  * @version 2017/5/20
  */
 public class CustomerPriceUpdateEvent extends Event {
+
     /**
      * The id of the updated route
      */
@@ -93,12 +94,12 @@ public class CustomerPriceUpdateEvent extends Event {
     @Override
     public String toString() {
         return "CustomerPriceUpdateEvent{" +
-                super.toString() +
+                "id=" + id +
                 ", routeId=" + routeId +
                 ", oldPricePerGram=" + oldPricePerGram +
-                ", newPricePerGram=" + newPricePerGram +
                 ", oldPricePerVolume=" + oldPricePerVolume +
+                ", newPricePerGram=" + newPricePerGram +
                 ", newPricePerVolume=" + newPricePerVolume +
-                '}';
+                "}";
     }
 }

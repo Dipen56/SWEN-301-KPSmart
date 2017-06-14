@@ -4,6 +4,7 @@ import model.location.Location;
 import model.location.NZLocation;
 import model.route.Route;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -45,6 +46,11 @@ public class Mail {
     private Priority priority;
 
     /**
+     * The date when the mail is delivered
+     */
+    private LocalDate deliveryDate;
+
+    /**
      * A series of routes that connects origin to destination.
      * <p>
      * IMPORTANT: Mail object itself is not responsible for checking the validity of the routes. Make sure it's valid
@@ -62,7 +68,7 @@ public class Mail {
      * @param volume
      * @param priority
      */
-    public Mail(int id, NZLocation origin, Location destination, double weight, double volume, Priority priority) {
+    public Mail(int id, NZLocation origin, Location destination, double weight, double volume, Priority priority, LocalDate deliveryDate) {
         if (origin.id == destination.id) {
             throw new IllegalArgumentException("Invalid mail: origin and destination cannot be the same");
         }
@@ -73,6 +79,21 @@ public class Mail {
         this.weight = weight;
         this.volume = volume;
         this.priority = priority;
+        this.deliveryDate = deliveryDate;
+    }
+
+    /**
+     * @return the origin of this mail
+     */
+    public NZLocation getOrigin() {
+        return this.origin;
+    }
+
+    /**
+     * @return the destination of this mail
+     */
+    public Location getDestination() {
+        return this.destination;
     }
 
     /**
@@ -97,24 +118,17 @@ public class Mail {
     }
 
     /**
+     * @return teh date when this mail gets delivered
+     */
+    public LocalDate getDeliveryDate() {
+        return this.deliveryDate;
+    }
+
+    /**
      * @return the series of routes that connects origin to destination.
      */
     public List<Route> getRoutes() {
         return routes;
-    }
-
-    /**
-     * @return the origin of this mail
-     */
-    public NZLocation getOrigin() {
-        return this.origin;
-    }
-
-    /**
-     * @return the destination of this mail
-     */
-    public Location getDestination() {
-        return this.destination;
     }
 
     /**
@@ -177,13 +191,32 @@ public class Mail {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof Mail))
+            return false;
+
+        Mail mail = (Mail) o;
+
+        return id == mail.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
     public String toString() {
         return "Mail{" +
-                "origin=" + origin +
+                "id=" + id +
+                ", origin=" + origin +
                 ", destination=" + destination +
                 ", weight=" + weight +
                 ", volume=" + volume +
                 ", priority=" + priority +
+                ", routes=" + routes +
                 '}';
     }
 }

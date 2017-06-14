@@ -13,64 +13,84 @@ import model.route.RouteType;
 import model.route.RoutingSystem;
 import model.staff.Staff;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/*
-TODO: consider another approach for implementing Database TRANSACTION:
-      1. record all of results in each step, e.g. bool_1, bool_2, bool_3, ...
-      2. if (!(bool_1 && bool_2 && bool_3 ... )) {
-             reloadEverythingFromXML();
-             return false;
-         } else {
-             return true;
-         }
- */
-
 /**
- * This class is a wrapper class that contains all model objects
+ * This class is the top-level class that contains all model-side objects
  *
  * @author Hector
  * @version 2017/5/20
  */
 public class KPSModel {
 
-    // ================================= Key modules ================================
-
+    /**
+     * The routing system manages all routes in this programme. It is a graph where each locations is represented as a
+     * node, and each route is represented as an edge. In addition, it uses Dijkstra algorithm internally to perform
+     * path-finding tasks.
+     */
     private RoutingSystem routingSystem;
 
-
-    // ================ fields for maintaining programme status =====================
-
+    /**
+     * The staff currently logged in.
+     */
     private Staff currentStaff;
 
+    /**
+     * The max id of events. This is used to help remember what id we should use when a new event is logged.
+     */
     private int maxEventId;
+
+    /**
+     * The max id of locations. This is used to help remember what id we should use when a new location is created.
+     */
     private int maxLocationId;
+
+    /**
+     * The max id of mails. This is used to help remember what id we should use when a new mail is created.
+     */
     private int maxMailId;
+
+    /**
+     * The max id of routes. This is used to help remember what id we should use when a new route is created.
+     */
     private int maxRouteId;
+
+    /**
+     * The max id of staffs. This is used to help remember what id we should use when a new staff is created.
+     */
     private int maxStaffId;
 
-
-    // ================= cached data (data from XML files) ======================
-
+    /**
+     * A cached collection of all events in the system as a map, where the key is the id, and the value is the Event
+     * object.
+     */
     private Map<Integer, Event> events;
 
     /**
-     * All locations in the system. They are maintained as a HashMap, where the key is the id of location, and the value
-     * is the location itself.
+     * A cached collection of all locations in the system as a map, where the key is the id, and the value is the
+     * Location object.
      */
     private Map<Integer, Location> locations;
 
+    /**
+     * A cached collection of all mails in the system as a map, where the key is the id, and the value is the Mail
+     * object.
+     */
     private Map<Integer, Mail> mails;
 
-
     /**
-     * All routes in the system. They are maintained as a HashMap, where the key is the id of route, and the value is
-     * the route itself.
+     * A cached collection of all routes in the system as a map, where the key is the id, and the value is the Route
+     * object.
      */
     private Map<Integer, Route> routes;
 
+    /**
+     * A cached collection of all staffs in the system as a map, where the key is the id, and the value is the Staff
+     * object.
+     */
     private Map<Integer, Staff> registeredStaffs;
 
     /**
@@ -91,6 +111,9 @@ public class KPSModel {
         routingSystem = new RoutingSystem(routes);
         prepareRoutingSystem();
         prepareOriginsAndDestinations();
+
+        // Just a diagnosis
+        checkValidityForRoutesOfAllMails();
     }
 
     // ============================================================
@@ -112,6 +135,32 @@ public class KPSModel {
         return this.events.get(id);
     }
 
+    /**
+     * Find all events within the given date range.
+     *
+     * @param startDate wanted start date
+     * @param endDate   wanted end date
+     * @return wanted events as a map, where the key is the id of the Event, and the value is the Event object
+     */
+    public Map<Integer, Event> getEventsByStartAndEndTime(LocalDate startDate, LocalDate endDate) {
+        // end date cannot be before start data
+        if (endDate.isBefore(startDate)) {
+            return null;
+        }
+
+        Map<Integer, Event> wantedEvents = new HashMap<>();
+
+        this.events.forEach((id, event) -> {
+            LocalDate eventDate = event.getTimeStamp().toLocalDate();
+
+            if (!startDate.isAfter(eventDate) && !endDate.isBefore(eventDate)) {
+                wantedEvents.put(event.id, event);
+            }
+        });
+
+        return wantedEvents;
+    }
+
     // ============================================================
     //                 Methods for Locations
     // ============================================================
@@ -129,7 +178,6 @@ public class KPSModel {
     public Set<Location> getAvailableDestinations() {
         return this.destinations;
     }
-
 
     // ============================================================
     //                   Methods for Mails
@@ -151,7 +199,7 @@ public class KPSModel {
         Location destination = findOrCreateLocationByString(destinationString);
 
         maxMailId++;
-        Mail mail = new Mail(maxMailId, origin, destination, weight, volume, priority);
+        Mail mail = new Mail(maxMailId, origin, destination, weight, volume, priority, LocalDate.now());
 
         // let the routing system try to find a valid chain of routes
         List<Route> routes = routingSystem.findRoutes(mail);
@@ -198,50 +246,6 @@ public class KPSModel {
      */
     public Mail getMailById(int id) {
         return this.mails.get(id);
-    }
-
-    /**
-     * @param id the id of mail that we want to get revenue from
-     * @return the revenue of the mail, or -1 if the given id is not in our system.
-     */
-    public double getMailRevenue(int id) {
-        Mail mail = getMailById(id);
-
-        if (mail == null) {
-            return -1;
-        }
-
-        return mail.getRevenue();
-    }
-
-    /**
-     * @param id the id of mail that we want to get expenditure from
-     * @return the expenditure of the mail, or -1 if the given id is not in our system.
-     */
-    public double getMailExpenditure(int id) {
-        Mail mail = getMailById(id);
-
-        if (mail == null) {
-            return -1;
-        }
-
-        return mail.getExpenditure();
-    }
-
-    /**
-     * @param tempMail the the temporary mail (not recorded from the system) that we want to get revenue from
-     * @return the revenue of the mail
-     */
-    public double getTempMailRevenue(Mail tempMail) {
-        return tempMail.getRevenue();
-    }
-
-    /**
-     * @param tempMail the temporary mail (not recorded from the system) that we want to get expenditure from
-     * @return the expenditure of the mail, or -1 if the given id is not in our system.
-     */
-    public double getTempMailExpenditure(Mail tempMail) {
-        return tempMail.getExpenditure();
     }
 
     /**
@@ -304,6 +308,76 @@ public class KPSModel {
         });
 
         return wantedMails;
+    }
+
+    /**
+     * Find all mails within the given date range.
+     *
+     * @param startDate wanted start date
+     * @param endDate   wanted end date
+     * @return wanted mails as a map, where the key is the id of the Mail, and the value is the Mail object
+     */
+    public Map<Integer, Mail> getMailsByStartAndEndTime(LocalDate startDate, LocalDate endDate) {
+        // end date cannot be before start data
+        if (endDate.isBefore(startDate)) {
+            return null;
+        }
+
+        Map<Integer, Mail> wantedMails = new HashMap<>();
+
+        this.mails.forEach((id, mail) -> {
+            LocalDate deliveryDate = mail.getDeliveryDate();
+
+            if (!startDate.isAfter(deliveryDate) && !endDate.isBefore(deliveryDate)) {
+                wantedMails.put(mail.id, mail);
+            }
+        });
+
+        return wantedMails;
+    }
+
+    /**
+     * @param id the id of mail that we want to get revenue from
+     * @return the revenue of the mail, or -1 if the given id is not in our system.
+     */
+    public double getMailRevenue(int id) {
+        Mail mail = getMailById(id);
+
+        if (mail == null) {
+            return -1;
+        }
+
+        return mail.getRevenue();
+    }
+
+    /**
+     * @param id the id of mail that we want to get expenditure from
+     * @return the expenditure of the mail, or -1 if the given id is not in our system.
+     */
+    public double getMailExpenditure(int id) {
+        Mail mail = getMailById(id);
+
+        if (mail == null) {
+            return -1;
+        }
+
+        return mail.getExpenditure();
+    }
+
+    /**
+     * @param tempMail the the temporary mail (not recorded from the system) that we want to get revenue from
+     * @return the revenue of the mail
+     */
+    public double getTempMailRevenue(Mail tempMail) {
+        return tempMail.getRevenue();
+    }
+
+    /**
+     * @param tempMail the temporary mail (not recorded from the system) that we want to get expenditure from
+     * @return the expenditure of the mail, or -1 if the given id is not in our system.
+     */
+    public double getTempMailExpenditure(Mail tempMail) {
+        return tempMail.getExpenditure();
     }
 
     /**
@@ -422,7 +496,6 @@ public class KPSModel {
      */
     public boolean addRoute(String startString, String endString, RouteType routeType, double duration, String transportFirm,
                             double pricePerGram, double pricePerVolume, double costPerGram, double costPerVolume) {
-
         // do not add same route again
         for (Route route : this.routes.values()) {
             if (route.getStartLocation().getLocationName().equalsIgnoreCase(startString)
@@ -548,7 +621,6 @@ public class KPSModel {
      */
     public boolean createNewStaff(String userName, String password, boolean isManager, String firstName,
                                   String lastName, String email, String phoneNumber) {
-
         // do not add same staff again
         for (Staff staff : this.registeredStaffs.values()) {
             if ((staff.getFirstName().equals(firstName) && staff.getLastName().equals(lastName))
@@ -608,7 +680,6 @@ public class KPSModel {
      */
     public boolean updateStaff(int idToUpdate, String newUserName, String newPassword, boolean newIsManager, String newFirstName,
                                String newLastName, String newEmail, String newPhoneNumber) {
-
         // if there is no match for the given id, return false;do not add same staff again
         if (registeredStaffs.values().stream().noneMatch(staff -> staff.id == idToUpdate)) {
             return false;
@@ -642,7 +713,6 @@ public class KPSModel {
         }
     }
 
-
     // =========================================================================
     //                     STATIC (HELPER) METHODS
     // =========================================================================
@@ -672,11 +742,9 @@ public class KPSModel {
         return calculateTotalRevenue(mails) - calculateTotalExpenditure(mails);
     }
 
-
     // =========================================================================
     //                         PRIVATE METHODS
     // =========================================================================
-
 
     /**
      * Load data from XML files.
@@ -693,6 +761,20 @@ public class KPSModel {
         maxMailId = XMLDriver.getMaxMailId();
         maxRouteId = XMLDriver.getMaxRouteId();
         maxStaffId = XMLDriver.getMaxStaffId();
+    }
+
+    /**
+     * Check the validity of all mails, so they won't contain malformed route chain.
+     * <p>
+     * NOTE: doing this cannot prevent all errors in reality. It's merely just a diagnosis process. But the system
+     * should be working properly if the fake data we prepared in XMLs has no errors in them.
+     */
+    private void checkValidityForRoutesOfAllMails() {
+        mails.values().forEach(mail -> {
+            if (!isValidRouteChain(mail.getRoutes())) {
+                System.err.println("[ERROR]There is a mail (id: " + mail.id + ") in the database (mails.xml file) that the system cannot find valid routes for it.");
+            }
+        });
     }
 
     /**

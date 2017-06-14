@@ -21,10 +21,13 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * This class represent a XML writer/reader.
@@ -595,7 +598,8 @@ public class XMLDriver {
         String weight = String.valueOf(mail.getWeight());
         String volume = String.valueOf(mail.getVolume());
         String priority = mail.getPriority().toString();
-
+        String deliveryDate = mail.getDeliveryDate().toString();
+        String routes = mail.getRoutes().stream().map(route -> String.valueOf(route.id)).collect(Collectors.joining(","));
 
         // Update the maxID
         document.getRootElement().addAttribute("maxId", id);
@@ -611,6 +615,8 @@ public class XMLDriver {
         attachChildNode(newMail, "weight", weight);
         attachChildNode(newMail, "volume", volume);
         attachChildNode(newMail, "priority", priority);
+        attachChildNode(newMail, "deliveryDate", deliveryDate);
+        attachChildNode(newMail, "routes", routes);
 
         mails.add(newMail);
 
@@ -624,6 +630,7 @@ public class XMLDriver {
      * @return a Map of mails where the key is mail id, and the value is the Mail object
      */
     public static Map<Integer, Mail> readMails() {
+        Map<Integer, Route> routesMap = readRoutes();
         Map<Integer, Mail> mails = new HashMap<>();
 
         // read from XML file to get the existing mails
@@ -644,8 +651,16 @@ public class XMLDriver {
             double weight = Float.parseFloat(node.valueOf("./weight"));
             double volume = Float.parseFloat(node.valueOf("./volume"));
             Priority priority = Priority.createPriorityFrom(node.valueOf("./priority"));
+            LocalDate deliveryDate = LocalDate.parse(node.valueOf("./deliveryDate"));
 
-            Mail mail = new Mail(id, origin, destination, weight, volume, priority);
+            Mail mail = new Mail(id, origin, destination, weight, volume, priority, deliveryDate);
+
+            List<Route> routes = Arrays.stream(node.valueOf("./routes").split(","))
+                    .map(idString -> routesMap.get(Integer.parseInt(idString)))
+                    .collect(Collectors.toList());
+
+            mail.setRoutes(routes);
+
             mails.put(id, mail);
         });
 
@@ -843,7 +858,7 @@ public class XMLDriver {
         String duration = String.valueOf(route.getDuration());
         String transportFirm = route.getTransportFirm();
         String pricePerGram = String.valueOf(route.getPricePerGram());
-        String pricePerVolume = String.valueOf(route.getCostPerVolume());
+        String pricePerVolume = String.valueOf(route.getPricePerVolume());
         String costPerGram = String.valueOf(route.getCostPerGram());
         String costPerVolume = String.valueOf(route.getCostPerVolume());
         String isActive = String.valueOf(route.isActive());
@@ -870,33 +885,6 @@ public class XMLDriver {
         // write the DOM tree back into XML
         return writeDocumentTo(document, ROUTE_XML_WRITE_PATH);
     }
-
-//    /**
-//     * Delete the route
-//     *
-//     * @param routeId the id of the route that needs to be updated
-//     * @return true if the route is no longer there, or false if the action failed.
-//     */
-//    public static boolean deactivateRoute(int routeId) {
-//        // read from XML file to get the existing locations
-//        Document document = readDocumentFrom(ROUTE_XML_FILE_NAME);
-//        if (document == null) {
-//            return false;
-//        }
-//
-//        Node existingNode = document.selectSingleNode("/Routes/*[@id='" + routeId + "']");
-//
-//        // if we can't find this id in XML file, then return true. This is the idempotentness of Delete.
-//        if (existingNode == null) {
-//            return true;
-//        }
-//
-//        // remove the existing route with the given id
-//        existingNode.detach();
-//
-//        // write the DOM tree back into XML
-//        return writeDocumentTo(document, ROUTE_XML_WRITE_PATH);
-//    }
 
     // ===============================================================
     //                STAFFS

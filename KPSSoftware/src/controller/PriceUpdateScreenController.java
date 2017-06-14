@@ -32,7 +32,7 @@ public class PriceUpdateScreenController implements Initializable {
     @FXML
     private Label errorLabel;
     @FXML
-    private ComboBox routeCombobox;
+    private ComboBox<String> routeCombobox;
     @FXML
     private TextField weightTextfield;
     @FXML
@@ -66,31 +66,31 @@ public class PriceUpdateScreenController implements Initializable {
     public void changeScenes(ActionEvent event) throws IOException {
 
         if (event.toString().contains("sendMail")) {
-            Parent sendMailScreen = FXMLLoader.load(PriceUpdateScreenController.class.getResource("/fxml/send mail screen.fxml"));
+            Parent sendMailScreen = FXMLLoader.load(PriceUpdateScreenController.class.getResource("/fxml/SendMailScreen.fxml"));
             Scene sendMailScene = new Scene(sendMailScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(sendMailScene);
             tempStage.show();
         } else if (event.toString().contains("routeDiscontinue")) {
-            Parent routeDiscontinueScreen = FXMLLoader.load(PriceUpdateScreenController.class.getResource("/fxml/route discontinue screen.fxml"));
+            Parent routeDiscontinueScreen = FXMLLoader.load(PriceUpdateScreenController.class.getResource("/fxml/RouteDiscontinueScreen.fxml"));
             Scene routeDiscontinueScene = new Scene(routeDiscontinueScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(routeDiscontinueScene);
             tempStage.show();
         } else if (event.toString().contains("transportCostUpdate")) {
-            Parent transportCostUpdateScreen = FXMLLoader.load(PriceUpdateScreenController.class.getResource("/fxml/transport cost screen.fxml"));
+            Parent transportCostUpdateScreen = FXMLLoader.load(PriceUpdateScreenController.class.getResource("/fxml/TransportCostScreen.fxml"));
             Scene transportCostUpdateScene = new Scene(transportCostUpdateScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(transportCostUpdateScene);
             tempStage.show();
         } else if (event.toString().contains("newRoute")) {
-            Parent newRouteScreen = FXMLLoader.load(PriceUpdateScreenController.class.getResource("/fxml/new route screen.fxml"));
+            Parent newRouteScreen = FXMLLoader.load(PriceUpdateScreenController.class.getResource("/fxml/NewRouteScreen.fxml"));
             Scene newRouteScene = new Scene(newRouteScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(newRouteScene);
             tempStage.show();
         } else if (event.toString().contains("businessFigures")) {
-            Parent businessFiguresScreen = FXMLLoader.load(PriceUpdateScreenController.class.getResource("/fxml/business figures screen.fxml"));
+            Parent businessFiguresScreen = FXMLLoader.load(PriceUpdateScreenController.class.getResource("/fxml/BusinessFiguresScreen.fxml"));
             Scene businessFiguresScene = new Scene(businessFiguresScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(businessFiguresScene);
@@ -100,7 +100,7 @@ public class PriceUpdateScreenController implements Initializable {
         } else if (event.toString().contains("logout")) {
             //TODO; POP up dialog box to ask the user if they are sure want to logout
             //DialogBox.LogoutyMsg("Logout", "Are you sure you want to logout.");
-            Parent loginScreen = FXMLLoader.load(PriceUpdateScreenController.class.getResource("/fxml/login screen.fxml"));
+            Parent loginScreen = FXMLLoader.load(PriceUpdateScreenController.class.getResource("/fxml/LoginScreen.fxml"));
             Scene loginScene = new Scene(loginScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(loginScene);
@@ -160,10 +160,8 @@ public class PriceUpdateScreenController implements Initializable {
             reviewLogsButton.setDisable(false);
         }
         for (Integer i : kpsMain.getAllRoutes().keySet()) {
-            Route root = kpsMain.getAllRoutes().get(i);
-            if (root.isActive()) {
-                routeCombobox.getItems().add(root.id + " " + root.getStartLocation().getLocationName() + " ->" + root.getEndLocation().getLocationName() + " : " + root.routeType.toString());
-            }
+            Route route = kpsMain.getAllRoutes().get(i);
+            routeCombobox.getItems().add(route.id + " " + route.getStartLocation().getLocationName() + " ->" + route.getEndLocation().getLocationName() + " : " + route.routeType.toString());
         }
         notificationLabel.setVisible(false);
         originLabel.setVisible(false);
@@ -178,7 +176,7 @@ public class PriceUpdateScreenController implements Initializable {
     private void clearContent(ActionEvent event) {
         Parent priceUpdateScreen = null;
         try {
-            priceUpdateScreen = FXMLLoader.load(PriceUpdateScreenController.class.getResource("/fxml/price update screen.fxml"));
+            priceUpdateScreen = FXMLLoader.load(PriceUpdateScreenController.class.getResource("/fxml/PriceUpdateScreen.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -192,7 +190,7 @@ public class PriceUpdateScreenController implements Initializable {
     private void returnHome(ActionEvent event) {
         Parent homescreen = null;
         try {
-            homescreen = FXMLLoader.load(PriceUpdateScreenController.class.getResource("/fxml/home screen.fxml"));
+            homescreen = FXMLLoader.load(PriceUpdateScreenController.class.getResource("/fxml/HomeScreen.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }

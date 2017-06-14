@@ -275,6 +275,7 @@ public class Route {
                 ", pricePerVolume=" + pricePerVolume +
                 ", costPerGram=" + costPerGram +
                 ", costPerVolume=" + costPerVolume +
+                ", isActive=" + isActive +
                 '}';
     }
 }

@@ -15,8 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import main.KPSMain;
-import model.mail.Priority;
-import model.route.Route;
 import model.route.RouteType;
 import model.staff.Staff;
 
@@ -36,7 +34,7 @@ public class NewRouteScreenController implements Initializable {
     @FXML
     private Button reviewLogsButton;
     @FXML
-    private ComboBox typeCombobox;
+    private ComboBox<String> typeCombobox;
     @FXML
     private TextField weightPriceTextfield;
     @FXML
@@ -70,31 +68,31 @@ public class NewRouteScreenController implements Initializable {
     public void changeScenes(ActionEvent event) throws IOException {
 
         if (event.toString().contains("sendMail")) {
-            Parent sendMailScreen = FXMLLoader.load(NewRouteScreenController.class.getResource("/fxml/send mail screen.fxml"));
+            Parent sendMailScreen = FXMLLoader.load(NewRouteScreenController.class.getResource("/fxml/SendMailScreen.fxml"));
             Scene sendMailScene = new Scene(sendMailScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(sendMailScene);
             tempStage.show();
         } else if (event.toString().contains("routeDiscontinue")) {
-            Parent routeDiscontinueScreen = FXMLLoader.load(NewRouteScreenController.class.getResource("/fxml/route discontinue screen.fxml"));
+            Parent routeDiscontinueScreen = FXMLLoader.load(NewRouteScreenController.class.getResource("/fxml/RouteDiscontinueScreen.fxml"));
             Scene routeDiscontinueScene = new Scene(routeDiscontinueScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(routeDiscontinueScene);
             tempStage.show();
         } else if (event.toString().contains("customerPriceUpdate")) {
-            Parent priceUpdateScreen = FXMLLoader.load(NewRouteScreenController.class.getResource("/fxml/price update screen.fxml"));
+            Parent priceUpdateScreen = FXMLLoader.load(NewRouteScreenController.class.getResource("/fxml/PriceUpdateScreen.fxml"));
             Scene priceUpdateScene = new Scene(priceUpdateScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(priceUpdateScene);
             tempStage.show();
         } else if (event.toString().contains("transportCostUpdate")) {
-            Parent transportCostUpdateScreen = FXMLLoader.load(NewRouteScreenController.class.getResource("/fxml/transport cost screen.fxml"));
+            Parent transportCostUpdateScreen = FXMLLoader.load(NewRouteScreenController.class.getResource("/fxml/TransportCostScreen.fxml"));
             Scene transportCostUpdateScene = new Scene(transportCostUpdateScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(transportCostUpdateScene);
             tempStage.show();
         } else if (event.toString().contains("businessFigures")) {
-            Parent businessFiguresScreen = FXMLLoader.load(NewRouteScreenController.class.getResource("/fxml/business figures screen.fxml"));
+            Parent businessFiguresScreen = FXMLLoader.load(NewRouteScreenController.class.getResource("/fxml/BusinessFiguresScreen.fxml"));
             Scene businessFiguresScene = new Scene(businessFiguresScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(businessFiguresScene);
@@ -104,7 +102,7 @@ public class NewRouteScreenController implements Initializable {
         } else if (event.toString().contains("logout")) {
             //TODO; POP up dialog box to ask the user if they are sure want to logout
             //DialogBox.LogoutyMsg("Logout", "Are you sure you want to logout.");
-            Parent loginScreen = FXMLLoader.load(NewRouteScreenController.class.getResource("/fxml/login screen.fxml"));
+            Parent loginScreen = FXMLLoader.load(NewRouteScreenController.class.getResource("/fxml/LoginScreen.fxml"));
             Scene loginScene = new Scene(loginScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(loginScene);
@@ -122,31 +120,42 @@ public class NewRouteScreenController implements Initializable {
      */
     public void handleButtons(ActionEvent event) {
         if (event.toString().contains("accept")) {
-            //TODO: Test all these cases
-            if (!originTextfield.getText().matches("[a-zA-Z]+")
-                    || !destinationTextfield.getText().matches("[a-zA-Z]+")
-                    || companyTextfield.getText().equals("")
-                    || !durationTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?")
-                    || !weightPriceTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?")
-                    || !volumePriceTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?")
-                    || !weightCostTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?")
-                    || !volumeCostTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?")
-                    || typeCombobox.getValue()==null) {
-                errorLabel.setText("Please Fill in all the Information");
-            }else{
-                //TODO: i could add a way to check for 2dp but we need to...
-                String origin = originTextfield.getText();
-                String destination= destinationTextfield.getText();
-                RouteType type = RouteType.valueOf((String)typeCombobox.getValue());
-                double duration = Double.parseDouble(durationTextfield.getText());
-                String firm= companyTextfield.getText();
-                double pricePerGram = Double.parseDouble(weightPriceTextfield.getText());
-                double pricePerVolume = Double.parseDouble(volumePriceTextfield.getText());
-                double costPerGram = Double.parseDouble(weightCostTextfield.getText());
-                double costPerVolume = Double.parseDouble(volumeCostTextfield.getText());
-                kpsMain.addRoute(origin,destination,type,duration,firm,pricePerGram,pricePerVolume,costPerGram,costPerVolume);
-                errorLabel.setText("New Route Successfully Created");
+
+            String origin = originTextfield.getText().trim();
+            String destination = destinationTextfield.getText().trim();
+            String transportCompany = companyTextfield.getText().trim();
+            String durationString = durationTextfield.getText().trim();
+            String typeString = typeCombobox.getValue();
+            String WeightPriceString = weightPriceTextfield.getText().trim();
+            String VolumePriceString = volumePriceTextfield.getText().trim();
+            String WeightCostString = weightCostTextfield.getText().trim();
+            String VolumeCostString = volumeCostTextfield.getText().trim();
+
+            if (origin.equals("") || destination.equals("") || transportCompany.equals("") || durationString.equals("")
+                    || typeString == null || WeightPriceString.equals("") || VolumePriceString.equals("")
+                    || WeightCostString.equals("") || VolumeCostString.equals("")) {
+                errorLabel.setText("Please fill in all the fields");
+                return;
             }
+
+            if (!WeightPriceString.matches("[0-9]{1,13}(\\.[0-9]*)?")
+                    || !VolumePriceString.matches("[0-9]{1,13}(\\.[0-9]*)?")
+                    || !WeightCostString.matches("[0-9]{1,13}(\\.[0-9]*)?")
+                    || !VolumeCostString.matches("[0-9]{1,13}(\\.[0-9]*)?")
+                    || !durationString.matches("[0-9]{1,13}(\\.[0-9]*)?")) {
+                errorLabel.setText("Please fill in valid numbers for price, cost or duration");
+                return;
+            }
+
+            double WeightPrice = Double.parseDouble(WeightPriceString);
+            double VolumePrice = Double.parseDouble(VolumePriceString);
+            double WeightCost = Double.parseDouble(WeightCostString);
+            double VolumeCost = Double.parseDouble(VolumeCostString);
+            double duration = Double.parseDouble(durationString);
+            RouteType type = RouteType.createFromString(typeString);
+
+            kpsMain.addRoute(origin, destination, type, duration, transportCompany, WeightPrice, VolumePrice, WeightCost, VolumeCost);
+            errorLabel.setText("New Route Successfully Created");
 
         } else if (event.toString().contains("reset")) {
             clearContent(event);
@@ -182,7 +191,7 @@ public class NewRouteScreenController implements Initializable {
     private void clearContent(ActionEvent event) {
         Parent newRouteScreen = null;
         try {
-            newRouteScreen = FXMLLoader.load(NewRouteScreenController.class.getResource("/fxml/new route screen.fxml"));
+            newRouteScreen = FXMLLoader.load(NewRouteScreenController.class.getResource("/fxml/NewRouteScreen.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -196,7 +205,7 @@ public class NewRouteScreenController implements Initializable {
     private void returnHome(ActionEvent event) {
         Parent homescreen = null;
         try {
-            homescreen = FXMLLoader.load(NewRouteScreenController.class.getResource("/fxml/home screen.fxml"));
+            homescreen = FXMLLoader.load(NewRouteScreenController.class.getResource("/fxml/HomeScreen.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -13,6 +13,7 @@ import model.route.RouteType;
 import model.staff.Staff;
 import view.GUI;
 
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,10 +32,10 @@ public class KPSMain {
     // ================== controller objects =======================
     private static LoginScreenController loginScreenController;
     private static HomeScreenController homeScreenController;
-    private static UserSettingController userSettingController;
-    private static ChangePasswordController changePasswordController;
-    private static ManageUserController manageUserControllerl;
-    private static AddNewUserController addNewUserController;
+    private static UserSettingScreenController userSettingScreenController;
+    private static ChangePasswordScreenController changePasswordScreenController;
+    private static ManageUserScreenController manageUserScreenControllerl;
+    private static AddNewUserScreenController addNewUserScreenController;
     private static SendMailScreenController sendMailScreenController;
     private static RouteDiscontinueScreenController routeDiscontinueScreenController;
     private static PriceUpdateScreenController priceUpdateScreenController;
@@ -53,10 +54,10 @@ public class KPSMain {
 
         LoginScreenController.setKPSMain(this);
         HomeScreenController.setKPSMain(this);
-        UserSettingController.setKPSMain(this);
-        ChangePasswordController.setKPSMain(this);
-        ManageUserController.setKPSMain(this);
-        AddNewUserController.setKPSMain(this);
+        UserSettingScreenController.setKPSMain(this);
+        ChangePasswordScreenController.setKPSMain(this);
+        ManageUserScreenController.setKPSMain(this);
+        AddNewUserScreenController.setKPSMain(this);
         SendMailScreenController.setKPSMain(this);
         RouteDiscontinueScreenController.setKPSMain(this);
         PriceUpdateScreenController.setKPSMain(this);
@@ -167,14 +168,14 @@ public class KPSMain {
             loginScreenController = (LoginScreenController) controllers;
         } else if (controllers instanceof HomeScreenController) {
             homeScreenController = (HomeScreenController) controllers;
-        } else if (controllers instanceof UserSettingController) {
-            userSettingController = (UserSettingController) controllers;
-        } else if (controllers instanceof ChangePasswordController) {
-            changePasswordController = (ChangePasswordController) controllers;
-        } else if (controllers instanceof ManageUserController) {
-            manageUserControllerl = (ManageUserController) controllers;
-        } else if (controllers instanceof AddNewUserController) {
-            addNewUserController = (AddNewUserController) controllers;
+        } else if (controllers instanceof UserSettingScreenController) {
+            userSettingScreenController = (UserSettingScreenController) controllers;
+        } else if (controllers instanceof ChangePasswordScreenController) {
+            changePasswordScreenController = (ChangePasswordScreenController) controllers;
+        } else if (controllers instanceof ManageUserScreenController) {
+            manageUserScreenControllerl = (ManageUserScreenController) controllers;
+        } else if (controllers instanceof AddNewUserScreenController) {
+            addNewUserScreenController = (AddNewUserScreenController) controllers;
         } else if (controllers instanceof SendMailScreenController) {
             sendMailScreenController = (SendMailScreenController) controllers;
         } else if (controllers instanceof RouteDiscontinueScreenController) {
@@ -251,6 +252,27 @@ public class KPSMain {
     public Map<Integer, Mail> getCriticalRoutes() {
         return kpsModel.getCriticalMails();
     }
+
+    public double getTotalRevenue(Map<Integer, Mail> mails) {
+        return KPSModel.calculateTotalRevenue(mails);
+    }
+
+    public double getTotalExpenditure(Map<Integer, Mail> mails) {
+        return  KPSModel.calculateTotalExpenditure(mails);
+    }
+
+    public Map<Integer, Event> getAllEvens() {
+        return kpsModel.getAllEvens();
+    }
+
+    public Map<Integer, Mail> getAllMails(LocalDate startDate, LocalDate endDate) {
+        return kpsModel.getMailsByStartAndEndTime(startDate, endDate);
+    }
+
+    public double getAverageDeliveryTime(String origin, String destination, Priority priority) {
+        return kpsModel.calculateAverageDeliveryTime(origin, destination, priority);
+    }
+
 
     /**
      * =================================================================================================================
@@ -429,6 +451,21 @@ public class KPSMain {
 
         double averageRevenue = totalRevenue / numMails;
         double averageCost = totalCost / numMails;
+
+    }
+
+    public void demonstration_getBusinessFiguresBetweenTimeRange() {
+        String startDateString = "2017-01-01";
+        String endDateString = "2017-12-31";
+
+        LocalDate startDate = LocalDate.parse(startDateString);
+        LocalDate endDate = LocalDate.parse(endDateString);
+
+        Map<Integer, Mail> mails = kpsModel.getMailsByStartAndEndTime(startDate, endDate);
+
+        double revenue = KPSModel.calculateTotalRevenue(mails);
+        double expenditure = KPSModel.calculateTotalExpenditure(mails);
+        int numMails = mails.size();
     }
 
     /**
@@ -439,8 +476,8 @@ public class KPSMain {
     public static void main(String[] args) {
         KPSMain app = new KPSMain();
 
-        // for testing the data populater, and the writing functions of XMLDriver
-        new DataPopulater();
+        // prepare some data so we can have something to play with
+        new DataPopulater().populateSomethingForMeWillYa();
 
         javafx.application.Application.launch(GUI.class);
     }

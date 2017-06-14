@@ -37,8 +37,8 @@ public class MailDeliveryEvent extends Event {
     @Override
     public String toString() {
         return "MailDeliveryEvent{" +
-                super.toString() +
+                "id=" + id +
                 ", mailId=" + mailId +
-                '}';
+                "}";
     }
 }

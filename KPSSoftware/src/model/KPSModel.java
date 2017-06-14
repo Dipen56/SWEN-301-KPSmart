@@ -135,6 +135,32 @@ public class KPSModel {
         return this.events.get(id);
     }
 
+    /**
+     * Find all events within the given date range.
+     *
+     * @param startDate wanted start date
+     * @param endDate   wanted end date
+     * @return wanted events as a map, where the key is the id of the Event, and the value is the Event object
+     */
+    public Map<Integer, Event> getEventsByStartAndEndTime(LocalDate startDate, LocalDate endDate) {
+        // end date cannot be before start data
+        if (endDate.isBefore(startDate)) {
+            return null;
+        }
+
+        Map<Integer, Event> wantedEvents = new HashMap<>();
+
+        this.events.forEach((id, event) -> {
+            LocalDate eventDate = event.getTimeStamp().toLocalDate();
+
+            if (!startDate.isAfter(eventDate) && !endDate.isBefore(eventDate)) {
+                wantedEvents.put(event.id, event);
+            }
+        });
+
+        return wantedEvents;
+    }
+
     // ============================================================
     //                 Methods for Locations
     // ============================================================

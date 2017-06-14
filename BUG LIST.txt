@@ -38,4 +38,11 @@ Says: "Please fill in all information", should be invalid information.
 Don't select anything ("Please Select"), then click on discontinue button.
 Hits a nullpointer exception.
 
+5) Discontinue Routes, 
+Duniden -> Christchurch land.
+Click Discontinue, and then go back to Send mail, then back to 
+Discontinue Routes, Duniden -> Christchurch land is still there.
+When you click view, it is still marked as active. Need to do it twice 
+for it to be removed.
+
 

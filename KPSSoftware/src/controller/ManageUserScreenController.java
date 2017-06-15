@@ -83,7 +83,7 @@ public class ManageUserScreenController implements Initializable {
             tempStage.setScene(addNewUserScene);
             tempStage.show();
         } else if (event.toString().contains("logout")) {
-            DialogBox.LogoutyMsg("Logout", "Are you sure to logout?",event);
+            DialogBox.LogoutMsg("Logout", "Are you sure to logout?",event);
         }
     }
 

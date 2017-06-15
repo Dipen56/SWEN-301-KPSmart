@@ -58,7 +58,7 @@ public class DialogBox {
         window.show();
     }
 
-    public static void LogoutyMsg(String title, String message,ActionEvent events) {
+    public static void LogoutMsg(String title, String message, ActionEvent events) {
         Stage window = new Stage();
         tempReturn = false;
         // this makes it so you can't click on the window other then this one
@@ -72,7 +72,7 @@ public class DialogBox {
         // set the massage
         label.setText(message);
         // creates the button
-        Button ok = new Button("Ok");
+        Button ok = new Button("Log Out" );
         Button close = new Button("Close");
 
         ok.setOnAction(event -> {

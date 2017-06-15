@@ -114,7 +114,7 @@ public class BusinessFiguresScreenController implements Initializable {
             tempStage.setScene(reviewLogScene);
             tempStage.show();
         } else if (event.toString().contains("logout")) {
-            DialogBox.LogoutyMsg("Logout", "Are you sure to logout?",event);
+            DialogBox.LogoutMsg("Logout", "Are you sure to logout?",event);
         }
     }
 

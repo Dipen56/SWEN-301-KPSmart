@@ -19,7 +19,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.KPSMain;
 import model.event.*;
-import model.mail.Mail;
 import model.staff.Staff;
 import view.DialogBox;
 
@@ -93,7 +92,7 @@ public class ReviewLogsController implements Initializable {
             tempStage.setScene(businessFiguresScene);
             tempStage.show();
         } else if (event.toString().contains("logout")) {
-            DialogBox.LogoutyMsg("Logout", "Are you sure to logout?",event);
+            DialogBox.LogoutMsg("Logout", "Are you sure to logout?",event);
         }
     }
 

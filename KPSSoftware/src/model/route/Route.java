@@ -256,6 +256,9 @@ public class Route {
 
         return id == route.id;
     }
+//    public String getDescription(){
+//        String discription =routeType.name()+" "+
+//    }
 
     @Override
     public int hashCode() {

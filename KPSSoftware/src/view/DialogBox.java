@@ -1,5 +1,6 @@
 package view;
 
+import controller.HomeScreenController;
 import controller.ReviewLogsController;
 import controller.SendMailScreenController;
 import javafx.event.ActionEvent;
@@ -57,7 +58,7 @@ public class DialogBox {
         window.show();
     }
 
-    public static void LogoutyMsg(String title, String message) {
+    public static void LogoutyMsg(String title, String message,ActionEvent events) {
         Stage window = new Stage();
         tempReturn = false;
         // this makes it so you can't click on the window other then this one
@@ -75,7 +76,16 @@ public class DialogBox {
         Button close = new Button("Close");
 
         ok.setOnAction(event -> {
-            tempReturn = true;
+            try {
+                Parent loginScreen = FXMLLoader.load(DialogBox.class.getResource("/fxml/LoginScreen.fxml"));
+                Scene loginScene = new Scene(loginScreen);
+                Stage tempStage = (Stage) ((Node) events.getSource()).getScene().getWindow();
+                tempStage.setScene(loginScene);
+                tempStage.show();
+            }catch(Exception e){
+
+            }
+
             window.close();
         });
         close.setOnAction(event -> {
@@ -90,6 +100,7 @@ public class DialogBox {
         window.setScene(scene);
         window.show();
     }
+
 
 
 

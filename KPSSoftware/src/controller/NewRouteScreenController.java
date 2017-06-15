@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import main.KPSMain;
 import model.route.RouteType;
 import model.staff.Staff;
+import view.DialogBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -104,16 +105,7 @@ public class NewRouteScreenController implements Initializable {
             tempStage.setScene(reviewLogScene);
             tempStage.show();
         } else if (event.toString().contains("logout")) {
-            //TODO; POP up dialog box to ask the user if they are sure want to logout
-            //DialogBox.LogoutyMsg("Logout", "Are you sure you want to logout.");
-            Parent loginScreen = FXMLLoader.load(NewRouteScreenController.class.getResource("/fxml/LoginScreen.fxml"));
-            Scene loginScene = new Scene(loginScreen);
-            Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            tempStage.setScene(loginScene);
-            tempStage.show();
-        } else if (event.toString().contains("setting")) {
-            //TODO
-            System.out.println("setting");
+            DialogBox.LogoutyMsg("Logout", "Are you sure to logout?",event);
         }
     }
 

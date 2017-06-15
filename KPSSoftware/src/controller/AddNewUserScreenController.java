@@ -72,13 +72,7 @@ public class AddNewUserScreenController implements Initializable {
             tempStage.show();
 
         } else if (event.toString().contains("logout")) {
-            //TODO; POP up dialog box to ask the user if they are sure want to logout
-            DialogBox.LogoutyMsg("Logout", "Are you sure to logout?");
-            Parent loginScreen = FXMLLoader.load(AddNewUserScreenController.class.getResource("/fxml/LoginScreen.fxml"));
-            Scene loginScene = new Scene(loginScreen);
-            Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            tempStage.setScene(loginScene);
-            tempStage.show();
+            DialogBox.LogoutyMsg("Logout", "Are you sure to logout?",event);
         }
     }
 

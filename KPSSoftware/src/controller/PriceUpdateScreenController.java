@@ -123,7 +123,7 @@ public class PriceUpdateScreenController implements Initializable {
                 int routeID = Integer.parseInt(selectdText[0]);
                 Route route = kpsMain.getRoute(routeID);
                 double oldWeightPrice = route.getPricePerGram();
-                double oldVolumePrice = route.getCostPerVolume();
+                double oldVolumePrice = route.getPricePerVolume();
                 double weightCost = Double.parseDouble(weightTextfield.getText());
                 double volumeCost = Double.parseDouble(volumeTextfield.getText());
                 kpsMain.updateRouteCustomerPrice(routeID,weightCost,volumeCost);

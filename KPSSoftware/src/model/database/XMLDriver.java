@@ -1098,18 +1098,14 @@ public class XMLDriver {
     private static Document readDocumentFrom(String fileName) {
         String filePath;
 
-        if (Files.exists(Paths.get(RUNTIME_PATH + fileName))) {
-            filePath = RUNTIME_PATH + fileName;
-        } else {
-            filePath = RESOURCE_XML_FOLDER_PATH + fileName;
-        }
-
         try {
             // if the given file exist in programme path, read it; otherwise read from resource.
-            if (filePath.startsWith("/")) {
-                return reader.read(DataPopulater.class.getResource(filePath));
-            } else {
+            if (Files.exists(Paths.get(RUNTIME_PATH + fileName))) {
+                filePath = RUNTIME_PATH + fileName;
                 return reader.read(new File(filePath));
+            } else {
+                filePath = RESOURCE_XML_FOLDER_PATH + fileName;
+                return reader.read(DataPopulater.class.getResource(filePath));
             }
         } catch (DocumentException e) {
             logError(e);

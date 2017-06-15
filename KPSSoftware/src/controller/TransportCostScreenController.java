@@ -155,7 +155,7 @@ public class TransportCostScreenController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpsMain.getCurrentStaff();
-        userLable.setText(staff.getFirstName());
+        userLable.setText((staff.isManager() ? "Manager": "Clerk")+" "+ staff.getFirstName());
         avatar.setImage(new Image(TransportCostScreenController.class.getResourceAsStream("/img/" + (staff.id % 5) + ".png")));
         if (!staff.isManager()) {
             reviewLogsButton.setVisible(false);

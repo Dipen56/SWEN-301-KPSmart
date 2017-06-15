@@ -77,7 +77,7 @@ public class EventDialogController implements Initializable {
             String six = "Date: " + mailEvent.getDeliveryDate().toString();
             String thirteen = "Route: ";
             for (Route route : mailEvent.getRoutes()) {
-                thirteen = thirteen + route.toString();
+                thirteen = thirteen + route.getRouteDescription();
             }
             setEventInformation(one, two, three, four, five, six, "", "", "", "", "", "", thirteen);
         } else if (eventType instanceof CustomerPriceUpdateEvent) {

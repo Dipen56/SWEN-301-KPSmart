@@ -98,7 +98,7 @@ public class UserSettingScreenController implements Initializable {
      */
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpsMain.getCurrentStaff();
-        userLable.setText(staff.getFirstName());
+        userLable.setText((staff.isManager() ? "Manager": "Clerk")+" "+ staff.getFirstName());
         avatar.setImage(new Image(SendMailScreenController.class.getResourceAsStream("/img/" + (staff.id % 5) + ".png")));
         if (!staff.isManager()) {
             manageUser.setVisible(false);

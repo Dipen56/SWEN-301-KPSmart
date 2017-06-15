@@ -113,7 +113,7 @@ public class HomeScreenController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpsMain.getCurrentStaff();
-        userLable.setText(staff.getFirstName());
+        userLable.setText((staff.isManager() ? "Manager": "Clerk")+" "+ staff.getFirstName());
         avatar.setImage(new Image(SendMailScreenController.class.getResourceAsStream("/img/" + (staff.id % 5) + ".png")));
         ImageView settingImage = new ImageView(new Image(getClass().getResourceAsStream("/img/setting-icon.png")));
         settingImage.setFitHeight(55);

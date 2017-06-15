@@ -102,7 +102,7 @@
             <TableView fx:id="tabelView" layoutX="52.0" layoutY="133.0" prefHeight="377.0" prefWidth="481.0">
               <columns>
                 <TableColumn fx:id="idColumn" prefWidth="82.0" text="ID" />
-                <TableColumn fx:id="eventNameColumn" prefWidth="398.0" text="Event Name" />
+                <TableColumn fx:id="eventNameColumn" prefWidth="381.0" text="Event Name" />
               </columns>
             </TableView>
             </children>

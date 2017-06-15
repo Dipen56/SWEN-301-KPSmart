@@ -13,7 +13,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.event.*;
@@ -41,14 +43,18 @@ public class DialogBox {
         window.initModality(Modality.APPLICATION_MODAL);
         // sets the title
         window.setTitle(title);
+        Image iconImage = new Image(GUI.class.getResourceAsStream("/img/KPS.png"));
+        window.getIcons().add(iconImage);
         // sets the weight and height
         window.setMinHeight(200);
         window.setMinWidth(300);
         Label label = new Label();
         // set the massage
         label.setText(message);
+        label.setFont(new Font("System",16 ));
         // creates the button
         Button ok = new Button("Ok");
+        ok.setPrefWidth(90);
         ok.setOnAction(e -> window.close());
         VBox layout = new VBox(10);
         layout.getChildren().addAll(label, ok);
@@ -65,6 +71,8 @@ public class DialogBox {
         window.initModality(Modality.APPLICATION_MODAL);
         // sets the title
         window.setTitle(title);
+        Image iconImage = new Image(GUI.class.getResourceAsStream("/img/KPS.png"));
+        window.getIcons().add(iconImage);
         // sets the weight and height
         window.setMinHeight(200);
         window.setMinWidth(300);
@@ -93,8 +101,12 @@ public class DialogBox {
             window.close();
         });
 
+
+        HBox hBox = new HBox(10);
+        hBox.getChildren().addAll(ok,close);
+        hBox.setAlignment(Pos.CENTER);
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(label, ok, close);
+        layout.getChildren().addAll(label,hBox);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout);
         window.setScene(scene);

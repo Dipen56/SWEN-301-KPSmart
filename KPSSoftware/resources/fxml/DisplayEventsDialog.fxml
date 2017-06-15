@@ -54,7 +54,7 @@
                 <Font name="System Bold" size="16.0" />
             </font>
         </Label>
-        <Button fx:id="closeButton" layoutX="257.0" layoutY="489.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="discard-button" stylesheets="@../css/style.css" text="Close" textFill="WHITE">
+        <Button fx:id="closeButton" layoutX="250.0" layoutY="496.0" mnemonicParsing="false" onAction="#handleButtons" prefHeight="36.0" prefWidth="101.0" styleClass="discard-button" stylesheets="@../css/style.css" text="Close" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="21.0" />
             </font>
@@ -89,7 +89,7 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="labelThirteen" alignment="TOP_LEFT" layoutX="26.0" layoutY="381.0" prefHeight="92.0" prefWidth="542.0" text="Label" wrapText="true">
+      <Label fx:id="labelThirteen" alignment="TOP_LEFT" layoutX="27.0" layoutY="375.0" prefHeight="120.0" prefWidth="550.0" text="Label" wrapText="true">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

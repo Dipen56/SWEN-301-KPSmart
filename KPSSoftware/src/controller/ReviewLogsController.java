@@ -110,20 +110,23 @@ public class ReviewLogsController implements Initializable {
             EventTable evetTable = (EventTable) tabelView.getSelectionModel().getSelectedItem();
             Integer id = evetTable.getId();
             Event eventType = kpsMain.getAllEvent().get(id);
-            System.out.println(eventType);
-            if (eventType instanceof MailDeliveryEvent) {
-                Mail mailEvent = kpsMain.getMail(((MailDeliveryEvent) eventType).getMailId());
-                displayEventDialog();
-            }
-//            else if (eventType instanceof CustomerPriceUpdateEvent) {
-//                eventName = " Customer Price Update Event";
-//            } else if (eventType instanceof RouteAdditionEvent) {
-//                eventName = " Route Addition Event";
-//            } else if (eventType instanceof RouteDeactivationEvent) {
-//                eventName = " Route Deactivation Event";
-//            } else if (eventType instanceof TransportCostUpdateEvent) {
-//                eventName = " Transport Cost Update Event";
+            EventDialogController.setEvent(eventType);
+            //System.out.println(eventType);
+            displayEventDialog();
+
+//            if (eventType instanceof MailDeliveryEvent) {
+//                Mail mailEvent = kpsMain.getMail(((MailDeliveryEvent) eventType).getMailId());
+//                displayEventDialog();
 //            }
+////            else if (eventType instanceof CustomerPriceUpdateEvent) {
+////                eventName = " Customer Price Update Event";
+////            } else if (eventType instanceof RouteAdditionEvent) {
+////                eventName = " Route Addition Event";
+////            } else if (eventType instanceof RouteDeactivationEvent) {
+////                eventName = " Route Deactivation Event";
+////            } else if (eventType instanceof TransportCostUpdateEvent) {
+////                eventName = " Transport Cost Update Event";
+////            }
 
         }
     }

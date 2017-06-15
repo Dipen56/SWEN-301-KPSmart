@@ -43,6 +43,7 @@ public class KPSMain {
     private static NewRouteScreenController newRouteScreenController;
     private static BusinessFiguresScreenController businessFiguresScreenController;
     private static ReviewLogsController reviewLogsController;
+    private static EventDialogController eventDialogController;
 
     // ================== view objects =============================
 
@@ -66,6 +67,7 @@ public class KPSMain {
         NewRouteScreenController.setKPSMain(this);
         BusinessFiguresScreenController.setKPSMain(this);
         ReviewLogsController.setKPSMain(this);
+        EventDialogController.setKPSMain(this);
     }
 
 
@@ -192,6 +194,8 @@ public class KPSMain {
             businessFiguresScreenController = (BusinessFiguresScreenController) controllers;
         } else if (controllers instanceof ReviewLogsController) {
             reviewLogsController = (ReviewLogsController) controllers;
+        }else if (controllers instanceof EventDialogController) {
+            eventDialogController = (EventDialogController) controllers;
         }
     }
 

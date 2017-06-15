@@ -102,7 +102,11 @@ public class SendMailScreenController implements Initializable {
             tempStage.setScene(businessFiguresScene);
             tempStage.show();
         } else if (event.toString().contains("reviewLogs")) {
-            //TODO; still need to build the screen
+            Parent reviewLogScreen = FXMLLoader.load(SendMailScreenController.class.getResource("/fxml/ReviewLogScreen.fxml"));
+            Scene reviewLogScene = new Scene(reviewLogScreen);
+            Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            tempStage.setScene(reviewLogScene);
+            tempStage.show();
         } else if (event.toString().contains("logout")) {
             //TODO; POP up dialog box to ask the user if they are sure want to logout
             //DialogBox.LogoutyMsg("Logout", "Are you sure you want to logout.");

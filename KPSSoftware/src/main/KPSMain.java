@@ -389,7 +389,7 @@ public class KPSMain {
         kpsModel.updateTransportCost(idToUpdate, newCostPerGram, newCostPerVolume);
     }
 
-    //dilver mail
+    //deliver mail
     public void demonstration_deliverMail() {
         String originString = "wellington";   // case insensitive
         String destinationString = "moscow";   // case insensitive

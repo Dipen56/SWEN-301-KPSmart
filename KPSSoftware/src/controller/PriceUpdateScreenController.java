@@ -114,9 +114,10 @@ public class PriceUpdateScreenController implements Initializable {
      */
     public void handleButtons(ActionEvent event) {
         if (event.toString().contains("accept")) {
-            if(routeCombobox.getValue()==null ||(!weightTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(weightTextfield.getText()) < 0 )
-                    || (!volumeTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(volumeTextfield.getText()) < 0)){
+            if(routeCombobox.getValue()==null ){
                 errorLabel.setText("Please Fill in all the Information");
+            }else if(!weightTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?" )|| !volumeTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?")){
+                errorLabel.setText("Please fill in valid numbers in weight or volume");
             }else{
                 String[] selectdText = ((String) routeCombobox.getValue()).split(" ");
 

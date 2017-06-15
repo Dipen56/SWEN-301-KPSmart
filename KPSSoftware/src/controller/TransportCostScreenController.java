@@ -209,7 +209,7 @@ public class TransportCostScreenController implements Initializable {
         weightCostLabel.setText("Old Weight Cost: $" + String.format("%.2f", oldWeightCost) + " New Cost: $" + String.format("%.2f", route.getCostPerGram()));
         volumeCostLabel.setText("Old Volume Cost: $" + String.format("%.2f", oldVolumeCost) + " New Cost: $" + String.format("%.2f", route.getCostPerVolume()));
         transportFirmLabel.setText("Transport Firm: " + route.getTransportFirm());
-        durationLabel.setText("Duration "+ route.getDuration()+" Hours");
+        durationLabel.setText("Duration "+ String.format("%.2f", route.getDuration()) +" Hours");
         notificationLabel.setVisible(true);
         orginLabel.setVisible(true);
         destinationLabel.setVisible(true);

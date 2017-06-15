@@ -114,7 +114,7 @@ public class PriceUpdateScreenController implements Initializable {
      */
     public void handleButtons(ActionEvent event) {
         if (event.toString().contains("accept")) {
-            if(routeCombobox==null ||(!weightTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(weightTextfield.getText()) < 0 )
+            if(routeCombobox.getValue()==null ||(!weightTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(weightTextfield.getText()) < 0 )
                     || (!volumeTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(volumeTextfield.getText()) < 0)){
                 errorLabel.setText("Please Fill in all the Information");
             }else{
@@ -129,7 +129,6 @@ public class PriceUpdateScreenController implements Initializable {
                 kpsMain.updateRouteCustomerPrice(routeID,weightCost,volumeCost);
                 errorLabel.setText("Customer price was successfully updated");
                 customerPriceUpdateNotification(route,oldWeightPrice,oldVolumePrice);
-
             }
 
         } else if (event.toString().contains("reset")) {

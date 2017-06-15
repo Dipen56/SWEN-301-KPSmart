@@ -164,6 +164,11 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
+            <Label layoutX="376.0" layoutY="314.0" text="hours">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
             </children>
         </AnchorPane>
     </children>

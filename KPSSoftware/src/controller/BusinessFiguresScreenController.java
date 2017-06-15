@@ -137,8 +137,10 @@ public class BusinessFiguresScreenController implements Initializable {
             } else {
                 double averageTime = kpsMain.getAverageDeliveryTime((String) avgOriginComboBox.getValue(), (String) avgDestinationComboBox.getValue(), Priority.createPriorityFrom((String) avgPriorityComboBox.getValue()));
                 if (averageTime >= 0) {
+                    errorLabel.setText("");
                     averageDeliveryLabel.setText(String.format("%.2f", averageTime));
                 } else {
+                    averageDeliveryLabel.setText("0");
                     errorLabel.setText("Selected Route Unavailable");
                 }
             }

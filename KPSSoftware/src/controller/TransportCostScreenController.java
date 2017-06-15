@@ -119,13 +119,15 @@ public class TransportCostScreenController implements Initializable {
      */
     public void handleButtons(ActionEvent event) {
         if (event.toString().contains("accept")) {
-            if (routeCombobox == null || (!weightTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(weightTextfield.getText()) < 0)
-                    || (!volumeTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(volumeTextfield.getText()) < 0)) {
-                errorLabel.setText("Please Fill in all the Information");
+            if (routeCombobox == null) {
+                errorLabel.setText("Please fill in all the information");
+            } else if (!weightTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(weightTextfield.getText()) < 0
+                    || !volumeTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(volumeTextfield.getText()) < 0) {
+                errorLabel.setText("Please fill in valid values");
             } else {
-                String[] selectdText = (routeCombobox.getValue()).split(" ");
+                String[] selectedText = (routeCombobox.getValue()).split(" ");
 
-                int routeID = Integer.parseInt(selectdText[0]);
+                int routeID = Integer.parseInt(selectedText[0]);
                 Route route = kpsMain.getRoute(routeID);
                 double oldWeightCost = route.getCostPerGram();
                 double oldVolumeCost = route.getCostPerVolume();

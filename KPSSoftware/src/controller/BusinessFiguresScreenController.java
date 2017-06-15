@@ -165,10 +165,10 @@ public class BusinessFiguresScreenController implements Initializable {
                 LocalDate startDate = (LocalDate) startDatePicker.getValue();
                 LocalDate endDate = (LocalDate) endDatePicker.getValue();
 
-                Map<Integer, Mail> mails = kpsMain.getAllMails(startDate, endDate);
+                Map<Integer, Mail> mails = kpsMain.getMailsByStartEndTime(startDate, endDate);
                 revenueLabel.setText(String.format("%.2f", kpsMain.getTotalRevenue(mails)));
                 expenditureLabel.setText(String.format("%.2f", kpsMain.getTotalExpenditure(mails)));
-                numberEventLabel.setText("" + kpsMain.getAllEvens(startDate, endDate).size());
+                numberEventLabel.setText("" + kpsMain.getEvensByStartEndTime(startDate, endDate).size());
                 totalMailLabel.setText("" + mails.size());
             }
         }

@@ -42,6 +42,7 @@ public class KPSMain {
     private static TransportCostScreenController transportCostScreenController;
     private static NewRouteScreenController newRouteScreenController;
     private static BusinessFiguresScreenController businessFiguresScreenController;
+    private static ReviewLogsController reviewLogsController;
 
     // ================== view objects =============================
 
@@ -64,6 +65,7 @@ public class KPSMain {
         TransportCostScreenController.setKPSMain(this);
         NewRouteScreenController.setKPSMain(this);
         BusinessFiguresScreenController.setKPSMain(this);
+        ReviewLogsController.setKPSMain(this);
     }
 
 
@@ -188,6 +190,8 @@ public class KPSMain {
             newRouteScreenController = (NewRouteScreenController) controllers;
         } else if (controllers instanceof BusinessFiguresScreenController) {
             businessFiguresScreenController = (BusinessFiguresScreenController) controllers;
+        } else if (controllers instanceof ReviewLogsController) {
+            reviewLogsController = (ReviewLogsController) controllers;
         }
     }
 
@@ -261,17 +265,25 @@ public class KPSMain {
         return KPSModel.calculateTotalExpenditure(mails);
     }
 
-    public Map<Integer, Event> getAllEvens(LocalDate startDate, LocalDate endDate) {
+    public Map<Integer, Event> getEvensByStartEndTime(LocalDate startDate, LocalDate endDate) {
         return kpsModel.getEventsByStartAndEndTime(startDate, endDate);
     }
 
-    public Map<Integer, Mail> getAllMails(LocalDate startDate, LocalDate endDate) {
+    public Map<Integer, Mail> getMailsByStartEndTime(LocalDate startDate, LocalDate endDate) {
         return kpsModel.getMailsByStartAndEndTime(startDate, endDate);
     }
 
     public double getAverageDeliveryTime(String origin, String destination, Priority priority) {
         return kpsModel.calculateAverageDeliveryTime(origin, destination, priority);
 
+    }
+
+    public Map<Integer, Event> getAllEvent() {
+        return kpsModel.getAllEvens();
+    }
+
+    public Mail getMail(int id){
+        return kpsModel.getMailById(id);
     }
 
 

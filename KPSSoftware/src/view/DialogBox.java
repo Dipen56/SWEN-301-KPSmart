@@ -1,12 +1,23 @@
 package view;
 
+import controller.ReviewLogsController;
+import controller.SendMailScreenController;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.event.*;
+
+import java.io.IOException;
 
 
 /**
@@ -14,6 +25,8 @@ import javafx.stage.Stage;
  */
 public class DialogBox {
     public static boolean tempReturn = false;
+
+
 
     /**
      * this method will open a dialog box given the title and the massage.
@@ -77,5 +90,7 @@ public class DialogBox {
         window.setScene(scene);
         window.show();
     }
+
+
 
 }

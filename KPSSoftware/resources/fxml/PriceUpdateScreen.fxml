@@ -79,12 +79,12 @@
                         <Font name="System Bold" size="21.0" />
                     </font>
                 </Label>
-                <Label layoutX="107.0" layoutY="188.0" prefHeight="36.0" prefWidth="166.0" text="New Weight Cost :  $">
+                <Label layoutX="107.0" layoutY="188.0" prefHeight="36.0" prefWidth="166.0" text="New Weight Price :  $">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
-                <Label layoutX="107.0" layoutY="241.0" prefHeight="36.0" prefWidth="166.0" text="New Volume Cost:  $">
+                <Label layoutX="107.0" layoutY="241.0" prefHeight="36.0" prefWidth="166.0" text="New Volume Price:  $">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>

@@ -72,13 +72,7 @@ public class AddNewUserScreenController implements Initializable {
             tempStage.show();
 
         } else if (event.toString().contains("logout")) {
-            //TODO; POP up dialog box to ask the user if they are sure want to logout
-            DialogBox.LogoutyMsg("Logout", "Are you sure to logout?");
-            Parent loginScreen = FXMLLoader.load(AddNewUserScreenController.class.getResource("/fxml/LoginScreen.fxml"));
-            Scene loginScene = new Scene(loginScreen);
-            Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            tempStage.setScene(loginScene);
-            tempStage.show();
+            DialogBox.LogoutMsg("Logout", "Are you sure to logout?",event);
         }
     }
 
@@ -93,15 +87,15 @@ public class AddNewUserScreenController implements Initializable {
         } else if (event.toString().contains("discard")) {
             returnUserManagement(event);
         } else if (event.toString().contains("accept")) {
-            //TODO need a dialog box to show defaul password.
             if (firstNameTextfield.getText().equals("") || lastNameTextfield.getText().equals("") || emailTextfield.getText().equals("") ||
                     phoneTextfield.getText().equals("") || usernameTextfield.getText().equals("") || (!managerCheckBox.isSelected() && !clerkCheckBox.isSelected())) {
                 errorLabel.setText("Error :( Please make sure all the information is provided Correctly");
             } else {
                 String userName = usernameTextfield.getText();
-                // FIXME: why we don't need the password to create a new user????
-                //        I set it as "123" for now.
+
                 String password = "123";
+
+
                 boolean isManager = managerCheckBox.isSelected();
                 String firstName = firstNameTextfield.getText();
                 String lastName = lastNameTextfield.getText();
@@ -112,6 +106,7 @@ public class AddNewUserScreenController implements Initializable {
                 if (!userCreated) {
                     errorLabel.setText("Error :( Please try again with a different username");
                 } else {
+                    DialogBox.displayMsg("User Information", "UserName: "+userName+'\n'+"Default Password: "+password);
                     errorLabel.setText("New Staff added");
                     clearContent(event);
                 }

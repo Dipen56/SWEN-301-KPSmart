@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import main.KPSMain;
 import model.route.Route;
 import model.staff.Staff;
+import view.DialogBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -101,18 +102,13 @@ public class TransportCostScreenController implements Initializable {
             tempStage.setScene(businessFiguresScene);
             tempStage.show();
         } else if (event.toString().contains("reviewLogs")) {
-            //TODO; still need to build the screen
-        } else if (event.toString().contains("logout")) {
-            //TODO; POP up dialog box to ask the user if they are sure want to logout
-            //DialogBox.LogoutyMsg("Logout", "Are you sure you want to logout.");
-            Parent loginScreen = FXMLLoader.load(TransportCostScreenController.class.getResource("/fxml/LoginScreen.fxml"));
-            Scene loginScene = new Scene(loginScreen);
+            Parent reviewLogScreen = FXMLLoader.load(TransportCostScreenController.class.getResource("/fxml/ReviewLogScreen.fxml"));
+            Scene reviewLogScene = new Scene(reviewLogScreen);
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            tempStage.setScene(loginScene);
+            tempStage.setScene(reviewLogScene);
             tempStage.show();
-        } else if (event.toString().contains("setting")) {
-            //TODO
-            System.out.println("setting");
+        } else if (event.toString().contains("logout")) {
+            DialogBox.LogoutMsg("Logout", "Are you sure to logout?",event);
         }
     }
 

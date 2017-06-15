@@ -1,12 +1,24 @@
 package view;
 
+import controller.HomeScreenController;
+import controller.ReviewLogsController;
+import controller.SendMailScreenController;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.event.*;
+
+import java.io.IOException;
 
 
 /**
@@ -14,6 +26,8 @@ import javafx.stage.Stage;
  */
 public class DialogBox {
     public static boolean tempReturn = false;
+
+
 
     /**
      * this method will open a dialog box given the title and the massage.
@@ -44,7 +58,7 @@ public class DialogBox {
         window.show();
     }
 
-    public static void LogoutyMsg(String title, String message) {
+    public static void LogoutMsg(String title, String message, ActionEvent events) {
         Stage window = new Stage();
         tempReturn = false;
         // this makes it so you can't click on the window other then this one
@@ -58,11 +72,20 @@ public class DialogBox {
         // set the massage
         label.setText(message);
         // creates the button
-        Button ok = new Button("Ok");
+        Button ok = new Button("Log Out" );
         Button close = new Button("Close");
 
         ok.setOnAction(event -> {
-            tempReturn = true;
+            try {
+                Parent loginScreen = FXMLLoader.load(DialogBox.class.getResource("/fxml/LoginScreen.fxml"));
+                Scene loginScene = new Scene(loginScreen);
+                Stage tempStage = (Stage) ((Node) events.getSource()).getScene().getWindow();
+                tempStage.setScene(loginScene);
+                tempStage.show();
+            }catch(Exception e){
+
+            }
+
             window.close();
         });
         close.setOnAction(event -> {
@@ -77,5 +100,8 @@ public class DialogBox {
         window.setScene(scene);
         window.show();
     }
+
+
+
 
 }

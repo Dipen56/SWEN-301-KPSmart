@@ -42,6 +42,8 @@ public class KPSMain {
     private static TransportCostScreenController transportCostScreenController;
     private static NewRouteScreenController newRouteScreenController;
     private static BusinessFiguresScreenController businessFiguresScreenController;
+    private static ReviewLogsController reviewLogsController;
+    private static EventDialogController eventDialogController;
 
     // ================== view objects =============================
 
@@ -64,6 +66,8 @@ public class KPSMain {
         TransportCostScreenController.setKPSMain(this);
         NewRouteScreenController.setKPSMain(this);
         BusinessFiguresScreenController.setKPSMain(this);
+        ReviewLogsController.setKPSMain(this);
+        EventDialogController.setKPSMain(this);
     }
 
 
@@ -188,6 +192,10 @@ public class KPSMain {
             newRouteScreenController = (NewRouteScreenController) controllers;
         } else if (controllers instanceof BusinessFiguresScreenController) {
             businessFiguresScreenController = (BusinessFiguresScreenController) controllers;
+        } else if (controllers instanceof ReviewLogsController) {
+            reviewLogsController = (ReviewLogsController) controllers;
+        }else if (controllers instanceof EventDialogController) {
+            eventDialogController = (EventDialogController) controllers;
         }
     }
 
@@ -249,7 +257,7 @@ public class KPSMain {
         kpsModel.addRoute(startString, endString, routeType, duration, transportFirm, pricePerGram, pricePerVolume, costPerGram, costPerVolume);
     }
 
-    public Map<Integer, Mail> getCriticalRoutes() {
+    public Map<Integer, Mail> getCriticalMails() {
         return kpsModel.getCriticalMails();
     }
 
@@ -258,19 +266,28 @@ public class KPSMain {
     }
 
     public double getTotalExpenditure(Map<Integer, Mail> mails) {
-        return  KPSModel.calculateTotalExpenditure(mails);
+        return KPSModel.calculateTotalExpenditure(mails);
     }
 
-    public Map<Integer, Event> getAllEvens() {
-        return kpsModel.getAllEvens();
+    public Map<Integer, Event> getEvensByStartEndTime(LocalDate startDate, LocalDate endDate) {
+        return kpsModel.getEventsByStartAndEndTime(startDate, endDate);
     }
 
-    public Map<Integer, Mail> getAllMails(LocalDate startDate, LocalDate endDate) {
+    public Map<Integer, Mail> getMailsByStartEndTime(LocalDate startDate, LocalDate endDate) {
         return kpsModel.getMailsByStartAndEndTime(startDate, endDate);
     }
 
     public double getAverageDeliveryTime(String origin, String destination, Priority priority) {
         return kpsModel.calculateAverageDeliveryTime(origin, destination, priority);
+
+    }
+
+    public Map<Integer, Event> getAllEvent() {
+        return kpsModel.getAllEvens();
+    }
+
+    public Mail getMail(int id){
+        return kpsModel.getMailById(id);
     }
 
 

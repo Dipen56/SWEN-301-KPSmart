@@ -75,7 +75,7 @@
                         <Font name="System Bold" size="15.0"/>
                     </font>
                 </Button>
-                <Button id="reviewLogs" mnemonicParsing="false" onAction="#changeScenes" prefHeight="60.0"
+                <Button fx:id="reviewLogs" mnemonicParsing="false" onAction="#changeScenes" prefHeight="60.0"
                         prefWidth="110.0" styleClass="main-button" stylesheets="@../css/style.css" text="Review Logs"
                         textAlignment="CENTER" textFill="WHITE" wrapText="true">
                     <font>

@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
  * Pair testing Dipen and Angelo on 16/06/2017.
  */
 public class JunitTest {
+    /**
+     * Testing mails are delivered.
+     */
     @Test
     public void testScuessfullMailDelivery() {
         KPSModel kpsModel = new KPSModel();
@@ -19,11 +22,6 @@ public class JunitTest {
         Priority priority = Priority.Domestic_Standard;
         Mail tempMail = kpsModel.processMail(originString, destinationString, weight, volume, priority);
         assert (tempMail != null);
-       kpsModel.deliverMail(tempMail);
-//        System.out.println(temp);
-//        assertTrue(temp == true);
-
-
     }
 
 }

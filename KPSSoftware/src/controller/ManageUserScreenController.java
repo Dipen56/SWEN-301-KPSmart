@@ -56,7 +56,8 @@ public class ManageUserScreenController implements Initializable {
     private CheckBox changeRoleCheckBox;
     @FXML
     private Button deleteButton;
-
+    @FXML
+    private Label errorLabel;
 
     public ManageUserScreenController() {
         KPSMain.setLoginScreenController(this);
@@ -82,8 +83,8 @@ public class ManageUserScreenController implements Initializable {
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             tempStage.setScene(addNewUserScene);
             tempStage.show();
-        } else if (event.toString().contains("logout")) {
-            DialogBox.LogoutMsg("Logout", "Are you sure to logout?",event);
+        } else if (event.toString().contains("logout-button")) {
+            DialogBox.LogoutMsg("Logout", "Are you sure to logout?", event);
         }
     }
 
@@ -98,13 +99,23 @@ public class ManageUserScreenController implements Initializable {
         } else if (event.toString().contains("discard")) {
             returnUserManagement(event);
         } else if (event.toString().contains("update")) {
-            if (selectUser.getValue() != null) {
-                String[] content = ((String) selectUser.getValue()).split(" ");
+            if (selectUser.getValue() != null && (firstNameTextField.getText().equals("") || lastNameTextField.getText().equals("") || emailTextField.getText().equals("") || phoneNumberTextField.getText().equals(""))) {
+                errorLabel.setText("Please fill in valid information");
+            } else if (selectUser.getValue() != null && (!phoneNumberTextField.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || phoneNumberTextField.getText().length() <= 7)) {
+                errorLabel.setText("Please fill in valid phone number");
+            } else {
+                if (selectUser.getValue() != null) {
+                    String[] content = ((String) selectUser.getValue()).split(" ");
 
-                //TODO create a label and implement value input check.
-                boolean vaildUpdate = kpsMain.updateStaffInformation(content[0], content[1], firstNameTextField.getText(),
-                        lastNameTextField.getText(), emailTextField.getText(), phoneNumberTextField.getText(), changeRoleCheckBox.isSelected());
-                clearContent(event);
+                    boolean vaildUpdate = kpsMain.updateStaffInformation(content[0], content[1], firstNameTextField.getText(),
+                            lastNameTextField.getText(), emailTextField.getText(), phoneNumberTextField.getText(), changeRoleCheckBox.isSelected());
+                    System.out.println(vaildUpdate);
+                    if (!vaildUpdate) {
+                        errorLabel.setText("Error please try different information");
+                    }else {
+                        errorLabel.setText("Information updated successfully");
+                    }
+                }
             }
 
         } else if (event.toString().contains("deleteButton")) {
@@ -151,7 +162,7 @@ public class ManageUserScreenController implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpsMain.getCurrentStaff();
-        userLable.setText((staff.isManager() ? "Manager": "Clerk")+" "+ staff.getFirstName());
+        userLable.setText((staff.isManager() ? "Manager" : "Clerk") + " " + staff.getFirstName());
         avatar.setImage(new Image(ManageUserScreenController.class.getResourceAsStream("/img/" + (staff.id % 5) + ".png")));
         for (Staff s : kpsMain.getAllUsers().values()) {
             selectUser.getItems().add(s.getFirstName() + " " + s.getLastName());

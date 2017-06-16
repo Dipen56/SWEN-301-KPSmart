@@ -119,11 +119,10 @@ public class TransportCostScreenController implements Initializable {
      */
     public void handleButtons(ActionEvent event) {
         if (event.toString().contains("accept")) {
-            if (routeCombobox == null) {
+            if (routeCombobox.getValue() == null) {
                 errorLabel.setText("Please fill in all the information");
-            } else if (!weightTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(weightTextfield.getText()) < 0
-                    || !volumeTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || Double.parseDouble(volumeTextfield.getText()) < 0) {
-                errorLabel.setText("Please fill in valid values");
+            } else if (!weightTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || !volumeTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?")) {
+                errorLabel.setText("Please fill in valid numbers in weight or volume");
             } else {
                 String[] selectedText = (routeCombobox.getValue()).split(" ");
 
@@ -210,6 +209,7 @@ public class TransportCostScreenController implements Initializable {
         typeLabel.setText("Type: " + route.routeType.toString());
         weightCostLabel.setText("Old Weight Cost: $" + String.format("%.2f", oldWeightCost) + " New Cost: $" + String.format("%.2f", route.getCostPerGram()));
         volumeCostLabel.setText("Old Volume Cost: $" + String.format("%.2f", oldVolumeCost) + " New Cost: $" + String.format("%.2f", route.getCostPerVolume()));
+
         transportFirmLabel.setText("Transport Firm: " + route.getTransportFirm());
         durationLabel.setText("Duration "+ String.format("%.2f", route.getDuration()) +" Hours");
         notificationLabel.setVisible(true);

@@ -127,7 +127,7 @@
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
-            <Label fx:id="errorLabel" alignment="CENTER" layoutX="110.0" layoutY="82.0" prefHeight="31.0" prefWidth="355.0" text="Please Enter the Information" textFill="RED">
+            <Label fx:id="errorLabel" alignment="CENTER" layoutX="54.0" layoutY="82.0" prefHeight="36.0" prefWidth="474.0" text="Please Enter the Information" textFill="RED" wrapText="true">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font></Label>

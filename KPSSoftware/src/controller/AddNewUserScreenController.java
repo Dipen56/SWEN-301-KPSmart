@@ -72,7 +72,7 @@ public class AddNewUserScreenController implements Initializable {
             tempStage.show();
 
         } else if (event.toString().contains("logout")) {
-            DialogBox.LogoutMsg("Logout", "Are you sure to logout?",event);
+            DialogBox.LogoutMsg("Logout", "Are you sure to logout?", event);
         }
     }
 
@@ -90,6 +90,8 @@ public class AddNewUserScreenController implements Initializable {
             if (firstNameTextfield.getText().equals("") || lastNameTextfield.getText().equals("") || emailTextfield.getText().equals("") ||
                     phoneTextfield.getText().equals("") || usernameTextfield.getText().equals("") || (!managerCheckBox.isSelected() && !clerkCheckBox.isSelected())) {
                 errorLabel.setText("Error :( Please make sure all the information is provided Correctly");
+            } else if (!phoneTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || phoneTextfield.getText().length() <= 7) {
+                errorLabel.setText("Please fill in valid phone numbers");
             } else {
                 String userName = usernameTextfield.getText();
 
@@ -106,7 +108,7 @@ public class AddNewUserScreenController implements Initializable {
                 if (!userCreated) {
                     errorLabel.setText("Error :( Please try again with a different username");
                 } else {
-                    DialogBox.displayMsg("User Information", "UserName: "+userName+'\n'+"Default Password: "+password);
+                    DialogBox.displayMsg("User Information", "UserName: " + userName + '\n' + "Default Password: " + password);
                     errorLabel.setText("New Staff added");
                     clearContent(event);
                 }
@@ -123,7 +125,7 @@ public class AddNewUserScreenController implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpsMain.getCurrentStaff();
-        userLable.setText((staff.isManager() ? "Manager": "Clerk")+" "+ staff.getFirstName());
+        userLable.setText((staff.isManager() ? "Manager" : "Clerk") + " " + staff.getFirstName());
         avatar.setImage(new Image(AddNewUserScreenController.class.getResourceAsStream("/img/" + (staff.id % 5) + ".png")));
 
     }

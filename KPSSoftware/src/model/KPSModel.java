@@ -229,7 +229,9 @@ public class KPSModel {
 
         // log the event
         maxEventId++;
-        return XMLDriver.writeMailDeliveryEvent(new MailDeliveryEvent(maxEventId, currentStaff.id, LocalDateTime.now(), mail.id));
+        MailDeliveryEvent event = new MailDeliveryEvent(maxEventId, currentStaff.id, LocalDateTime.now(), mail.id);
+        this.events.put(event.id, event);
+        return XMLDriver.writeMailDeliveryEvent(event);
     }
 
 
@@ -440,6 +442,9 @@ public class KPSModel {
 
         // log event into xml file
         maxEventId++;
+        CustomerPriceUpdateEvent event = new CustomerPriceUpdateEvent(maxEventId, currentStaff.id, LocalDateTime.now(),
+                routeId, oldPricePerGram, oldPricePerVolume, newPricePerGram, newPricePerVolume);
+        this.events.put(event.id, event);
         XMLDriver.writeCustomerPriceUpdateEvent(new CustomerPriceUpdateEvent(maxEventId, currentStaff.id, LocalDateTime.now(),
                 routeId, oldPricePerGram, oldPricePerVolume, newPricePerGram, newPricePerVolume));
 
@@ -474,6 +479,9 @@ public class KPSModel {
 
         // log event into xml file
         maxEventId++;
+        TransportCostUpdateEvent event = new TransportCostUpdateEvent(maxEventId, currentStaff.id, LocalDateTime.now(),
+                routeId, oldCostPerGram, oldCostPerVolume, newCostPerGram, newCostPerVolume);
+        events.put(event.id, event);
         XMLDriver.writeTransportCostUpdateEvent(new TransportCostUpdateEvent(maxEventId, currentStaff.id, LocalDateTime.now(),
                 routeId, oldCostPerGram, oldCostPerVolume, newCostPerGram, newCostPerVolume));
 
@@ -529,6 +537,8 @@ public class KPSModel {
 
         // log event
         maxEventId++;
+        RouteAdditionEvent event = new RouteAdditionEvent(maxEventId, currentStaff.id, LocalDateTime.now(), route.id);
+        this.events.put(event.id, event);
         XMLDriver.writeRouteAdditionEvent(new RouteAdditionEvent(maxEventId, currentStaff.id, LocalDateTime.now(), route.id));
 
         return true;
@@ -549,6 +559,8 @@ public class KPSModel {
 
         // log event
         maxEventId++;
+        RouteDeactivationEvent event = new RouteDeactivationEvent(maxEventId, currentStaff.id, LocalDateTime.now(), routeId);
+        events.put(event.id, event);
         XMLDriver.writeRouteDeactivationEvent(new RouteDeactivationEvent(maxEventId, currentStaff.id, LocalDateTime.now(), routeId));
 
         return true;

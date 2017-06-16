@@ -21,7 +21,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by Dipen on 25/04/2017. this class represents the controller for the home screen.
+ * Created by Dipen on 25/04/2017. This is the controller used for the Home Screen. and will handle the interaction
+ * between view and the model.
  */
 public class HomeScreenController implements Initializable {
     private static KPSMain kpsMain;
@@ -34,9 +35,7 @@ public class HomeScreenController implements Initializable {
     @FXML
     private Button setting;
 
-    /**
-     * the constructor is used to set the reference to this class
-     */
+
     public HomeScreenController() {
         KPSMain.setLoginScreenController(this);
     }
@@ -92,7 +91,7 @@ public class HomeScreenController implements Initializable {
             tempStage.setScene(reviewLogScene);
             tempStage.show();
         } else if (event.toString().contains("logout")) {
-            DialogBox.LogoutMsg("Logout", "Are you sure to logout?",event);
+            DialogBox.LogoutMsg("Logout", "Are you sure to logout?", event);
 
         } else if (event.toString().contains("setting")) {
             Parent usermanagementScreen = FXMLLoader.load(HomeScreenController.class.getResource("/fxml/UserSettingScreen.fxml"));
@@ -105,7 +104,7 @@ public class HomeScreenController implements Initializable {
 
 
     /**
-     * Everything that should occur before the home is displayed should go in here.
+     * Everything that should occur before the screen is displayed should go in here.
      *
      * @param location
      * @param resources
@@ -113,7 +112,7 @@ public class HomeScreenController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpsMain.getCurrentStaff();
-        userLable.setText((staff.isManager() ? "Manager": "Clerk")+" "+ staff.getFirstName());
+        userLable.setText((staff.isManager() ? "Manager" : "Clerk") + " " + staff.getFirstName());
         avatar.setImage(new Image(SendMailScreenController.class.getResourceAsStream("/img/" + (staff.id % 5) + ".png")));
         ImageView settingImage = new ImageView(new Image(getClass().getResourceAsStream("/img/setting-icon.png")));
         settingImage.setFitHeight(55);

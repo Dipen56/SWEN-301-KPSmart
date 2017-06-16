@@ -22,7 +22,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by Dipen on 25/05/2017.
+ * Created by Dipen on 25/05/2017. This is the controller used for the Change Password Screen. and will handle the interaction
+ * between view and the model.
  */
 public class ChangePasswordScreenController implements Initializable {
     private static KPSMain kpsMain;
@@ -69,12 +70,12 @@ public class ChangePasswordScreenController implements Initializable {
             tempStage.show();
 
         } else if (event.toString().contains("logout")) {
-            DialogBox.LogoutMsg("Logout", "Are you sure to logout?",event);
+            DialogBox.LogoutMsg("Logout", "Are you sure to logout?", event);
         }
     }
 
     /**
-     * This method is used to handel local screen button actions. i.e accept, reset, discard and exit
+     * This method is used to handel local screen button actions.
      *
      * @param event
      */
@@ -115,7 +116,7 @@ public class ChangePasswordScreenController implements Initializable {
     }
 
     /**
-     * Everything that should occur before the home is displayed should go in here.
+     * Everything that should occur before the screen is displayed should go in here.
      *
      * @param location
      * @param resources
@@ -123,16 +124,21 @@ public class ChangePasswordScreenController implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpsMain.getCurrentStaff();
-        userLable.setText((staff.isManager() ? "Manager": "Clerk")+" "+ staff.getFirstName());
+        userLable.setText((staff.isManager() ? "Manager" : "Clerk") + " " + staff.getFirstName());
         avatar.setImage(new Image(ChangePasswordScreenController.class.getResourceAsStream("/img/" + (staff.id % 5) + ".png")));
         if (!staff.isManager()) {
             manageUser.setVisible(false);
             manageUser.setDisable(false);
-            addNewUser.setVisible(false);
+            addNewUser.setDisable(false);
             addNewUser.setVisible(false);
         }
     }
 
+    /**
+     * clears the screen
+     *
+     * @param event
+     */
     private void clearContent(ActionEvent event) {
         Parent changePasswordScreen = null;
         try {
@@ -146,7 +152,11 @@ public class ChangePasswordScreenController implements Initializable {
         tempStage.show();
     }
 
-
+    /**
+     * returns the user back to the home screen
+     *
+     * @param event
+     */
     private void returnUserManagement(ActionEvent event) {
         Parent userManagementscreen = null;
         try {

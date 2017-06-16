@@ -24,7 +24,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by Dipen on 25/04/2017.
+ * Created by Dipen on 25/04/2017. This is the controller used for the Add New Route Screen. and will handle the interaction
+ * between view and the model.
  */
 public class NewRouteScreenController implements Initializable {
     private static KPSMain kpsMain;
@@ -105,12 +106,12 @@ public class NewRouteScreenController implements Initializable {
             tempStage.setScene(reviewLogScene);
             tempStage.show();
         } else if (event.toString().contains("logout")) {
-            DialogBox.LogoutMsg("Logout", "Are you sure to logout?",event);
+            DialogBox.LogoutMsg("Logout", "Are you sure to logout?", event);
         }
     }
 
     /**
-     * This method is used to handel local screen button actions. i.e accept, reset, discard and exit
+     * This method is used to handel local screen button actions.
      *
      * @param event
      */
@@ -163,7 +164,7 @@ public class NewRouteScreenController implements Initializable {
 
 
     /**
-     * Everything that should occur before the home is displayed should go in here.
+     * Everything that should occur before the screen is displayed should go in here.
      *
      * @param location
      * @param resources
@@ -171,7 +172,7 @@ public class NewRouteScreenController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpsMain.getCurrentStaff();
-        userLable.setText((staff.isManager() ? "Manager": "Clerk")+" "+ staff.getFirstName());
+        userLable.setText((staff.isManager() ? "Manager" : "Clerk") + " " + staff.getFirstName());
         avatar.setImage(new Image(NewRouteScreenController.class.getResourceAsStream("/img/" + (staff.id % 5) + ".png")));
         if (!staff.isManager()) {
             reviewLogsButton.setVisible(false);
@@ -184,6 +185,11 @@ public class NewRouteScreenController implements Initializable {
 
     }
 
+    /**
+     * clears the screen
+     *
+     * @param event
+     */
     private void clearContent(ActionEvent event) {
         Parent newRouteScreen = null;
         try {
@@ -197,7 +203,11 @@ public class NewRouteScreenController implements Initializable {
         tempStage.show();
     }
 
-
+    /**
+     * returns the user back to the home screen
+     *
+     * @param event
+     */
     private void returnHome(ActionEvent event) {
         Parent homescreen = null;
         try {

@@ -22,7 +22,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by Dipen on 25/05/2017.
+ * Created by Dipen on 25/05/2017. This is the controller used for the Add New User Screen. and will handle the interaction
+ * between view and the model.
  */
 public class AddNewUserScreenController implements Initializable {
     private static KPSMain kpsMain;
@@ -77,7 +78,7 @@ public class AddNewUserScreenController implements Initializable {
     }
 
     /**
-     * This method is used to handel local screen button actions. i.e accept, reset, discard and exit
+     * This method is used to handel local screen button actions.
      *
      * @param event
      */
@@ -94,10 +95,8 @@ public class AddNewUserScreenController implements Initializable {
                 errorLabel.setText("Please fill in valid phone numbers");
             } else {
                 String userName = usernameTextfield.getText();
-
-                String password = "123";
-
-
+                //Default password of the user
+                String password = "123456";
                 boolean isManager = managerCheckBox.isSelected();
                 String firstName = firstNameTextfield.getText();
                 String lastName = lastNameTextfield.getText();
@@ -117,12 +116,11 @@ public class AddNewUserScreenController implements Initializable {
     }
 
     /**
-     * Everything that should occur before the home is displayed should go in here.
+     * Everything that should occur before the screen is displayed should go in here.
      *
      * @param location
      * @param resources
      */
-
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpsMain.getCurrentStaff();
         userLable.setText((staff.isManager() ? "Manager" : "Clerk") + " " + staff.getFirstName());
@@ -130,6 +128,11 @@ public class AddNewUserScreenController implements Initializable {
 
     }
 
+    /**
+     * clears the screen
+     *
+     * @param event
+     */
     private void clearContent(ActionEvent event) {
         Parent changePasswordScreen = null;
         try {
@@ -143,7 +146,11 @@ public class AddNewUserScreenController implements Initializable {
         tempStage.show();
     }
 
-
+    /**
+     * returns the user back to the home screen
+     *
+     * @param event
+     */
     private void returnUserManagement(ActionEvent event) {
         Parent userManagementscreen = null;
         try {

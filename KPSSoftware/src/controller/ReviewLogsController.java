@@ -28,7 +28,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
- * Created by Dipen on 14/06/2017.
+ * Created by Dipen on 14/06/2017.This is the controller used for the Review Logs Screen. and will handle the interaction
+ * between view and the model.
  */
 public class ReviewLogsController implements Initializable {
     private static KPSMain kpsMain;
@@ -48,7 +49,7 @@ public class ReviewLogsController implements Initializable {
     }
 
     /**
-     * this method is used to change betweeen screens.
+     * this method is used to change between screens.
      *
      * @param event
      * @throws IOException
@@ -96,6 +97,11 @@ public class ReviewLogsController implements Initializable {
         }
     }
 
+    /**
+     * This method is used to handel local screen button actions.
+     * @param event
+     * @throws IOException
+     */
     public void handleButtons(ActionEvent event) throws IOException {
         if (event.toString().contains("exit")) {
             returnHome(event);
@@ -109,6 +115,10 @@ public class ReviewLogsController implements Initializable {
         }
     }
 
+    /**
+     * Helper method that is used to call the Event Information screen.
+     * @throws IOException
+     */
     private void displayEventDialog() throws IOException {
         Parent loginScreen = FXMLLoader.load(ReviewLogsController.class.getResource("/fxml/DisplayEventsDialog.fxml"));
         Scene scene = new Scene(loginScreen);
@@ -128,6 +138,11 @@ public class ReviewLogsController implements Initializable {
         window.show();
     }
 
+    /**
+     * Everything that should occur before the screen is displayed should go in here.
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpsMain.getCurrentStaff();
@@ -159,6 +174,10 @@ public class ReviewLogsController implements Initializable {
         tabelView.setItems(items);
     }
 
+    /**
+     * returns the user back to the home screen
+     * @param event
+     */
     private void returnHome(ActionEvent event) {
         Parent homescreen = null;
         try {
@@ -182,7 +201,7 @@ public class ReviewLogsController implements Initializable {
     }
 
     /**
-     * This is a helpper class used by Table View Columns to get the values.
+     * This is a helper class used by Table View Columns to get the values.
      */
     public class EventTable {
         private Integer id;

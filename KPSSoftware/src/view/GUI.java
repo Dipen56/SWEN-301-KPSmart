@@ -1,7 +1,7 @@
 package view;
 
 /**
- * Created by Dipen on 18/04/2017.This class is finished! YOU WANT TO CHANGE CODE PLEASE TALK WITH ME FIRST!!
+ * Created by Dipen on 18/04/2017.This class is used to display the main GUI window on the screen.
  */
 
 import javafx.application.Application;

@@ -20,7 +20,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by Dipen on 25/05/2017.
+ * Created by Dipen on 25/05/2017.This is the controller used for the Manage User Screen. and will handle the interaction
+ * between view and the model.
  */
 public class ManageUserScreenController implements Initializable {
     private static KPSMain kpsMain;
@@ -89,7 +90,7 @@ public class ManageUserScreenController implements Initializable {
     }
 
     /**
-     * This method is used to handel local screen button actions. i.e accept, reset, discard and exit
+     * This method is used to handel local screen button actions.
      *
      * @param event
      */
@@ -99,10 +100,14 @@ public class ManageUserScreenController implements Initializable {
         } else if (event.toString().contains("discard")) {
             returnUserManagement(event);
         } else if (event.toString().contains("update")) {
-            if (selectUser.getValue() != null && (firstNameTextField.getText().equals("") || lastNameTextField.getText().equals("") || emailTextField.getText().equals("") || phoneNumberTextField.getText().equals(""))) {
+            if (selectUser.getValue() == null) {
+                errorLabel.setText("Please select a user to update");
+            } else if (selectUser.getValue() != null && ((!phoneNumberTextField.getText().matches("[0-9]{1,13}(\\.[0-9]*)?")
+                    && !phoneNumberTextField.getText().equals("")) || (phoneNumberTextField.getText().length() <= 7 && phoneNumberTextField.getText().length() >= 7))) {
+                errorLabel.setText("Please fill in valid 7 digit phone number");
+            } else if (selectUser.getValue() != null && firstNameTextField.getText().equals("") && lastNameTextField.getText().equals("")
+                    && emailTextField.getText().equals("") && phoneNumberTextField.getText().equals("") && !changeRoleCheckBox.isSelected()) {
                 errorLabel.setText("Please fill in valid information");
-            } else if (selectUser.getValue() != null && (!phoneNumberTextField.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || phoneNumberTextField.getText().length() <= 7)) {
-                errorLabel.setText("Please fill in valid phone number");
             } else {
                 if (selectUser.getValue() != null) {
                     String[] content = ((String) selectUser.getValue()).split(" ");
@@ -112,7 +117,7 @@ public class ManageUserScreenController implements Initializable {
                     System.out.println(vaildUpdate);
                     if (!vaildUpdate) {
                         errorLabel.setText("Error please try different information");
-                    }else {
+                    } else {
                         errorLabel.setText("Information updated successfully");
                     }
                 }
@@ -154,7 +159,7 @@ public class ManageUserScreenController implements Initializable {
     }
 
     /**
-     * Everything that should occur before the home is displayed should go in here.
+     * Everything that should occur before the screen is displayed should go in here.
      *
      * @param location
      * @param resources
@@ -171,6 +176,11 @@ public class ManageUserScreenController implements Initializable {
 
     }
 
+    /**
+     * clears the screen
+     *
+     * @param event
+     */
     private void clearContent(ActionEvent event) {
         Parent changePasswordScreen = null;
         try {
@@ -184,6 +194,11 @@ public class ManageUserScreenController implements Initializable {
         tempStage.show();
     }
 
+    /**
+     * returns the user back to the home screen
+     *
+     * @param event
+     */
     private void returnUserManagement(ActionEvent event) {
         Parent userManagementscreen = null;
         try {

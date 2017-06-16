@@ -26,7 +26,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by Dipen on 25/04/2017.
+ * Created by Dipen on 25/04/2017.This is the controller used for the Send Mail Screen. and will handle the interaction
+ * between view and the model.
  */
 public class SendMailScreenController implements Initializable {
     private static KPSMain kpsMain;
@@ -114,7 +115,7 @@ public class SendMailScreenController implements Initializable {
     }
 
     /**
-     * This method is used to handel local screen button actions. i.e accept, reset, discard and exit
+     * This method is used to handel local screen button actions.
      *
      * @param event
      */
@@ -189,7 +190,7 @@ public class SendMailScreenController implements Initializable {
 
 
     /**
-     * Everything that should occur before the home is displayed should go in here.
+     * Everything that should occur before the screen is displayed should go in here.
      *
      * @param location
      * @param resources
@@ -221,6 +222,10 @@ public class SendMailScreenController implements Initializable {
 
     }
 
+    /**
+     * clears the screen
+     * @param event
+     */
     private void clearContent(ActionEvent event) {
         Parent sendMailScreen = null;
         try {
@@ -234,7 +239,10 @@ public class SendMailScreenController implements Initializable {
         tempStage.show();
     }
 
-
+    /**
+     * returns the user back to the home screen
+     * @param event
+     */
     private void returnHome(ActionEvent event) {
         Parent homescreen = null;
         try {

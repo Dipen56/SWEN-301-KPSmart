@@ -21,7 +21,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by Dipen on 25/04/2017. this class represents the user setting controller.
+ * Created by Dipen on 25/04/2017. This is the controller used for the User Setting Screen. and will handle the interaction
+ * between view and the model.
  */
 public class UserSettingScreenController implements Initializable {
     private static KPSMain kpsMain;
@@ -75,12 +76,12 @@ public class UserSettingScreenController implements Initializable {
             tempStage.setScene(returnHomeScene);
             tempStage.show();
         } else if (event.toString().contains("logout")) {
-            DialogBox.LogoutMsg("Logout", "Are you sure to logout?",event);
+            DialogBox.LogoutMsg("Logout", "Are you sure to logout?", event);
         }
     }
 
     /**
-     * This method is used to handel local screen button actions. i.e accept, reset, discard and exit
+     * This method is used to handel local screen button actions.
      *
      * @param event
      */
@@ -91,14 +92,14 @@ public class UserSettingScreenController implements Initializable {
     }
 
     /**
-     * Everything that should occur before the home is displayed should go in here.
+     * Everything that should occur before the screen is displayed should go in here.
      *
      * @param location
      * @param resources
      */
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpsMain.getCurrentStaff();
-        userLable.setText((staff.isManager() ? "Manager": "Clerk")+" "+ staff.getFirstName());
+        userLable.setText((staff.isManager() ? "Manager" : "Clerk") + " " + staff.getFirstName());
         avatar.setImage(new Image(SendMailScreenController.class.getResourceAsStream("/img/" + (staff.id % 5) + ".png")));
         if (!staff.isManager()) {
             manageUser.setVisible(false);

@@ -27,7 +27,8 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 /**
- * Created by Dipen on 25/04/2017.
+ * Created by Dipen on 25/04/2017. This is the controller used for the Business Figures Screen. and will handle the interaction
+ * between view and the model.
  */
 public class BusinessFiguresScreenController implements Initializable {
     private static KPSMain kpsMain;
@@ -114,12 +115,12 @@ public class BusinessFiguresScreenController implements Initializable {
             tempStage.setScene(reviewLogScene);
             tempStage.show();
         } else if (event.toString().contains("logout")) {
-            DialogBox.LogoutMsg("Logout", "Are you sure to logout?",event);
+            DialogBox.LogoutMsg("Logout", "Are you sure to logout?", event);
         }
     }
 
     /**
-     * This method is used to handel local screen button actions. i.e accept, reset, discard and exit
+     * This method is used to handel local screen button actions.
      *
      * @param event
      */
@@ -177,7 +178,7 @@ public class BusinessFiguresScreenController implements Initializable {
 
 
     /**
-     * Everything that should occur before the home is displayed should go in here.
+     * Everything that should occur before the screen is displayed should go in here.
      *
      * @param location
      * @param resources
@@ -185,7 +186,7 @@ public class BusinessFiguresScreenController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpsMain.getCurrentStaff();
-        userLable.setText((staff.isManager() ? "Manager": "Clerk")+" "+ staff.getFirstName());
+        userLable.setText((staff.isManager() ? "Manager" : "Clerk") + " " + staff.getFirstName());
         avatar.setImage(new Image(BusinessFiguresScreenController.class.getResourceAsStream("/img/" + (staff.id % 5) + ".png")));
         if (!staff.isManager()) {
             reviewLogsButton.setVisible(false);
@@ -203,6 +204,11 @@ public class BusinessFiguresScreenController implements Initializable {
         avgPriorityComboBox.getItems().add(Priority.International_Air.toString());
     }
 
+    /**
+     * returns the user back to the home screen
+     *
+     * @param event
+     */
     private void returnHome(ActionEvent event) {
         Parent homescreen = null;
         try {

@@ -17,7 +17,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by Dipen on 15/06/2017.
+ * Created by Dipen on 15/06/2017. This is the controller used for the Event Information Screen. and will handle the interaction
+ * between view and the model.
  */
 public class EventDialogController implements Initializable {
     private static KPSMain kpsMain;
@@ -47,8 +48,6 @@ public class EventDialogController implements Initializable {
     private Label labelTwelve;
     @FXML
     private Label labelThirteen;
-
-
     @FXML
     private Label eventTypeLabel;
     private static Event eventType;
@@ -57,6 +56,12 @@ public class EventDialogController implements Initializable {
         KPSMain.setLoginScreenController(this);
     }
 
+    /**
+     * This method is used to handel local screen button actions.
+     *
+     * @param event
+     * @throws IOException
+     */
     public void handleButtons(ActionEvent event) throws IOException {
         if (event.toString().contains("closeButton")) {
             Stage tempStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -64,6 +69,12 @@ public class EventDialogController implements Initializable {
         }
     }
 
+    /**
+     * Everything that should occur before the screen is displayed should go in here.
+     *
+     * @param location
+     * @param resources
+     */
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println(eventType);
         if (eventType instanceof MailDeliveryEvent) {
@@ -148,6 +159,23 @@ public class EventDialogController implements Initializable {
         }
     }
 
+    /**
+     * Helpper method used to set all the labels on the screen. allows for code reusability.
+     *
+     * @param one
+     * @param two
+     * @param three
+     * @param four
+     * @param five
+     * @param six
+     * @param seven
+     * @param eight
+     * @param nine
+     * @param ten
+     * @param eleven
+     * @param twelve
+     * @param thirteen
+     */
     private void setEventInformation(String one, String two, String three, String four, String five, String six, String seven,
                                      String eight, String nine, String ten, String eleven, String twelve, String thirteen) {
 
@@ -168,6 +196,11 @@ public class EventDialogController implements Initializable {
 
     }
 
+    /**
+     * used by the Review Logs screen to set the type of event, for which more information is required.
+     *
+     * @param eventTypes
+     */
     public static void setEvent(Event eventTypes) {
         eventType = eventTypes;
     }

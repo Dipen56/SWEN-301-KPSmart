@@ -24,7 +24,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by Dipen on 25/04/2017.
+ * Created by Dipen on 25/04/2017.This is the controller used for the Transport Cost Screen. and will handle the interaction
+ * between view and the model.
  */
 public class TransportCostScreenController implements Initializable {
     private static KPSMain kpsMain;
@@ -108,12 +109,12 @@ public class TransportCostScreenController implements Initializable {
             tempStage.setScene(reviewLogScene);
             tempStage.show();
         } else if (event.toString().contains("logout")) {
-            DialogBox.LogoutMsg("Logout", "Are you sure to logout?",event);
+            DialogBox.LogoutMsg("Logout", "Are you sure to logout?", event);
         }
     }
 
     /**
-     * This method is used to handel local screen button actions. i.e accept, reset, discard and exit
+     * This method is used to handel local screen button actions.
      *
      * @param event
      */
@@ -146,7 +147,7 @@ public class TransportCostScreenController implements Initializable {
 
 
     /**
-     * Everything that should occur before the home is displayed should go in here.
+     * Everything that should occur before the screen is displayed should go in here.
      *
      * @param location
      * @param resources
@@ -154,7 +155,7 @@ public class TransportCostScreenController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpsMain.getCurrentStaff();
-        userLable.setText((staff.isManager() ? "Manager": "Clerk")+" "+ staff.getFirstName());
+        userLable.setText((staff.isManager() ? "Manager" : "Clerk") + " " + staff.getFirstName());
         avatar.setImage(new Image(TransportCostScreenController.class.getResourceAsStream("/img/" + (staff.id % 5) + ".png")));
         if (!staff.isManager()) {
             reviewLogsButton.setVisible(false);
@@ -176,6 +177,11 @@ public class TransportCostScreenController implements Initializable {
 
     }
 
+    /**
+     * clears the screen
+     *
+     * @param event
+     */
     private void clearContent(ActionEvent event) {
         Parent transportCostUpdateScreen = null;
         try {
@@ -189,7 +195,11 @@ public class TransportCostScreenController implements Initializable {
         tempStage.show();
     }
 
-
+    /**
+     * returns the user back to the home screen
+     *
+     * @param event
+     */
     private void returnHome(ActionEvent event) {
         Parent homescreen = null;
         try {
@@ -203,6 +213,13 @@ public class TransportCostScreenController implements Initializable {
         tempStage.show();
     }
 
+    /**
+     * this is a helpper method that is used to display the transport cost update notification.
+     *
+     * @param route
+     * @param oldWeightCost
+     * @param oldVolumeCost
+     */
     private void transportCostUpdateNotification(Route route, double oldWeightCost, double oldVolumeCost) {
         orginLabel.setText("Affected Origin: " + route.getStartLocation().getLocationName());
         destinationLabel.setText("Affected Destination: " + route.getEndLocation().getLocationName());
@@ -211,7 +228,7 @@ public class TransportCostScreenController implements Initializable {
         volumeCostLabel.setText("Old Volume Cost: $" + String.format("%.2f", oldVolumeCost) + " New Cost: $" + String.format("%.2f", route.getCostPerVolume()));
 
         transportFirmLabel.setText("Transport Firm: " + route.getTransportFirm());
-        durationLabel.setText("Duration "+ String.format("%.2f", route.getDuration()) +" Hours");
+        durationLabel.setText("Duration " + String.format("%.2f", route.getDuration()) + " Hours");
         notificationLabel.setVisible(true);
         orginLabel.setVisible(true);
         destinationLabel.setVisible(true);

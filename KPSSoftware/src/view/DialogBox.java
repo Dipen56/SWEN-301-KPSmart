@@ -30,7 +30,6 @@ public class DialogBox {
     public static boolean tempReturn = false;
 
 
-
     /**
      * this method will open a dialog box given the title and the massage.
      *
@@ -51,7 +50,7 @@ public class DialogBox {
         Label label = new Label();
         // set the massage
         label.setText(message);
-        label.setFont(new Font("System",16 ));
+        label.setFont(new Font("System", 16));
         // creates the button
         Button ok = new Button("Ok");
         ok.setPrefWidth(90);
@@ -64,6 +63,14 @@ public class DialogBox {
         window.show();
     }
 
+    /**
+     * This method will display a dialog box for logging out, and if the user selects Logout it will log them out else
+     * it will close the dialog box.
+     *
+     * @param title
+     * @param message
+     * @param events
+     */
     public static void LogoutMsg(String title, String message, ActionEvent events) {
         Stage window = new Stage();
         tempReturn = false;
@@ -80,9 +87,9 @@ public class DialogBox {
         // set the massage
         label.setText(message);
         // creates the button
-        Button ok = new Button("Log Out" );
+        Button ok = new Button("Log Out");
         Button close = new Button("Close");
-
+        //used to log the user out of the kps system
         ok.setOnAction(event -> {
             try {
                 Parent loginScreen = FXMLLoader.load(DialogBox.class.getResource("/fxml/LoginScreen.fxml"));
@@ -90,7 +97,7 @@ public class DialogBox {
                 Stage tempStage = (Stage) ((Node) events.getSource()).getScene().getWindow();
                 tempStage.setScene(loginScene);
                 tempStage.show();
-            }catch(Exception e){
+            } catch (Exception e) {
 
             }
 
@@ -103,17 +110,15 @@ public class DialogBox {
 
 
         HBox hBox = new HBox(10);
-        hBox.getChildren().addAll(ok,close);
+        hBox.getChildren().addAll(ok, close);
         hBox.setAlignment(Pos.CENTER);
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(label,hBox);
+        layout.getChildren().addAll(label, hBox);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout);
         window.setScene(scene);
         window.show();
     }
-
-
 
 
 }

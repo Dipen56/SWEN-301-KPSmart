@@ -1,7 +1,8 @@
 package controller;
 
 /**
- * Created by Dipen on 18/04/2017. This class represents the controller for the login screen.
+ * Created by Dipen on 18/04/2017. This is the controller used for the Login Screen. and will handle the interaction
+ * between view and the model.
  */
 
 import javafx.event.ActionEvent;
@@ -30,9 +31,7 @@ public class LoginScreenController {
     @FXML
     private Label authticationError;
 
-    /**
-     * Constructor for the login screen controller.
-     */
+
     public LoginScreenController() {
         KPSMain.setLoginScreenController(this);
     }

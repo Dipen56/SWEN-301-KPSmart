@@ -24,7 +24,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by Dipen on 25/04/2017.
+ * Created by Dipen on 25/04/2017.This is the controller used for the Price Update Screen. and will handle the interaction
+ * between view and the model.
  */
 public class PriceUpdateScreenController implements Initializable {
     private static KPSMain kpsMain;
@@ -52,7 +53,8 @@ public class PriceUpdateScreenController implements Initializable {
     private Label weightPriceLabel;
     @FXML
     private Label volumePriceLabel;
-    @FXML Label notificationLabel;
+    @FXML
+    Label notificationLabel;
 
     public PriceUpdateScreenController() {
         KPSMain.setLoginScreenController(this);
@@ -103,22 +105,22 @@ public class PriceUpdateScreenController implements Initializable {
             tempStage.setScene(reviewLogScene);
             tempStage.show();
         } else if (event.toString().contains("logout")) {
-            DialogBox.LogoutMsg("Logout", "Are you sure to logout?",event);
+            DialogBox.LogoutMsg("Logout", "Are you sure to logout?", event);
         }
     }
 
     /**
-     * This method is used to handel local screen button actions. i.e accept, reset, discard and exit
+     * This method is used to handel local screen button actions.
      *
      * @param event
      */
     public void handleButtons(ActionEvent event) {
         if (event.toString().contains("accept")) {
-            if(routeCombobox.getValue()==null ){
+            if (routeCombobox.getValue() == null) {
                 errorLabel.setText("Please Fill in all the Information");
-            }else if(!weightTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?" )|| !volumeTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?")){
+            } else if (!weightTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?") || !volumeTextfield.getText().matches("[0-9]{1,13}(\\.[0-9]*)?")) {
                 errorLabel.setText("Please fill in valid numbers in weight or volume");
-            }else{
+            } else {
                 String[] selectdText = ((String) routeCombobox.getValue()).split(" ");
 
                 int routeID = Integer.parseInt(selectdText[0]);
@@ -127,9 +129,9 @@ public class PriceUpdateScreenController implements Initializable {
                 double oldVolumePrice = route.getPricePerVolume();
                 double weightCost = Double.parseDouble(weightTextfield.getText());
                 double volumeCost = Double.parseDouble(volumeTextfield.getText());
-                kpsMain.updateRouteCustomerPrice(routeID,weightCost,volumeCost);
+                kpsMain.updateRouteCustomerPrice(routeID, weightCost, volumeCost);
                 errorLabel.setText("Customer price was successfully updated");
-                customerPriceUpdateNotification(route,oldWeightPrice,oldVolumePrice);
+                customerPriceUpdateNotification(route, oldWeightPrice, oldVolumePrice);
             }
 
         } else if (event.toString().contains("reset")) {
@@ -141,7 +143,7 @@ public class PriceUpdateScreenController implements Initializable {
     }
 
     /**
-     * Everything that should occur before the home is displayed should go in here.
+     * Everything that should occur before the screen is displayed should go in here.
      *
      * @param location
      * @param resources
@@ -149,7 +151,7 @@ public class PriceUpdateScreenController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Staff staff = kpsMain.getCurrentStaff();
-        userLable.setText((staff.isManager() ? "Manager": "Clerk")+" "+ staff.getFirstName());
+        userLable.setText((staff.isManager() ? "Manager" : "Clerk") + " " + staff.getFirstName());
         avatar.setImage(new Image(PriceUpdateScreenController.class.getResourceAsStream("/img/" + (staff.id % 5) + ".png")));
         if (!staff.isManager()) {
             reviewLogsButton.setVisible(false);
@@ -169,6 +171,11 @@ public class PriceUpdateScreenController implements Initializable {
 
     }
 
+    /**
+     * clears the screen
+     *
+     * @param event
+     */
     private void clearContent(ActionEvent event) {
         Parent priceUpdateScreen = null;
         try {
@@ -182,7 +189,11 @@ public class PriceUpdateScreenController implements Initializable {
         tempStage.show();
     }
 
-
+    /**
+     * returns the user back to the home screen
+     *
+     * @param event
+     */
     private void returnHome(ActionEvent event) {
         Parent homescreen = null;
         try {
@@ -195,12 +206,20 @@ public class PriceUpdateScreenController implements Initializable {
         tempStage.setScene(homeSecne);
         tempStage.show();
     }
-    private void customerPriceUpdateNotification(Route route,double oldWeightPrice,double oldVolumePrice){
-        originLabel.setText("Affected Origin: "+route.getStartLocation().getLocationName());
-        destinationLabel.setText("Affected Destination: "+route.getEndLocation().getLocationName());
+
+    /**
+     * Helpper method used to display the notification for the price update
+     *
+     * @param route
+     * @param oldWeightPrice
+     * @param oldVolumePrice
+     */
+    private void customerPriceUpdateNotification(Route route, double oldWeightPrice, double oldVolumePrice) {
+        originLabel.setText("Affected Origin: " + route.getStartLocation().getLocationName());
+        destinationLabel.setText("Affected Destination: " + route.getEndLocation().getLocationName());
         priorityLabel.setText("Type: " + route.routeType.toString());
-        weightPriceLabel.setText("Old Weight Price: $"+String.format("%.2f",oldWeightPrice)+" New Price: $"+String.format("%.2f",route.getPricePerGram()));
-        volumePriceLabel.setText("Old Volume Price: $"+String.format("%.2f",oldVolumePrice)+" New Price: $"+String.format("%.2f",route.getPricePerVolume()));
+        weightPriceLabel.setText("Old Weight Price: $" + String.format("%.2f", oldWeightPrice) + " New Price: $" + String.format("%.2f", route.getPricePerGram()));
+        volumePriceLabel.setText("Old Volume Price: $" + String.format("%.2f", oldVolumePrice) + " New Price: $" + String.format("%.2f", route.getPricePerVolume()));
         notificationLabel.setVisible(true);
         originLabel.setVisible(true);
         destinationLabel.setVisible(true);

@@ -20,7 +20,7 @@ import java.util.Set;
 /**
  * This class is the top-level controller of the app. The main method of the programme is located in this class.
  *
- * @author Dipen
+ * @author Dipen & Hector
  * @version 18/04/2017
  */
 public class KPSMain {
@@ -53,7 +53,7 @@ public class KPSMain {
      */
     public KPSMain() {
         kpsModel = new KPSModel();
-
+        //the code below will set the reference of this object in the all the controller.
         LoginScreenController.setKPSMain(this);
         HomeScreenController.setKPSMain(this);
         UserSettingScreenController.setKPSMain(this);
@@ -77,19 +77,48 @@ public class KPSMain {
      * =================================================================================================================
      */
 
+    /**
+     * this method is used to get the current user logged into the system
+     *
+     * @return Staff
+     */
     public Staff getCurrentStaff() {
         return kpsModel.getCurrentStaff();
     }
 
+    /**
+     * this method is used to get all the users registered in teh system
+     *
+     * @return Map<Integer, Staff>
+     */
     public Map<Integer, Staff> getAllUsers() {
         return kpsModel.getAllStaffs();
     }
 
+    /**
+     * this method is used to all a new user to the system
+     *
+     * @param userName
+     * @param password
+     * @param isManager
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param phoneNumber
+     * @return
+     */
     public boolean addNewUser(String userName, String password, boolean isManager, String firstName,
                               String lastName, String email, String phoneNumber) {
         return kpsModel.createNewStaff(userName, password, isManager, firstName, lastName, email, phoneNumber);
     }
 
+    /**
+     * This method is used to deleted the user from the system.
+     *
+     * @param firstName
+     * @param lastName
+     * @return
+     */
     public boolean deleteUser(String firstName, String lastName) {
         for (Staff s : kpsModel.getAllStaffs().values()) {
             if (s.getFirstName().equals(firstName) && s.getLastName().equals(lastName)) {
@@ -100,7 +129,18 @@ public class KPSMain {
         return false;
     }
 
-
+    /**
+     * this method is used to update the staff information, will return true is successful else false
+     *
+     * @param firstName
+     * @param lastName
+     * @param newFirstName
+     * @param newLastName
+     * @param newEmail
+     * @param newPhone
+     * @param changeRole
+     * @return
+     */
     public boolean updateStaffInformation(String firstName, String lastName, String newFirstName, String newLastName, String newEmail, String newPhone, boolean changeRole) {
         Staff tempStaff = null;
 
@@ -146,6 +186,12 @@ public class KPSMain {
 
     }
 
+    /**
+     * this method is used to change the current staffs password and will return true if successful else false.
+     *
+     * @param newPassword
+     * @return
+     */
     public boolean changeCurrentStaffPassword(String newPassword) {
         Staff currentStaff = getCurrentStaff();
 
@@ -163,10 +209,23 @@ public class KPSMain {
         return null;
     }
 
+    /**
+     * this method is used to log a user in to the system, it checks there username and password is successful then it
+     * will return true else false
+     *
+     * @param username
+     * @param password
+     * @return
+     */
     public boolean authenticateLogin(String username, String password) {
         return kpsModel.login(username, password);
     }
 
+    /**
+     * This method is by the controllers to set there references in this class.
+     *
+     * @param controllers
+     */
     public static void setLoginScreenController(Object controllers) {
         if (controllers instanceof LoginScreenController) {
             loginScreenController = (LoginScreenController) controllers;
@@ -194,99 +253,222 @@ public class KPSMain {
             businessFiguresScreenController = (BusinessFiguresScreenController) controllers;
         } else if (controllers instanceof ReviewLogsController) {
             reviewLogsController = (ReviewLogsController) controllers;
-        }else if (controllers instanceof EventDialogController) {
+        } else if (controllers instanceof EventDialogController) {
             eventDialogController = (EventDialogController) controllers;
         }
     }
 
+    /**
+     * this method is used to get all the available destination.
+     *
+     * @return
+     */
     public Set<Location> getAvailableDestinations() {
         return kpsModel.getAvailableDestinations();
     }
 
+    /**
+     * this method is used to get all the available origi.
+     *
+     * @return
+     */
     public Set<NZLocation> getAvailableOrigins() {
         return kpsModel.getAvailableOrigins();
     }
 
-    // process mail
+    /**
+     * this method is used to process the mail NOT send. it will check if mail can be sent with the information provided.
+     * if the the mail can be sent it will return a Mail object else null.
+     *
+     * @param origin
+     * @param destination
+     * @param weight
+     * @param volume
+     * @param priority
+     * @return
+     */
     public Mail processMail(String origin, String destination, double weight, double volume, Priority priority) {
         return kpsModel.processMail(origin, destination, weight, volume, priority);
     }
 
-    // deliver mail
+    /**
+     * this method is used to deliver the mail having passed the mail to send. if successful it will return true else false.
+     *
+     * @param mail
+     * @return
+     */
     public boolean deliverMail(Mail mail) {
         return kpsModel.deliverMail(mail);
     }
 
-    public double getMailRevenue(int mailId) {
-        return kpsModel.getMailRevenue(mailId);
-    }
-
-    public double getMailExpenditure(int mailId) {
-        return kpsModel.getMailExpenditure(mailId);
-    }
-
+    /**
+     * this method is used to get the temporary revenue for a mail.
+     *
+     * @param tempMail
+     * @return
+     */
     public double getTempMailRevenue(Mail tempMail) {
         return kpsModel.getTempMailRevenue(tempMail);
     }
 
+    /**
+     * this method used to get the temporary expenditure for a Mail.
+     *
+     * @param tempMail
+     * @return
+     */
     public double getTempMailExpenditure(Mail tempMail) {
         return kpsModel.getTempMailExpenditure(tempMail);
     }
 
+    /**
+     * this method will get all the routes in the system.
+     *
+     * @return
+     */
     public Map<Integer, Route> getAllRoutes() {
         return kpsModel.getAllRoutes();
     }
 
+    /**
+     * this method will get the route give a route id
+     *
+     * @param id
+     * @return
+     */
     public Route getRoute(int id) {
         return kpsModel.getRouteById(id);
     }
 
+    /**
+     * this method is used to deactivate a route given a route id and will return true if successful else false.
+     *
+     * @param routId
+     * @return
+     */
     public boolean deactivateRoute(int routId) {
         return kpsModel.deactivateRoute(routId);
     }
 
+    /**
+     * this method is used to update the customer price
+     *
+     * @param idToUpdate
+     * @param newPricePerGram
+     * @param newPricePerVolume
+     */
     public void updateRouteCustomerPrice(int idToUpdate, double newPricePerGram, double newPricePerVolume) {
         kpsModel.updateCustomerPrice(idToUpdate, newPricePerGram, newPricePerVolume);
     }
 
+    /**
+     * this method is used to update the transport cost.
+     *
+     * @param idToUpdate
+     * @param newCostPerGram
+     * @param newCostPerVolume
+     */
     public void updateRouteTransportCost(int idToUpdate, double newCostPerGram, double newCostPerVolume) {
         kpsModel.updateTransportCost(idToUpdate, newCostPerGram, newCostPerVolume);
     }
 
+    /**
+     * this method is used to add a new route to the system.
+     *
+     * @param startString
+     * @param endString
+     * @param routeType
+     * @param duration
+     * @param transportFirm
+     * @param pricePerGram
+     * @param pricePerVolume
+     * @param costPerGram
+     * @param costPerVolume
+     */
     public void addRoute(String startString, String endString, RouteType routeType, double duration, String transportFirm, double pricePerGram, double pricePerVolume, double costPerGram, double costPerVolume) {
         kpsModel.addRoute(startString, endString, routeType, duration, transportFirm, pricePerGram, pricePerVolume, costPerGram, costPerVolume);
     }
 
+    /**
+     * this method is used to get critical mail.
+     *
+     * @return
+     */
     public Map<Integer, Mail> getCriticalMails() {
         return kpsModel.getCriticalMails();
     }
 
+    /**
+     * this method is used to get the total revenue
+     *
+     * @param mails
+     * @return
+     */
     public double getTotalRevenue(Map<Integer, Mail> mails) {
         return KPSModel.calculateTotalRevenue(mails);
     }
 
+    /**
+     * this method is used to get the total expenditure
+     *
+     * @param mails
+     * @return
+     */
     public double getTotalExpenditure(Map<Integer, Mail> mails) {
         return KPSModel.calculateTotalExpenditure(mails);
     }
 
+    /**
+     * this method is used to get the events based on a start and end date
+     *
+     * @param startDate
+     * @param endDate
+     * @return
+     */
     public Map<Integer, Event> getEvensByStartEndTime(LocalDate startDate, LocalDate endDate) {
         return kpsModel.getEventsByStartAndEndTime(startDate, endDate);
     }
 
+    /**
+     * this method is used to get the mails based on the start and end date.
+     *
+     * @param startDate
+     * @param endDate
+     * @return
+     */
     public Map<Integer, Mail> getMailsByStartEndTime(LocalDate startDate, LocalDate endDate) {
         return kpsModel.getMailsByStartAndEndTime(startDate, endDate);
     }
 
+    /**
+     * this method is used to get the average delivery time give a valid route.
+     *
+     * @param origin
+     * @param destination
+     * @param priority
+     * @return
+     */
     public double getAverageDeliveryTime(String origin, String destination, Priority priority) {
         return kpsModel.calculateAverageDeliveryTime(origin, destination, priority);
 
     }
 
+    /**
+     * this method will get all the events
+     *
+     * @return
+     */
     public Map<Integer, Event> getAllEvent() {
         return kpsModel.getAllEvens();
     }
 
-    public Mail getMail(int id){
+    /**
+     * this method will get all the mail given a mail id.
+     *
+     * @param id
+     * @return
+     */
+    public Mail getMail(int id) {
         return kpsModel.getMailById(id);
     }
 

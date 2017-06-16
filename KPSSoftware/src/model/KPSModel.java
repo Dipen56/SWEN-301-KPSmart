@@ -424,7 +424,7 @@ public class KPSModel {
         Route route = getRouteById(routeId);
 
         // if we can't find the route, or the route is inactive, return false
-        if (route == null || !route.isActive()) {
+        if (route == null) {
             return false;
         }
 
@@ -458,7 +458,7 @@ public class KPSModel {
         Route route = getRouteById(routeId);
 
         // if we can't find the route, or the route is inactive, return false
-        if (route == null || !route.isActive()) {
+        if (route == null) {
             return false;
         }
 

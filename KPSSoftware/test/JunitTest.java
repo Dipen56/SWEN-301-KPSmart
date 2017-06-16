@@ -1,14 +1,7 @@
-
 import model.KPSModel;
 import model.mail.Mail;
 import model.mail.Priority;
-import model.route.RouteType;
-
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
 
 
 /**

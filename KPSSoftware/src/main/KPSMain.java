@@ -27,9 +27,13 @@ public class KPSMain {
 
     // ================== Model objects ============================
 
+    /**
+     * The top-level model object. This sole model provides all APIs from model world.
+     */
     private KPSModel kpsModel;
 
     // ================== controller objects =======================
+
     private static LoginScreenController loginScreenController;
     private static HomeScreenController homeScreenController;
     private static UserSettingScreenController userSettingScreenController;
@@ -45,14 +49,12 @@ public class KPSMain {
     private static ReviewLogsController reviewLogsController;
     private static EventDialogController eventDialogController;
 
-    // ================== view objects =============================
-
-
     /**
      * Constructor
      */
     public KPSMain() {
         kpsModel = new KPSModel();
+
         //the code below will set the reference of this object in the all the controller.
         LoginScreenController.setKPSMain(this);
         HomeScreenController.setKPSMain(this);
@@ -69,13 +71,6 @@ public class KPSMain {
         ReviewLogsController.setKPSMain(this);
         EventDialogController.setKPSMain(this);
     }
-
-
-    /**
-     * =================================================================================================================
-     * These methods made by Dipen
-     * =================================================================================================================
-     */
 
     /**
      * this method is used to get the current user logged into the system
@@ -183,7 +178,6 @@ public class KPSMain {
             }
             return true;
         }
-
     }
 
     /**
@@ -199,7 +193,13 @@ public class KPSMain {
                 currentStaff.getFirstName(), currentStaff.getLastName(), currentStaff.getEmail(), currentStaff.getPhoneNumber());
     }
 
-    public Staff getSelectedUser(String firstName, String lastName) {
+    /**
+     * @param firstName
+     * @param lastName
+     * @return the user in the system that matches the given first name and last name. If there is no match, null is
+     * returned.
+     */
+    public Staff getMatchedUser(String firstName, String lastName) {
         for (Staff s : kpsModel.getAllStaffs().values()) {
             if (s.getFirstName().equals(firstName) && s.getLastName().equals(lastName)) {
                 return s;
@@ -277,8 +277,8 @@ public class KPSMain {
     }
 
     /**
-     * this method is used to process the mail NOT send. it will check if mail can be sent with the information provided.
-     * if the the mail can be sent it will return a Mail object else null.
+     * this method is used to process the mail NOT send. it will check if mail can be sent with the information
+     * provided. if the the mail can be sent it will return a Mail object else null.
      *
      * @param origin
      * @param destination
@@ -292,7 +292,8 @@ public class KPSMain {
     }
 
     /**
-     * this method is used to deliver the mail having passed the mail to send. if successful it will return true else false.
+     * this method is used to deliver the mail having passed the mail to send. if successful it will return true else
+     * false.
      *
      * @param mail
      * @return
@@ -385,7 +386,8 @@ public class KPSMain {
      * @param costPerGram
      * @param costPerVolume
      */
-    public void addRoute(String startString, String endString, RouteType routeType, double duration, String transportFirm, double pricePerGram, double pricePerVolume, double costPerGram, double costPerVolume) {
+    public void addRoute(String startString, String endString, RouteType routeType, double duration, String transportFirm,
+                         double pricePerGram, double pricePerVolume, double costPerGram, double costPerVolume) {
         kpsModel.addRoute(startString, endString, routeType, duration, transportFirm, pricePerGram, pricePerVolume, costPerGram, costPerVolume);
     }
 
@@ -450,7 +452,6 @@ public class KPSMain {
      */
     public double getAverageDeliveryTime(String origin, String destination, Priority priority) {
         return kpsModel.calculateAverageDeliveryTime(origin, destination, priority);
-
     }
 
     /**
@@ -472,213 +473,17 @@ public class KPSMain {
         return kpsModel.getMailById(id);
     }
 
-
-    /**
-     * =================================================================================================================
-     * END
-     * =================================================================================================================
-     */
-
-    // ====================================================================
-    //            Demonstrations for how to use the KPSModel
-    //
-    //        These methods will be deleted in the final version
-    // ====================================================================
-
-    // add staff, given the parameters for creating a Staff object
-    public void demonstration_AddStaff() {
-        String userName = "username";
-        String password = "password";
-        boolean isManager = true;
-        String firstName = "Hektar";
-        String lastName = "Zhao";
-        String email = "123@456.com";
-        String phoneNumber = "0211111111";
-
-        kpsModel.createNewStaff(userName, password, isManager, firstName, lastName, email, phoneNumber);
-    }
-
-    // delete staff, given id
-    public void demonstration_deleteStaff() {
-        int idToDelete = 2;
-
-        kpsModel.deleteStaff(2);
-    }
-
-    // update staff, given id, and the parameters for creating a Staff object except id
-    public void demonstration_updateStaff() {
-        int idToUpdate = 2;
-        String userName = "username";
-        String password = "password";
-        boolean isManager = true;
-        String firstName = "Hektar";
-        String lastName = "Zhao";
-        String email = "123@456.com";
-        String phoneNumber = "0211111111";
-
-        kpsModel.updateStaff(idToUpdate, userName, password, isManager, firstName, lastName, email, phoneNumber);
-    }
-
-    // get staff, given id
-    public void demonstration_getStaffById() {
-        int id = 2;
-
-        Staff staff = kpsModel.getStaffById(id);
-    }
-
-    // get logged in staff
-    public void demonstration_getCurrentStaff() {
-        Staff currentStaff = kpsModel.getCurrentStaff();
-    }
-
-    // add route
-    public void demonstration_addRoute() {
-        String startString = "Wellington";  // case insensitive
-        String endString = "moscow"; // case insensitive
-        RouteType routeType = RouteType.Air;
-        double duration = 3.5f;
-        String transportFirm = "FedEx";
-        double pricePerGram = 2.5f;
-        double pricePerVolume = 2.6f;
-        double costPerGram = 2.7f;
-        double costPerVolume = 2.8f;
-
-        kpsModel.addRoute(startString, endString, routeType, duration, transportFirm, pricePerGram, pricePerVolume, costPerGram, costPerVolume);
-    }
-
-    // deactivate route
-    public void demonstration_deactivateRoute() {
-        int idToDeactivate = 2;
-
-        kpsModel.deactivateRoute(idToDeactivate);
-    }
-
-    // update route price
-    public void demonstration_updateRouteCustomerPrice() {
-        int idToUpdate = 2;
-        double newPricePerGram = 3.5f;
-        double newPricePerVolume = 4.0f;
-
-        kpsModel.updateCustomerPrice(idToUpdate, newPricePerGram, newPricePerVolume);
-    }
-
-    // update route cost
-    public void demonstration_updateRouteTransportCost() {
-        int idToUpdate = 2;
-        double newCostPerGram = 3.5f;
-        double newCostPerVolume = 4.0f;
-
-        kpsModel.updateTransportCost(idToUpdate, newCostPerGram, newCostPerVolume);
-    }
-
-    //dilver mail
-    public void demonstration_deliverMail() {
-        String originString = "wellington";   // case insensitive
-        String destinationString = "moscow";   // case insensitive
-        double weight = 500f;
-        double volume = 1000f;
-        Priority priority = Priority.International_Air;
-
-        Mail tempMail = kpsModel.processMail(originString, destinationString, weight, volume, priority);
-
-        if (tempMail == null) {
-            // we don't support sending mails from the given origin to the given destination
-        } else {
-            // We can deliver the mail
-
-            boolean result = kpsModel.deliverMail(tempMail);
-
-            // note we must deliver the mail first, otherwise there is no such mail in database.
-            double revenue = kpsModel.getMailRevenue(tempMail.id);
-            double expenditure = kpsModel.getMailExpenditure(tempMail.id);
-        }
-    }
-
-    // get available Origins
-    public void demonstration_getAvailableOrigins() {
-        Set<NZLocation> origins = kpsModel.getAvailableOrigins();
-    }
-
-    // get available destinations
-    public void demonstration_getAvailableDestinations() {
-        Set<Location> destinations = kpsModel.getAvailableDestinations();
-    }
-
-    // get all events
-    public void demonstration_getAllEvents() {
-        Map<Integer, Event> events = kpsModel.getAllEvens();
-    }
-
-    // calculate business figures of one mail
-    public void demonstration_getBusinessFiguresOfOneMail() {
-        int mainIdToCalculate = 3;
-        Mail mailToCalculate = kpsModel.getMailById(mainIdToCalculate);
-
-        double revenue = mailToCalculate.getRevenue();
-
-        double cost = mailToCalculate.getExpenditure();
-
-        double profit = revenue - cost;
-    }
-
-    // calculate business figures of all mails
-    public void demonstration_getBusinessFiguresOfAllMail() {
-        Map<Integer, Mail> allMails = kpsModel.getAllMails();
-
-        double totalRevenue = KPSModel.calculateTotalRevenue(allMails);
-
-        double totalCost = KPSModel.calculateTotalExpenditure(allMails);
-
-        double totalProfit = KPSModel.calculateTotalProfit(allMails);
-    }
-
-    // get a list of [origin, destination, priority] triples, aka critical routes
-    public void demonstration_getCriticalRoutes() {
-        Map<Integer, Mail> criticalMails = kpsModel.getCriticalMails();
-
-        // for each mail, to get the origin, destination, and priority
-        criticalMails.values().forEach(mail -> {
-            String origin = mail.getOrigin().getLocationName();
-            String destination = mail.getDestination().getLocationName();
-            Priority priority = mail.getPriority();
-        });
-
-        // calculate the average revenue and average expenditure:
-        double numMails = criticalMails.size();
-        double totalRevenue = KPSModel.calculateTotalRevenue(criticalMails);
-        double totalCost = KPSModel.calculateTotalExpenditure(criticalMails);
-
-        double averageRevenue = totalRevenue / numMails;
-        double averageCost = totalCost / numMails;
-
-    }
-
-    public void demonstration_getBusinessFiguresBetweenTimeRange() {
-        String startDateString = "2017-01-01";
-        String endDateString = "2017-12-31";
-
-        LocalDate startDate = LocalDate.parse(startDateString);
-        LocalDate endDate = LocalDate.parse(endDateString);
-
-        Map<Integer, Mail> mails = kpsModel.getMailsByStartAndEndTime(startDate, endDate);
-
-        double revenue = KPSModel.calculateTotalRevenue(mails);
-        double expenditure = KPSModel.calculateTotalExpenditure(mails);
-        int numMails = mails.size();
-    }
-
     /**
      * Main method.
      *
      * @param args
      */
     public static void main(String[] args) {
-        KPSMain app = new KPSMain();
+        new KPSMain();
 
         // prepare some data so we can have something to play with
         new DataPopulater().populateSomethingForMeWillYa();
 
         javafx.application.Application.launch(GUI.class);
     }
-
 }

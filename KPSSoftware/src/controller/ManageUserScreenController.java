@@ -134,7 +134,7 @@ public class ManageUserScreenController implements Initializable {
 
         } else if (event.toString().contains("selectUser")) {
             String[] content = ((String) selectUser.getValue()).split(" ");
-            Staff staff = kpsMain.getSelectedUser(content[0], content[1]);
+            Staff staff = kpsMain.getMatchedUser(content[0], content[1]);
 
             firstName.setText("First Name: " + staff.getFirstName());
             userImage.setImage(new Image(ManageUserScreenController.class.getResourceAsStream("/img/" + (staff.id % 5) + ".png")));

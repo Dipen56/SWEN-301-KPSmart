@@ -11,7 +11,6 @@ import model.event.*;
 import model.mail.Mail;
 import model.route.Route;
 
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;

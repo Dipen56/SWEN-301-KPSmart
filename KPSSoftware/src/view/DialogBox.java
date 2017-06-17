@@ -1,10 +1,6 @@
 package view;
 
-import controller.HomeScreenController;
-import controller.ReviewLogsController;
-import controller.SendMailScreenController;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -18,9 +14,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.event.*;
-
-import java.io.IOException;
 
 
 /**

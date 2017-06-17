@@ -245,6 +245,17 @@ public class Route {
         this.isActive = isActive;
     }
 
+    /**
+     * @return the string representation for displaying the route's information
+     */
+    public String getRouteDescription() {
+        return "{Origin: " + start.getLocationName() + " Destination: " + end.getLocationName() + " Type: " + routeType.name()
+                + " Duration: " + String.format("%.2f", duration) + " Transport Firm: " + transportFirm + " Price Per Gram: "
+                + String.format("%.2f", pricePerGram) + " Price Per Volume: " + String.format("%.2f", pricePerVolume)
+                + " Cost Per Gram: " + String.format("%.2f", costPerGram) + " Cost Per Volume: "
+                + String.format("%.2f", costPerVolume) + " Status: " + isActive + "}";
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -255,14 +266,6 @@ public class Route {
         Route route = (Route) o;
 
         return id == route.id;
-    }
-
-    public String getRouteDescription() {
-        return "{Origin: " + start.getLocationName() + " Destination: " + end.getLocationName() + " Type: " + routeType.name()
-                + " Duration: " + String.format("%.2f",duration) + " Transport Firm: " + transportFirm + " Price Per Gram: "
-                + String.format("%.2f",pricePerGram )+ " Price Per Volume: " + String.format("%.2f", pricePerVolume)
-                + " Cost Per Gram: " + String.format("%.2f",costPerGram) + " Cost Per Volume: "
-                + String.format("%.2f",costPerVolume) + " Status: " + isActive + "}";
     }
 
     @Override

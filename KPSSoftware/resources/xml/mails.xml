@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Mails maxId="5">
+<Mails maxId="6">
     <Mail id="1">
         <originId>7</originId>
         <destinationId>1</destinationId>
